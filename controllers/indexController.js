@@ -1,5 +1,5 @@
 module.exports = {
   getIndex: (req, res) => {
-    res.render("loginSection", { layout: "login" });
+    res.render("index");
   },
 };
