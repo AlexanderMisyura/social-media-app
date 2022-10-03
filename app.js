@@ -7,6 +7,7 @@ const MongoStore = require("connect-mongo");
 const flash = require("express-flash");
 const connectDB = require("./config/database");
 const hbs = require("express-handlebars").engine;
+const logger = require("morgan");
 
 require("dotenv").config({ path: "./config/.env" });
 
@@ -14,6 +15,10 @@ require("dotenv").config({ path: "./config/.env" });
 require("./config/passport")(passport);
 
 connectDB();
+
+if (process.env.NODE_ENV === "development") {
+  app.use(logger("dev"));
+}
 
 // Handlebars
 app.engine(
