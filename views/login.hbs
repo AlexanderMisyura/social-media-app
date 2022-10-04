@@ -1,5 +1,72 @@
-<form action="/login" method="POST">
-  <input type="email" name="email" placeholder="email" required>
-  <input type="password" name="password" placeholder="password" required>
-  <button type="submit">send</button>
+<figure class="image block">
+  <img src="./img/socister-short.png" alt="" />
+</figure>
+<form class="box block" action="/login" method="POST">
+  <div class="field">
+    <div class="control has-icons-left has-icons-right">
+      <input
+        class="input {{!-- is-success --}}"
+        type="text"
+        placeholder="email"
+        name="email"
+      />
+      <span class="icon is-small is-left">
+        <i class="fas fa-user"></i>
+      </span>
+      {{!-- <span class="icon is-small is-right">
+        <i class="fas fa-check"></i>
+      </span> --}}
+    </div>
+    {{!-- <p class="help is-success">This email is available</p> --}}
+  </div>
+
+  <div class="field">
+    <div class="control has-icons-left has-icons-right">
+      <input
+        class="input {{!-- is-danger --}}"
+        type="password"
+        placeholder="password"
+        name="password"
+      />
+      <span class="icon is-small is-left">
+        <i class="fas fa-envelope"></i>
+      </span>
+      {{!-- <span class="icon is-small is-right">
+        <i class="fas fa-exclamation-triangle"></i>
+      </span> --}}
+    </div>
+    {{!-- <p class="help is-danger">smth with password</p> --}}
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <button class="button is-link is-fullwidth is-small" type="submit">Log In</button>
+    </div>
+  </div>
 </form>
+<div class="box block has-text-centered">
+  <p>Don&#39;t have an account? <a href="/signup">Sign up!</a></p>
+</div>
+<footer class="section">
+  <div class="container level is-mobile">
+    <p class="level-item has-text-centered">
+      <a class="link is-info" href="https://github.com/AlexanderMisyura" target="_blank">
+        <span class="icon has-text-dark is-large">
+          <i class="fa-brands fa-github fa-2xl"></i>
+        </span></a>
+    </p>
+    <p class="level-item has-text-centered">
+      <a class="link is-info" href="https://www.linkedin.com/in/alexander-misyura-940021239/" target="_blank">
+        <span class="icon has-text-dark is-large">
+          <i class="fa-brands fa-linkedin fa-2xl"></i>
+        </span></a>
+    </p>
+    <p class="level-item has-text-centered">
+      <a class="link is-info" href="https://twitter.com/alexandermisyu1" target="_blank">
+        <span class="icon has-text-dark is-large">
+          <i class="fa-brands fa-twitter fa-2xl"></i>
+        </span></a>
+    </p>
+  </div>
+  <div class="block has-text-centered">&copy; 2022, Alexander Misyura</div>
+</footer>

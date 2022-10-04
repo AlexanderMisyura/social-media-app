@@ -30,6 +30,9 @@ app.engine(
 );
 app.set("view engine", ".hbs");
 
+// Static folder
+app.use(express.static("public"));
+
 // Body parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

@@ -7,7 +7,7 @@ module.exports = {
     if (req.user) {
       return res.redirect("/profile");
     }
-    res.render("login", { layout: "login" });
+    res.render("login", { layout: "login", title: "Socister" });
   },
 
   getSignup: (req, res) => {
@@ -27,7 +27,7 @@ module.exports = {
 
     if (validationErrors.length) {
       req.flash("errors", validationErrors);
-      return res.redirect("/login");
+      return res.redirect("/");
     }
 
     req.body.email = validator.normalizeEmail(req.body.email, {
