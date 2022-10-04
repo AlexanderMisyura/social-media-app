@@ -103,4 +103,14 @@ module.exports = {
       }
     );
   },
+
+  getLogout: (req, res) => {
+    req.logout((err) => {
+      if (err) {
+        return next(err);
+      }
+      console.log("User has logged out.");
+      res.redirect("/");
+    });
+  },
 };
