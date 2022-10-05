@@ -4,30 +4,32 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{title}}</title>    
+    <title>Socister</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
     />
-    <script src="https://kit.fontawesome.com/8dde09376c.js" crossorigin="anonymous"></script>
-    <style>
-      body {
-        background-color: #ffe08a;
-        min-height: 100vh;
-      }
-    </style>
+    <link rel="stylesheet" href="./css/style.css" />
+    <script
+      src="https://kit.fontawesome.com/8dde09376c.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
-  <body class="is-warning">
-    <main class="section">
-      <div class="container is-max-desktop">
+  <body>
+    <main class="section is-flex">
+      <div class="container is-max-desktop is-align-self-center">
         <div class="columns is-centered">
           <div class="column is-half">
-            <div class="section">
+            <div class="section box">
+              <figure class="image block box logo">
+                <img src="./img/socister-short.png" alt="socister logo" />
+              </figure>
               {{{body}}}
             </div>
           </div>
         </div>
       </div>
     </main>
+    {{> _footer}}
   </body>
 </html>

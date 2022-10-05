@@ -1,0 +1,29 @@
+/* Stick footer to bottom if there is little content in main*/
+
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+main {  
+  flex: 1 0 auto;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+/* Custom styling */
+
+.logo {
+  background-color: #ffe08a;
+}
+
+html {  
+  background-color: #ffe08a;
+  background-image: url("../img/Random256Grunge05_purple.png");
+}

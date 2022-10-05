@@ -7,7 +7,7 @@ module.exports = {
     if (req.user) {
       return res.redirect("/profile");
     }
-    res.render("login", { layout: "login", title: "Socister" });
+    res.render("login", { layout: "login" });
   },
 
   getSignup: (req, res) => {
