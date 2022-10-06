@@ -18,6 +18,11 @@ const PostSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  status: {
+    type: String,
+    default: "public",
+    enum: ["public", "private", "friends"]
+  },
   likes: {
     type: Number,
     default: 0,
