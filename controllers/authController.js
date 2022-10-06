@@ -5,14 +5,14 @@ const User = require("../models/User");
 module.exports = {
   getLogin: (req, res) => {
     if (req.user) {
-      return res.redirect("/profile");
+      return res.redirect("/");
     }
     res.render("login", { layout: "login" });
   },
 
   getSignup: (req, res) => {
     if (req.user) {
-      return res.redirect("/profile");
+      return res.redirect("/");
     }
     res.render("signup", { layout: "login" });
   },
@@ -47,7 +47,7 @@ module.exports = {
           return next(err);
         }
         req.flash("success", { msg: "Success! You are logged in." });
-        res.redirect(req.session.returnTo || "/profile");
+        res.redirect(req.session.returnTo || "/feed");
       });
     })(req, res, next);
   },

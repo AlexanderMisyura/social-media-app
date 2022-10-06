@@ -56,6 +56,7 @@ app.use(flash());
 
 // Routes
 app.use("/", require("./routes/indexRoute"));
+app.use("/profile", require("./routes/profileRoute"));
 
 const PORT = process.env.PORT || 3000;
 
