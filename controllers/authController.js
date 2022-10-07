@@ -27,7 +27,7 @@ module.exports = {
 
     if (validationErrors.length) {
       req.flash("errors", validationErrors);
-      return res.redirect("/");
+      return res.redirect("/login");
     }
 
     req.body.email = validator.normalizeEmail(req.body.email, {
@@ -47,7 +47,7 @@ module.exports = {
           return next(err);
         }
         req.flash("success", { msg: "Success! You are logged in." });
-        res.redirect(req.session.returnTo || "/feed");
+        res.redirect(req.session.returnTo || "/");
       });
     })(req, res, next);
   },
@@ -97,7 +97,7 @@ module.exports = {
             if (err) {
               return next(err);
             }
-            res.redirect("/profile");
+            res.redirect("/");
           });
         });
       }
