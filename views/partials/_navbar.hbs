@@ -1,0 +1,69 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="container is-max-desktop">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="/">
+        <img src="../img/socister-nav.png" alt="socister logo" />
+      </a>
+
+      <a
+        role="button"
+        class="navbar-burger"
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navbar"
+      >
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <div id="navbar" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="/post/add">
+          <span class="pr-2">New post</span>
+          <figure class="image">
+            <img src="../img/socister-single.png" alt="add new post" />
+          </figure>
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <div class="navbar-link">
+            <span class="pr-2">userName
+              {{!req.user.userName}}
+            </span>
+            <figure class="image">
+              <img
+                src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.osmpic.com%2Fwp-content%2Fuploads%2F2019%2F03%2FPicsArt_03-21-10.30.59-901x1024.jpg&f=1&nofb=1&ipt=88bf4004958c1611e3ca7edc880bf042acb60063e42b9182b86e87f088e0050b&ipo=images"
+                alt="profile image"
+                class="is-rounded"
+              />
+            </figure>
+          </div>
+
+          <div class="navbar-dropdown">
+            <a class="navbar-item">
+              <span class="icon"><i class="fa-regular fa-user"></i></span>
+              <span>Profile</span>
+            </a>
+            <a class="navbar-item">
+              <span class="icon"><i class="fa-regular fa-bookmark"></i></span>
+              <span>Saved</span>
+            </a>
+            <a class="navbar-item">
+              <span class="icon"><i class="fa-regular fa-envelope"></i></span>
+              <span>Friends</span>
+            </a>
+            <hr class="navbar-divider" />
+            <a class="navbar-item" href="/logout">
+              <span class="icon"><i
+                  class="fa-solid fa-arrow-right-from-bracket"
+                ></i></span>
+              <span>Log Out</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</nav>

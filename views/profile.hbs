@@ -1,2 +1,32 @@
-<p>profile here</p>
-<a href="/logout">logout</a>
+<div class="card">
+  <div class="card-content">
+    <div class="columns">
+      <div class="column">
+        <div class="media">
+          <div class="media-left">
+            <figure class="image is-128x128">
+              <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png{{!req.user.image}}" alt="profile image">
+            </figure>
+          </div>
+          <div class="media-content">
+            <p class="title is-4">{{!req.user.userName}}userName</p>
+          </div>
+        </div>
+      </div>
+      <div class="column">
+        <aside class="menu box">
+          <ul class="menu-list ">
+            <li class="mb-1"><a>Posts</a></li>
+            <li class="mb-1"><a>Comments</a></li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+    
+
+    <div class="content">
+      {{!req.user.bio}}
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti mollitia harum sequi exercitationem nostrum! Ratione, consequatur? Ipsa quisquam reprehenderit atque!
+    </div>
+  </div>
+</div>
