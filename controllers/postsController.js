@@ -1,7 +1,12 @@
 const Post = require("../models/Post");
 
-module.exports = {
-  getProfile: (req, res) => {
-    res.render("profile")
+module.exports = { 
+  getIndex: (req, res) => {
+    try {
+      // const posts = Post.find({})
+    } catch (err) {
+      
+    }
+    res.render("index")
   }
 }
