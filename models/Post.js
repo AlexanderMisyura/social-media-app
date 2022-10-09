@@ -21,7 +21,7 @@ const PostSchema = new mongoose.Schema({
   status: {
     type: String,
     default: "public",
-    enum: ["public", "private", "friends"]
+    enum: ["public", "private", "friends"],
   },
   likes: {
     type: Number,

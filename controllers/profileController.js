@@ -9,11 +9,6 @@ module.exports = {
       const user = await User.findOne({ _id: req.user.id });
       const posts = await Post.find({ user: req.user.id });
       const comments = await CommentSchema.find({ user: req.user.id });
-      console.log(user);
-      console.log("---------");
-      console.log(posts);
-      console.log("---------");
-      console.log(comments);
       res.render("profile");
     } catch (err) {
       console.error(err);
