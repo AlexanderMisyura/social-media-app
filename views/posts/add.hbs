@@ -1,5 +1,10 @@
 <div class="container is-max-desktop">
-  <form class="box block" action="/login" method="POST">
+  <form
+    class="box block"
+    action="/post/add"
+    method="POST"
+    enctype="multipart/form-data"
+  >
     <div class="field">
       <div class="control has-icons-left">
         <input class="input" type="text" placeholder="title" name="title" />
@@ -11,7 +16,11 @@
 
     <div class="field">
       <div class="control">
-        <textarea class="textarea" placeholder="Caption"></textarea>
+        <textarea
+          class="textarea"
+          name="caption"
+          placeholder="Caption"
+        ></textarea>
       </div>
     </div>
 
@@ -19,7 +28,7 @@
       <div class="control">
         <div class="file is-boxed is-fullwidth has-text-centered">
           <label class="file-label">
-            <input class="file-input" type="file" name="resume" />
+            <input class="file-input" type="file" name="image" />
             <span class="file-cta">
               <span class="file-icon">
                 <i class="fas fa-upload"></i>
@@ -31,6 +40,22 @@
           </label>
         </div>
       </div>
+    </div>
+
+    <div class="control box has-text-centered">
+      <p>Check who can see your post</p>
+      <label class="radio">
+        <input type="radio" name="status" value="public" />
+        Anyone
+      </label>
+      <label class="radio">
+        <input type="radio" name="status" value="private" />
+        Only you
+      </label>
+      <label class="radio">
+        <input type="radio" name="status" value="friends" />
+        Just you and your friends
+      </label>
     </div>
 
     <div class="field">
