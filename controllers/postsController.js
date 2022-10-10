@@ -9,4 +9,8 @@ module.exports = {
     }
     res.render("index");
   },
+
+  getAddPost: (req, res) => {
+    res.render("posts/add", {title: "Socister | Create an awsome new post"})
+  }
 };
