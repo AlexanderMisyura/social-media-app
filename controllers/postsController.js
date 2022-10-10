@@ -1,16 +1,16 @@
 const Post = require("../models/Post");
 
 module.exports = {
-  getIndex: (req, res) => {
+  getIndex: async (req, res) => {
     try {
-      // const posts = Post.find({})
+      const posts = await Post.find().sort({ creationDate: "desc" }).populate("user").lean();
+      res.render("index", { title: "Socister | Feed", posts});
     } catch (err) {
       console.error(err);
     }
-    res.render("index");
   },
 
   getAddPost: (req, res) => {
-    res.render("posts/add", {title: "Socister | Create an awsome new post"})
-  }
+    res.render("posts/add", { title: "Socister | Create an awsome new post" });
+  },
 };
