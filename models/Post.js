@@ -8,7 +8,9 @@ const PostSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
+  },
+  cloudinaryId: {
+    type: String,
   },
   caption: {
     type: String,
@@ -29,8 +31,9 @@ const PostSchema = new mongoose.Schema({
   },
   comments: {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+    default: [],
   },
-  creationDate: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },

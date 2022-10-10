@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
   image: { type: String },
   bio: { type: String },
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  creationDate: { type: Date, default: Date.now },
+  createdAt: { type: Date, default: Date.now },
   rating: { type: Number, default: 0 },
 });
 
