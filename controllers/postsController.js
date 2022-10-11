@@ -38,9 +38,21 @@ module.exports = {
       await post.save();
       console.log(post);
 
-      res.redirect(`/profile/${req.user.id}`);
+      res.redirect(`/post/${postId}`);
     } catch (err) {
       console.error(err);
     }
   },
+
+  getPost: async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id).populate("user").lean();
+      if (!post) {
+        return res.send("error");
+      }
+      res.render("posts/post", {title: `Socister | ${post.title}`, post})
+    } catch (err) {
+      console.error(err);
+    }
+  }
 };
