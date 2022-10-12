@@ -6,7 +6,7 @@ module.exports = {
   getIndex: async (req, res) => {
     try {
       const posts = await Post.find()
-        .sort({ creationDate: "desc" })
+        .sort({ createdAt: "desc" })
         .populate("user")
         .lean();
       res.render("index", { title: "Socister | Feed", posts });

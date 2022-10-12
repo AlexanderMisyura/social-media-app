@@ -11,7 +11,7 @@ module.exports = {
       if (req.user.id === req.params.id) {
         posts = await Post.find({ user: req.user.id, deleted: false })
           .populate("user")
-          .sort({ creationDate: "desc" })
+          .sort({ createdAt: "desc" })
           .lean();
         comments = {
           bodies: await CommentSchema.find({ user: req.user.id }).lean(),
