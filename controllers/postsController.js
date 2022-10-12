@@ -33,10 +33,17 @@ module.exports = {
         folder: `socister/posts/${req.user.id}/${postId}`,
       });
 
-      post.image = uploadResult.secure_url;
+      post.image = cloudinary.url(uploadResult.public_id, {
+        transformation: {
+          aspect_ratio: 1,
+          crop: "pad",
+          fetch_format: "auto",
+          quality: "auto",
+          background: "auto",
+        },
+      });
       post.cloudinaryId = uploadResult.public_id;
       await post.save();
-      console.log(post);
 
       res.redirect(`/post/${postId}`);
     } catch (err) {
@@ -50,9 +57,9 @@ module.exports = {
       if (!post) {
         return res.send("error");
       }
-      res.render("posts/post", {title: `Socister | ${post.title}`, post})
+      res.render("posts/post", { title: `Socister | ${post.title}`, post });
     } catch (err) {
       console.error(err);
     }
-  }
+  },
 };
