@@ -27,3 +27,12 @@ html {
   background-color: #ffe08a;
   background-image: url("../img/Random256Grunge05_purple.png");
 }
+
+.is-max-width-100 {
+  max-width: 100%;
+}
+.is-cropped {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

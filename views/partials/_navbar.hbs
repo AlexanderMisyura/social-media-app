@@ -28,8 +28,8 @@
         </a>
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link">
-            <span class="pr-2">userName
-              {{!req.user.userName}}
+            <span class="pr-2">
+              {{user.name}}
             </span>
             <figure class="image">
               <img
@@ -41,7 +41,7 @@
           </div>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item">
+            <a class="navbar-item" href="/profile/{{user.id}}"">
               <span class="icon"><i class="fa-regular fa-user"></i></span>
               <span>Profile</span>
             </a>

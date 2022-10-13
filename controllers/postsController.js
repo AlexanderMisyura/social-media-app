@@ -5,18 +5,30 @@ const mongoose = require("mongoose");
 module.exports = {
   getIndex: async (req, res) => {
     try {
+      const user = {
+        name: req.user.userName,
+        id: req.user.id,
+      };
       const posts = await Post.find()
         .sort({ createdAt: "desc" })
         .populate("user")
         .lean();
-      res.render("index", { title: "Socister | Feed", posts });
+      res.render("index", {
+        title: "Socister | Feed",
+        user,
+        posts,
+      });
     } catch (err) {
       console.error(err);
     }
   },
 
   getAddPost: (req, res) => {
-    res.render("posts/add", { title: "Socister | Create an awsome new post" });
+    const user = {
+      name: req.user.userName,
+      id: req.user.id,
+    };
+    res.render("posts/add", { title: "Socister | Create an awsome new post", user });
   },
 
   savePost: async (req, res) => {
@@ -53,11 +65,15 @@ module.exports = {
 
   getPost: async (req, res) => {
     try {
+      const user = {
+        name: req.user.userName,
+        id: req.user.id,
+      };
       const post = await Post.findById(req.params.id).populate("user").lean();
       if (!post) {
         return res.send("error");
       }
-      res.render("posts/post", { title: `Socister | ${post.title}`, post });
+      res.render("posts/post", { title: `Socister | ${post.title}`, user, post });
     } catch (err) {
       console.error(err);
     }

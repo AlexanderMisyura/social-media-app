@@ -10,8 +10,8 @@
               </figure>
             </div>
             <div class="media-content is-align-self-center">
-              <p class="title is-4">{{user.userName}}</p>
-              <p>User rating: {{user.rating}}</p>
+              <p class="title is-4">{{browsedUser.userName}}</p>
+              <p>User rating: {{browsedUser.rating}}</p>
             </div>
           </div>
         </div>
@@ -25,8 +25,8 @@
         </div>
       </div>
       <div class="content">
-        {{#if user.bio}}
-          {{user.bio}}
+        {{#if browsedUser.bio}}
+          {{browsedUser.bio}}
         {{else}}
           <p>The user has not specified anything about himself yet.</p>
         {{/if}}

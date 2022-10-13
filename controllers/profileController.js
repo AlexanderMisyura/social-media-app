@@ -7,7 +7,11 @@ module.exports = {
     try {
       let posts;
       let comments;
-      let user = await User.findOne({ id: req.params.id }).lean();
+      const user = {
+        name: req.user.userName,
+        id: req.user.id,
+      };
+      let browsedUser = await User.findOne({ _id: req.params.id }).lean();
       if (req.user.id === req.params.id) {
         posts = await Post.find({ user: req.user.id, deleted: false })
           .populate("user")
@@ -30,7 +34,13 @@ module.exports = {
           count: await CommentSchema.count({ user: req.params.id }),
         };
       }
-      res.render("profile", { posts, comments, user, title: `${user.userName}'s profile` });
+      res.render("profile", {
+        title: `${browsedUser.userName}'s profile`,
+        posts,
+        user,
+        browsedUser,
+        comments,
+      });
     } catch (err) {
       console.error(err);
     }

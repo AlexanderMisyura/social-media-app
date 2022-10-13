@@ -1,12 +1,35 @@
-<div class="container is-max-desktop">
+<div class="container is-max-widescreen">
   <div class="columns is-multiline">
     {{#each posts as |post|}}
-      <div class="column is-one-third">
-        <article class="card box">
-          <p class="title is-6">{{post.title}}</p>
+      <div class="column is-half-tablet is-one-third-desktop is-one-quarter-widescreen">
+        <article class="card">
+          <div class="card-header">
+            <div
+              class="card-header-title is-flex-direction-column is-align-items-flex-start is-max-width-100"
+            >
+              <a class="has-text-dark" href="/profile/{{post.user._id}}">
+                <div class="media mb-1">
+                  <div class="media-left">
+                    <figure class="image is-24x24">
+                      <img
+                        src="https://res.cloudinary.com/dqgpoeydj/image/upload/v1665583773/no-image_g3rf5e.jpg"
+                        alt="user avatar"
+                      />
+                    </figure>
+                  </div>
+                  <div class="media-content">
+                    <p class="title is-6 is-clipped">{{post.user.userName}}</p>
+                  </div>
+                </div>
+              </a>
+              <h2
+                class="title is-6 is-max-width-100 is-cropped"
+              >{{post.title}}</h2>
+            </div>
+          </div>
           <div class="card-image">
             <figure class="image is-square">
-              <a href="/post/{{post.id}}"><img
+              <a href="/post/{{post._id}}"><img
                   src="{{post.image}}"
                   alt="{{post.title}} image"
                 /></a>
@@ -14,20 +37,43 @@
           </div>
           <div class="card-content">
             <div class="content">
-              <p>{{post.caption}}</p>
+              <p class="is-cropped">{{post.caption}}</p>
             </div>
-            <div class="media">
-              <div class="media-left">
-                <figure class="image is-48x48">
-                  <img
-                    src="https://res.cloudinary.com/dqgpoeydj/image/upload/v1665583773/no-image_g3rf5e.jpg"
-                    alt="user avatar"
-                  />
-                </figure>
-              </div>
-              <div class="media-content">
-                <p class="title is-6">{{post.user.userName}}</p>
-              </div>
+          </div>
+          <div class="card-footer is-justify-content-space-between">
+            <div class="card-item">
+              <span class="card-footer-item">
+                <span class="icon has-text-grey">
+                  <i class="fa-regular fa-eye fa-lg"></i>
+                </span>
+              </span>
+            </div>
+            <div class="card-item">
+              <a class="card-footer-item" href="">
+                <span class="icon has-text-dark">
+                  <i class="fa-solid fa-comment fa-lg"></i>
+                </span>
+              </a>
+            </div>
+            <div class="card-item">
+              <span class="card-footer-item">
+                <a class="pr-1" href="">
+                  <span class="icon has-text-dark">
+                    <i class="fa-solid fa-share-nodes fa-lg"></i>
+                  </span>
+                </a>
+                <a class="pr-1" href="">
+                  <span class="icon has-text-dark">
+                    <i class="fa-regular fa-bookmark fa-lg"></i>
+                  </span>
+                </a>
+                <a href="">
+                  <span class="icon has-text-dark">
+                    <i class="fa-regular fa-star fa-lg"></i>
+                  </span>
+                </a>
+              </span>
+
             </div>
           </div>
         </article>
