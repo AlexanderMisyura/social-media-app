@@ -35,7 +35,7 @@ module.exports = {
           count: await CommentSchema.count({ user: req.params.id }),
         };
       }
-      res.render("profile", {
+      res.render("profile/profile", {
         title: `${browsedUser.userName}'s profile`,
         posts,
         user,
@@ -55,7 +55,7 @@ module.exports = {
         image: req.user.image
       };
       const browsedUser = await User.findById(req.user.id).lean();
-      res.render("profileSettings", {title: `${browsedUser.userName}'s profile settings`, user, browsedUser});
+      res.render("profile/profileSettings", {title: `${browsedUser.userName}'s profile settings`, user, browsedUser});
     } catch (err) {
       console.error(err);
     }
