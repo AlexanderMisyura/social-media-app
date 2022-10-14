@@ -10,7 +10,7 @@ module.exports = {
       const user = {
         name: req.user.userName,
         id: req.user.id,
-        image: req.user.image
+        image: req.user.image,
       };
       let browsedUser = await User.findOne({ _id: req.params.id }).lean();
       if (req.user.id === req.params.id) {
@@ -48,18 +48,22 @@ module.exports = {
     }
   },
 
-  getProfileSettings: async(req, res) => {
+  getProfileSettings: async (req, res) => {
     try {
       const user = {
         name: req.user.userName,
         id: req.user.id,
-        image: req.user.image
+        image: req.user.image,
       };
       const browsedUser = await User.findById(req.user.id).lean();
-      res.render("profile/profileSettings", {title: `${browsedUser.userName}'s profile settings`, user, browsedUser});
+      res.render("profile/profileSettings", {
+        title: `${browsedUser.userName}'s profile settings`,
+        user,
+        browsedUser,
+      });
     } catch (err) {
       console.error(err);
       res.render("error/500");
     }
-  }
+  },
 };

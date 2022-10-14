@@ -6,7 +6,11 @@
           <div class="media">
             <div class="media-left is-flex">
               <figure class="image is-128x128">
-                <img class="is-rounded" src="{{browsedUser.image}}" alt="profile image">
+                <img
+                  class="is-rounded"
+                  src="{{browsedUser.image}}"
+                  alt="profile image"
+                />
               </figure>
             </div>
             <div class="media-content is-align-self-center">
@@ -18,7 +22,7 @@
         </div>
         <div class="column">
           <aside class="menu box">
-            <ul class="menu-list ">
+            <ul class="menu-list">
               <li class="mb-1"><a>Posts</a></li>
               <li class="mb-1"><a>Comments</a></li>
             </ul>
@@ -36,8 +40,7 @@
   </div>
 </div>
 
-
-{{!-- need helper like
+{{! need helper like
 
 module.exports = {
   populatePosts: function (posts) {
@@ -63,33 +66,40 @@ module.exports = {
     return result;
   }
 }
---}}
+}}
 
 <div class="container is-max-desktop">
   {{!#if posts}}
-    {{!-- populatePosts posts --}}
-    {{!#each posts}}
-      <div class="tile is-ancestor">
-        <div class="tile is-parent is-6">
-          <div class="tile box is-child">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa veritatis iste aut officiis, porro voluptate.</div>
-        </div>
-        <div class="tile is-parent is-6">
-          <div class="tile box is-child">Delectus veritatis unde minus eveniet, maxime alias consequatur itaque non hic. Voluptatum excepturi recusandae enim?</div>
-        </div>
-      </div>
-      <div class="tile is-ancestor">
-        <div class="tile is-parent is-6">
-          <div class="tile box is-child">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa veritatis iste aut officiis, porro voluptate.</div>
-        </div>
-        <div class="tile is-parent is-6">
-          <div class="tile box is-child">Vitae eveniet at laboriosam quaerat a saepe provident? Vero, dolores labore nulla Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus, et! rem maxime sit.</div>
-        </div>
-      </div>
-      <div class="tile is-ancestor">
-        <div class="tile is-parent is-6">
-          <div class="tile box is-child">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa veritatis iste aut officiis, porro voluptate.</div>
-        </div>
-      </div>
-    {{!/each}}
+  {{! populatePosts posts }}
+  {{!#each posts}}
+  <div class="tile is-ancestor">
+    <div class="tile is-parent is-6">
+      <div class="tile box is-child">Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit. Ipsa veritatis iste aut officiis, porro voluptate.</div>
+    </div>
+    <div class="tile is-parent is-6">
+      <div class="tile box is-child">Delectus veritatis unde minus eveniet,
+        maxime alias consequatur itaque non hic. Voluptatum excepturi recusandae
+        enim?</div>
+    </div>
+  </div>
+  <div class="tile is-ancestor">
+    <div class="tile is-parent is-6">
+      <div class="tile box is-child">Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit. Ipsa veritatis iste aut officiis, porro voluptate.</div>
+    </div>
+    <div class="tile is-parent is-6">
+      <div class="tile box is-child">Vitae eveniet at laboriosam quaerat a saepe
+        provident? Vero, dolores labore nulla Lorem ipsum dolor sit amet
+        consectetur adipisicing elit. Accusamus, et! rem maxime sit.</div>
+    </div>
+  </div>
+  <div class="tile is-ancestor">
+    <div class="tile is-parent is-6">
+      <div class="tile box is-child">Lorem ipsum dolor sit amet, consectetur
+        adipisicing elit. Ipsa veritatis iste aut officiis, porro voluptate.</div>
+    </div>
+  </div>
+  {{!/each}}
   {{!/if}}
 </div>

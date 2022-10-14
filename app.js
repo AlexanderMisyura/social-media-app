@@ -61,7 +61,7 @@ app.use(flash());
 app.use("/", require("./routes/indexRoute"));
 app.use("/profile", require("./routes/profileRoute"));
 app.get("*", (req, res) => {
-  res.render("error/404", {layout: "narrow", title: "404 NOT FOUND" });
+  res.render("error/404", { layout: "narrow", title: "404 NOT FOUND" });
 });
 
 const PORT = process.env.PORT || 3000;

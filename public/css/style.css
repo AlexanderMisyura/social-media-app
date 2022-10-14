@@ -1,6 +1,7 @@
 /* Stick footer to bottom if there is little content in main*/
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -9,7 +10,7 @@ body {
   flex-direction: column;
 }
 
-main {  
+main {
   flex: 1 0 auto;
 }
 
@@ -23,7 +24,7 @@ footer {
   background-color: #ffe08a;
 }
 
-html {  
+html {
   background-color: #ffe08a;
   background-image: url("../img/Random256Grunge05_purple.png");
 }

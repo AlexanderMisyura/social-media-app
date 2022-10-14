@@ -7,7 +7,7 @@ module.exports = {
           <i class="fa-solid fa-gears fa-xl"></i>
         </span>
       </a>
-    </div>`
+    </div>`;
     }
   },
-}
+};

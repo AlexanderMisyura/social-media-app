@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt");
 require("dotenv").config({ path: "../config/.env" });
 
 const defaultValues = {
-  image: val => val === undefined ? process.env.DEFAULT_AVATAR_LINK : val,
-  bio: val => val === undefined ? "No bio yet" : val,
+  image: (val) => (val === undefined ? process.env.DEFAULT_AVATAR_LINK : val),
+  bio: (val) => (val === undefined ? "No bio yet" : val),
 };
 
 const UserSchema = new mongoose.Schema({

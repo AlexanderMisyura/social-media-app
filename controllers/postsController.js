@@ -8,7 +8,7 @@ module.exports = {
       const user = {
         name: req.user.userName,
         id: req.user.id,
-        image: req.user.image
+        image: req.user.image,
       };
       const posts = await Post.find()
         .sort({ createdAt: "desc" })
@@ -29,9 +29,12 @@ module.exports = {
     const user = {
       name: req.user.userName,
       id: req.user.id,
-      image: req.user.image
+      image: req.user.image,
     };
-    res.render("posts/add", { title: "Socister | Create an awsome new post", user });
+    res.render("posts/add", {
+      title: "Socister | Create an awsome new post",
+      user,
+    });
   },
 
   savePost: async (req, res) => {
@@ -72,13 +75,17 @@ module.exports = {
       const user = {
         name: req.user.userName,
         id: req.user.id,
-        image: req.user.image
+        image: req.user.image,
       };
       const post = await Post.findById(req.params.id).populate("user").lean();
       if (!post) {
         return res.send("error");
       }
-      res.render("posts/post", { title: `Socister | ${post.title}`, user, post });
+      res.render("posts/post", {
+        title: `Socister | ${post.title}`,
+        user,
+        post,
+      });
     } catch (err) {
       console.error(err);
       res.render("error/500");
