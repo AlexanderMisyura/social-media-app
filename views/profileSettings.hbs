@@ -1,0 +1,70 @@
+<div class="container is-max-desktop is-align-self-center">
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="section box">
+        <form action="profile/settings/{{user.id}}" method="post">
+
+          <div class="field">
+            <div class="media">
+              <div class="media-left is-flex">
+                <figure class="image is-128x128">
+                  <img
+                    class="is-rounded"
+                    src="{{browsedUser.image}}"
+                    alt="profile image"
+                  />
+                </figure>
+              </div>
+              <div class="media-content is-align-self-center">
+                <div class="file is-justify-content-space-around">
+                  <input type="file" class="file-input" name="image" />
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Choose image
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Username: {{browsedUser.userName}}</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="New username">
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="label">
+              <p>Bio:</p>
+              <p>{{browsedUser.bio}}</p>
+            </label>
+            <div class="control">
+              <textarea class="textarea" placeholder="New bio"></textarea>
+            </div>
+          </div>
+          <div class="box message is-danger has-text-centered">
+            <a class="button is-danger" href="/profile/passwordChange/{{browsedUser.id}}">
+              <span class="icon-text">
+                <span class="icon">
+                  <i class="fa-solid fa-key"></i>
+                </span>
+                <span>Change password (not working yet)</span>
+              </span>
+            </a>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <button class="button is-link is-fullwidth">Submit changes</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

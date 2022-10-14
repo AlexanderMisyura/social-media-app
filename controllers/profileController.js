@@ -45,4 +45,17 @@ module.exports = {
       console.error(err);
     }
   },
+
+  getProfileSettings: async(req, res) => {
+    try {
+      const user = {
+        name: req.user.userName,
+        id: req.user.id,
+      };
+      const browsedUser = await User.findById(req.user.id).lean();
+      res.render("profileSettings", {title: `${browsedUser.userName}'s profile settings`, user, browsedUser});
+    } catch (err) {
+      console.error(err);
+    }
+  }
 };
