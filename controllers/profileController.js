@@ -44,6 +44,7 @@ module.exports = {
       });
     } catch (err) {
       console.error(err);
+      res.render("error/500");
     }
   },
 
@@ -58,6 +59,7 @@ module.exports = {
       res.render("profile/profileSettings", {title: `${browsedUser.userName}'s profile settings`, user, browsedUser});
     } catch (err) {
       console.error(err);
+      res.render("error/500");
     }
   }
 };

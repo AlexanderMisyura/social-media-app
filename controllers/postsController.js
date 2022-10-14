@@ -21,6 +21,7 @@ module.exports = {
       });
     } catch (err) {
       console.error(err);
+      res.render("error/500");
     }
   },
 
@@ -62,6 +63,7 @@ module.exports = {
       res.redirect(`/post/${postId}`);
     } catch (err) {
       console.error(err);
+      res.render("error/500");
     }
   },
 
@@ -79,6 +81,7 @@ module.exports = {
       res.render("posts/post", { title: `Socister | ${post.title}`, user, post });
     } catch (err) {
       console.error(err);
+      res.render("error/500");
     }
   },
 };

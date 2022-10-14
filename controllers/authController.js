@@ -4,11 +4,11 @@ const User = require("../models/User");
 
 module.exports = {
   getLogin: (req, res) => {
-    res.render("login", { layout: "login" });
+    res.render("login", { layout: "narrow", title: "Socister | Login"});
   },
 
   getSignup: (req, res) => {
-    res.render("signup", { layout: "login" });
+    res.render("signup", { layout: "narrow", title: "Socister | Signup" });
   },
 
   postLogin: (req, res, next) => {
