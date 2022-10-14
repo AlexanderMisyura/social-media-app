@@ -8,6 +8,7 @@ module.exports = {
       const user = {
         name: req.user.userName,
         id: req.user.id,
+        image: req.user.image
       };
       const posts = await Post.find()
         .sort({ createdAt: "desc" })
@@ -27,6 +28,7 @@ module.exports = {
     const user = {
       name: req.user.userName,
       id: req.user.id,
+      image: req.user.image
     };
     res.render("posts/add", { title: "Socister | Create an awsome new post", user });
   },
@@ -68,6 +70,7 @@ module.exports = {
       const user = {
         name: req.user.userName,
         id: req.user.id,
+        image: req.user.image
       };
       const post = await Post.findById(req.params.id).populate("user").lean();
       if (!post) {
