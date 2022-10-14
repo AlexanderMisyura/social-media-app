@@ -21,7 +21,10 @@ module.exports = {
       });
     } catch (err) {
       console.error(err);
-      res.render("error/500");
+      res.render("error/500", {
+        layout: "narrow",
+        title: "500 SOMETHING WENT WRONG",
+      });
     }
   },
 
@@ -66,7 +69,10 @@ module.exports = {
       res.redirect(`/post/${postId}`);
     } catch (err) {
       console.error(err);
-      res.render("error/500");
+      res.render("error/500", {
+        layout: "narrow",
+        title: "500 SOMETHING WENT WRONG",
+      });
     }
   },
 
@@ -88,7 +94,10 @@ module.exports = {
       });
     } catch (err) {
       console.error(err);
-      res.render("error/500");
+      res.render("error/500", {
+        layout: "narrow",
+        title: "500 SOMETHING WENT WRONG",
+      });
     }
   },
 };
