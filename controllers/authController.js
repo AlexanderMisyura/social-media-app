@@ -4,16 +4,10 @@ const User = require("../models/User");
 
 module.exports = {
   getLogin: (req, res) => {
-    if (req.user) {
-      return res.redirect("/");
-    }
     res.render("login", { layout: "login" });
   },
 
   getSignup: (req, res) => {
-    if (req.user) {
-      return res.redirect("/");
-    }
     res.render("signup", { layout: "login" });
   },
 
