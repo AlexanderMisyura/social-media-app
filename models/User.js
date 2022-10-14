@@ -1,12 +1,22 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+require("dotenv").config({ path: "../config/.env" });
+
+const defaultValues = {
+  image: val => val === undefined ? process.env.DEFAULT_AVATAR_LINK : val,
+  bio: val => val === undefined ? "No bio yet" : val,
+};
 
 const UserSchema = new mongoose.Schema({
   userName: { type: String, unique: true, required: true },
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
-  image: { type: String },
-  bio: { type: String },
+  image: {
+    type: String,
+    default: process.env.DEFAULT_AVATAR_LINK,
+    set: defaultValues.image,
+  },
+  bio: { type: String, default: "No bio yet", set: defaultValues.bio },
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   createdAt: { type: Date, default: Date.now },
   rating: { type: Number, default: 0 },
