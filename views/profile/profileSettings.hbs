@@ -2,7 +2,7 @@
   <div class="columns is-centered">
     <div class="column is-half">
       <div class="section box">
-        <form action="profile/settings/{{user.id}}" method="post">
+        <form action="/profile" method="post" enctype="multipart/form-data">
 
           <div class="field">
             <div class="media">
@@ -17,15 +17,17 @@
               </div>
               <div class="media-content is-align-self-center">
                 <div class="file is-justify-content-space-around">
-                  <input type="file" class="file-input" name="image" />
-                  <span class="file-cta">
-                    <span class="file-icon">
-                      <i class="fas fa-upload"></i>
+                  <label class="file-label">
+                    <input class="file-input" type="file" name="image">
+                    <span class="file-cta">
+                      <span class="file-icon">
+                        <i class="fas fa-upload"></i>
+                      </span>
+                      <span class="file-label">
+                        Choose image
+                      </span>
                     </span>
-                    <span class="file-label">
-                      Choose image
-                    </span>
-                  </span>
+                  </label>
                 </div>
               </div>
             </div>
@@ -33,8 +35,11 @@
 
           <div class="field">
             <label class="label">Username: {{browsedUser.userName}}</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="New username" />
+            <div class="control has-icons-left">
+              <input class="input" type="text" placeholder="New username" name="userName"/>
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
             </div>
           </div>
 
@@ -44,7 +49,7 @@
               <p>{{browsedUser.bio}}</p>
             </label>
             <div class="control">
-              <textarea class="textarea" placeholder="New bio"></textarea>
+              <textarea class="textarea" placeholder="New bio" name="bio"></textarea>
             </div>
           </div>
           <div class="box message is-danger has-text-centered">
