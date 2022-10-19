@@ -20,7 +20,7 @@ module.exports = {
                             <article class="media is-align-items-stretch">
                               <figure class="media-left">
                                 <p class="image is-128x128 is-96x96-mobile">
-                                  <img src="${post.image}">
+                                  <a href="/post/${post._id}"><img src="${post.image}"></a>
                                 </p>
                               </figure>
                               <div class="media-content is-cropped is-flex is-flex-direction-column is-justify-content-space-between">

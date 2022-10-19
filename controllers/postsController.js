@@ -51,7 +51,7 @@ module.exports = {
 
       const postId = post._id.toString();
       const uploadResult = await cloudinary.uploader.upload(req.file.path, {
-        folder: `socister/posts/${req.user.id}/${postId}`,
+        folder: `socister/${req.user.id}/posts/${postId}`,
       });
 
       post.image = cloudinary.url(uploadResult.public_id, {
@@ -62,6 +62,7 @@ module.exports = {
           quality: "auto",
           background: "auto",
         },
+        secure: true,
       });
       post.cloudinaryId = uploadResult.public_id;
       await post.save();

@@ -72,4 +72,28 @@ module.exports = {
       });
     }
   },
+
+  saveProfileChanges: async (req, res) => {
+    try {
+      console.log(req.body, req.file);
+      // if (req.user.id !== req.params.id) {
+      //   return res.redirect("/");
+      // }
+      // if (!req.file && req.body) {}
+      // const user = await User.findById(req.user.id);
+      // if (!user) {
+      //   return res.render("error/404", {
+      //     layout: "narrow",
+      //     title: "404 NOT FOUND",
+      //   });
+      // }
+      // let updateResult = user.updateOne({ _id: req.user.id });
+    } catch (err) {
+      console.error(err);
+      res.render("error/500", {
+        layout: "narrow",
+        title: "500 SOMETHING WENT WRONG",
+      });
+    }
+  },
 };
