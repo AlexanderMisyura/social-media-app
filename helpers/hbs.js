@@ -36,8 +36,8 @@ module.exports = {
                                 <span>${post.views}</span>
                               </div>
                               <div>
-                                <span class="icon has-text-dark">
-                                  <i class="fa-solid fa-comment fa-lg"></i>
+                                <span class="icon has-text-grey">
+                                  <i class="fa-regular fa-comment fa-lg"></i>
                                 </span>
                               </div>
                               <div>
