@@ -22,12 +22,12 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Handlebars
-const { profileEditIcon, populateProfilePosts } = require("./helpers/hbs");
+const { profileEditIcon, postDeleteButton } = require("./helpers/hbs");
 
 app.engine(
   ".hbs",
   hbs({
-    helpers: { profileEditIcon, populateProfilePosts },
+    helpers: { profileEditIcon, postDeleteButton },
     defaultLayout: "main",
     extname: ".hbs",
   })
