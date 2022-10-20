@@ -16,7 +16,7 @@ module.exports = {
       };
       let browsedUser = await User.findOne({ _id: req.params.id }).lean();
       if (req.user.id === req.params.id) {
-        posts = await Post.find({ user: req.user.id, deleted: false })
+        posts = await Post.find({ user: req.params.id, deleted: false })
           .populate("user")
           .sort({ createdAt: "desc" })
           .lean();
@@ -26,7 +26,7 @@ module.exports = {
         };
       } else {
         posts = await Post.find({
-          user: req.user.id,
+          user: req.params.id,
           status: "public",
           deleted: false,
         })
