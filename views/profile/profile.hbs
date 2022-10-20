@@ -35,9 +35,68 @@
   </div>
 </div>
 <div class="container is-max-desktop">
-  {{#if posts}}
-    {{{populateProfilePosts posts}}}
-  {{else}}
-    <p>No posts yet</p>
-  {{/if}}
+
+  <div class="columns is-multiline is-desktop">
+    {{#if posts}}
+      {{#each posts as |post|}}
+        <div class="column is-half-desktop">
+          <div class="box is-relative">
+            {{{postDeleteButton ../user.id ../browsedUser._id}}}
+            <article class="media is-align-items-stretch">
+              <figure class="media-left">
+                <p class="image is-128x128">
+                  <a href="/post/{{_id}}"><img src="{{image}}" /></a>
+                </p>
+              </figure>
+              <div
+                class="media-content is-flex is-flex-direction-column is-justify-content-space-between is-cropped"
+              >
+                <div class="content">
+                  <h3
+                    class="title is-5 is-cropped"
+                  >{{title}}</h3>
+                  <p class="subtitle is-6 is-cropped">{{caption}}</p>
+                </div>
+                <footer class="is-flex is-justify-content-space-between">
+                  <div class="icon-text">
+                    <span class="icon has-text-grey">
+                      <i class="fa-regular fa-eye fa-lg"></i>
+                    </span>
+                    <span>{{views}}</span>
+                  </div>
+                  <div>
+                    <span class="icon has-text-grey">
+                      <i class="fa-regular fa-comment fa-lg"></i>
+                    </span>
+                  </div>
+                  <div>
+                    <a class="pr-1" href="">
+                      <span class="icon has-text-dark">
+                        <i class="fa-solid fa-share-nodes fa-lg"></i>
+                      </span>
+                    </a>
+                    <a class="pr-1" href="">
+                      <span class="icon has-text-dark">
+                        <i class="fa-regular fa-bookmark fa-lg"></i>
+                      </span>
+                    </a>
+                    <a class="icon-text" href="">
+                      <span class="icon has-text-dark">
+                        <i class="fa-regular fa-star fa-lg"></i>
+                      </span>
+                      <span>{{likes}}</span>
+                    </a>
+                  </div>
+                </footer>
+              </div>
+            </article>
+          </div>
+        </div>
+      {{/each}}
+    {{else}}
+      <div class="column">
+        <p class="box">No posts yet</p>
+      </div>
+    {{/if}}
+  </div>
 </div>
