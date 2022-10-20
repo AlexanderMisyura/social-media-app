@@ -20,12 +20,40 @@
         <figure class="image is-square mb-5">
           <img src="{{post.image}}" alt="{{post.title}} image" />
         </figure>
-        <div class="is-size-5">{{post.caption}}</div>
-        <div class="has-text-right">
-          <span class="icon has-text-warning is-clickable">
-            <i class="fa-regular fa-star fa-2xl"></i>
-          </span>
+        <div class="is-size-5 content">
+          <p>{{post.caption}}</p>
         </div>
+        <footer class="is-flex is-justify-content-space-between">
+          <div class="icon-text">
+            <span class="icon has-text-grey">
+              <i class="fa-regular fa-eye fa-lg"></i>
+            </span>
+            <span>{{post.views}}</span>
+          </div>
+          <div class="icon">
+            <span class="icon has-text-grey">
+              <i class="fa-regular fa-comment fa-lg"></i>
+            </span>
+          </div>
+          <div>
+            <a class="pr-1" href="">
+              <span class="icon has-text-dark">
+                <i class="fa-solid fa-share-nodes fa-lg"></i>
+              </span>
+            </a>
+            <a class="pr-1" href="">
+              <span class="icon has-text-dark">
+                <i class="fa-regular fa-bookmark fa-lg"></i>
+              </span>
+            </a>
+            <a href="" class="icon-text">
+              <span class="icon has-text-dark">
+                <i class="fa-regular fa-star fa-lg"></i>
+              </span>
+              <span>{{post.likes}}</span>
+            </a>
+          </div>
+        </footer>
       </article>
     </div>
     <div class="column is-half-tablet is-half-desktop is-one-third-fullhd">

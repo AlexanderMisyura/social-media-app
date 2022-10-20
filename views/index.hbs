@@ -44,18 +44,19 @@
           </div>
           <div class="card-footer is-justify-content-space-between">
             <div class="card-item">
-              <span class="card-footer-item">
+              <span class="card-footer-item icon-text">
                 <span class="icon has-text-grey">
                   <i class="fa-regular fa-eye fa-lg"></i>
                 </span>
+                <span>{{post.views}}</span>
               </span>
             </div>
             <div class="card-item">
-              <a class="card-footer-item" href="">
-                <span class="icon has-text-dark">
-                  <i class="fa-solid fa-comment fa-lg"></i>
+              <span class="card-footer-item" href="">
+                <span class="icon has-text-grey">
+                  <i class="fa-regular fa-comment fa-lg"></i>
                 </span>
-              </a>
+              </span>
             </div>
             <div class="card-item">
               <span class="card-footer-item">
@@ -69,10 +70,11 @@
                     <i class="fa-regular fa-bookmark fa-lg"></i>
                   </span>
                 </a>
-                <a href="">
+                <a class="icon-text" href="">
                   <span class="icon has-text-dark">
                     <i class="fa-regular fa-star fa-lg"></i>
                   </span>
+                  <span>{{post.likes}}</span>
                 </a>
               </span>
 

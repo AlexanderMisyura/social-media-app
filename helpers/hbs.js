@@ -29,15 +29,16 @@ module.exports = {
                                 <p class="subtitle is-6 is-cropped">${post.caption}</p>
                               </div>
                               <footer class="is-flex is-justify-content-space-between">
-                              <div>
-                              <span class="icon has-text-grey">
-                                <i class="fa-regular fa-eye fa-lg"></i>
-                              </span>
+                              <div class="icon-text">
+                                <span class="icon has-text-grey">
+                                  <i class="fa-regular fa-eye fa-lg"></i>
+                                </span>
+                                <span>${post.views}</span>
                               </div>
                               <div>
-                              <span class="icon has-text-dark">
-                                <i class="fa-solid fa-comment fa-lg"></i>
-                              </span>
+                                <span class="icon has-text-dark">
+                                  <i class="fa-solid fa-comment fa-lg"></i>
+                                </span>
                               </div>
                               <div>
                                 <a class="pr-1" href="">
@@ -50,10 +51,11 @@ module.exports = {
                                     <i class="fa-regular fa-bookmark fa-lg"></i>
                                   </span>
                                 </a>
-                                <a href="">
+                                <a class="icon-text" href="">
                                   <span class="icon has-text-dark">
                                     <i class="fa-regular fa-star fa-lg"></i>
                                   </span>
+                                  <span>${post.likes}</span>
                                 </a>
                               </div>
                               </footer>
