@@ -18,12 +18,39 @@
       </a>
     </div>
 
-    <div id="navbar" class="navbar-menu">
+    <div id="navbar" class="navbar-menu {{!is-active}}">
       <div class="navbar-end">
+
+        <div class="navbar-item">
+          <form action="/search" method="GET">
+            <div class="field has-addons">
+              <div class="control">
+                <input
+                  class="input is-small"
+                  type="search"
+                  placeholder="Search"
+                  name="search"
+                />
+              </div>
+              <div class="control">
+                <button type="submit" class="button is-small">
+                  <span class="icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
         <a class="navbar-item" href="/post/add">
           <span class="pr-2">New post</span>
-          <figure class="image">
-            <img src="/img/socister-single.png" alt="add new post" />
+          <figure class="image is-32x32">
+            <img
+              class="is-rounded"
+              src="/img/socister-single.png"
+              alt="add new post"
+            />
           </figure>
         </a>
         <div class="navbar-item has-dropdown is-hoverable">
@@ -31,7 +58,7 @@
             <span class="pr-2">
               {{user.name}}
             </span>
-            <figure class="image">
+            <figure class="image is-32x32">
               <img
                 src="{{user.image}}"
                 alt="profile image"
@@ -40,7 +67,7 @@
             </figure>
           </div>
 
-          <div class="navbar-dropdown">
+          <div class="navbar-dropdown is-right">
             <a class="navbar-item" href="/profile/{{user.id}}">
               <span class="icon"><i class="fa-regular fa-user"></i></span>
               <span>Profile</span>
