@@ -7,7 +7,7 @@ const upload = require("../middleware/multer");
 // @route GET /profile/:userId
 router.get("/:id", ensureAuth, profileController.getProfile);
 router.get("/settings/:id", ensureAuth, profileController.getProfileSettings);
-router.post("/", ensureAuth, upload.single("image"), profileController.saveProfileChanges);
+router.put("/:id", ensureAuth, upload.single("image"), profileController.updateProfile);
 // router.get("/passwordChange", ensureAuth, profileController.);
 
 module.exports = router;

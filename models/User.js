@@ -16,6 +16,7 @@ const UserSchema = new mongoose.Schema({
     default: process.env.DEFAULT_AVATAR_LINK,
     set: defaultValues.image,
   },
+  cloudinaryId: { type: String },
   bio: { type: String, default: "No bio yet", set: defaultValues.bio },
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   createdAt: { type: Date, default: Date.now },

@@ -8,6 +8,7 @@ const flash = require("express-flash");
 const connectDB = require("./config/database");
 const hbs = require("express-handlebars").engine;
 const logger = require("morgan");
+const methodOverride = require("method-override");
 
 require("dotenv").config({ path: "./config/.env" });
 
@@ -39,6 +40,9 @@ app.use(express.static("public"));
 // Body parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Method override
+app.use(methodOverride("_method"));
 
 // Sessions store in MongoDB
 app.use(
