@@ -1,8 +1,8 @@
 module.exports = {
-  profileEditIcon: function (loggedUserId, browsedUserId) {
+  profileEditButton: function (loggedUserId, browsedUserId) {
     if (loggedUserId === browsedUserId.toString()) {
-      return `<div class="media-right">
-      <a href="/profile/settings/${loggedUserId}">
+      return `<div class="is-top-right-position">
+      <a class="button is-white is-small is-rounded" href="/profile/settings/${loggedUserId}">
         <span class="icon has-text-dark">
           <i class="fa-solid fa-gears fa-xl"></i>
         </span>
@@ -14,7 +14,7 @@ module.exports = {
   postDeleteButton: function (loggedUserId, browsedUserId) {
     if (loggedUserId === browsedUserId.toString()) {
       return `<div class="is-top-left-position">
-      <button class="button is-white">
+      <button class="button is-danger">
         <span class="icon">
           <i class="fa-regular fa-trash-can"></i>
         </span>

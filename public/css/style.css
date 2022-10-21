@@ -29,9 +29,14 @@ html {
   background-image: url("../img/Random256Grunge05_purple.png");
 }
 
+.box {
+  padding: .5rem;
+}
+
 .is-max-width-100 {
   max-width: 100%;
 }
+
 .is-cropped {
   white-space: nowrap;
   overflow: hidden;
@@ -54,4 +59,47 @@ html {
 
 .is-max-width-less-1em {
   max-width: calc(100% - 1em);
+}
+
+@media screen and (max-width: 450px) {
+  .section {
+    padding: 0em 0 3em;
+  }
+  .columns {
+    margin: 0;
+  }
+  .column {
+    padding: .25rem;
+  }
+  .is-top-left-position,
+  .is-top-right-position {
+    top: 0;
+    border: 0;
+  }
+  .is-top-left-position {
+    left: 0;
+  }
+  .is-top-right-position {
+    right: 0;
+  }
+  .media:not(article .media) {
+    flex-direction: column;
+    align-items: center;
+  }
+  .media-left:not(article .media-left) {
+    margin: 0;
+  }
+  .media-content:not(article .media-content) {
+    text-align: center;
+  }
+  .image {
+    margin: 0 auto;
+  }
+  .image.is-128x128 {
+    width: 100%;
+    height: 100%;
+  }
+  .is-max-width-less-1em {
+    max-width: 100%;
+  }
 }
