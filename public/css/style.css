@@ -37,3 +37,17 @@ html {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.is-top-left-position {
+  position: absolute;
+  left: .5em;
+  top: .5rem;
+  z-index: 100;
+}
+
+.is-top-right-position {
+  position: absolute;
+  right: .5em;
+  top: .5rem;
+  z-index: 100;
+}
