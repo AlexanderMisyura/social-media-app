@@ -10,7 +10,7 @@
                 <figure class="image is-128x128">
                   <img
                     class="is-rounded"
-                    src="{{browsedUser.image}}"
+                    src="{{user.image}}"
                     alt="profile image"
                   />
                 </figure>
@@ -34,7 +34,7 @@
           </div>
 
           <div class="field">
-            <label class="label">Username: {{browsedUser.userName}}</label>
+            <label class="label">Username: {{user.userName}}</label>
             <div class="control has-icons-left">
               <input class="input" type="text" placeholder="New username" name="userName"/>
               <span class="icon is-small is-left">
@@ -46,7 +46,7 @@
           <div class="field">
             <label class="label">
               <p>Bio:</p>
-              <p>{{browsedUser.bio}}</p>
+              <p>{{user.bio}}</p>
             </label>
             <div class="control">
               <textarea class="textarea" placeholder="New bio" name="bio"></textarea>
@@ -55,7 +55,7 @@
           <div class="box message is-danger has-text-centered">
             <a
               class="button is-danger"
-              href="/profile/passwordChange/{{browsedUser.id}}"
+              href="/profile/passwordChange/{{user.id}}"
             >
               <span class="icon-text">
                 <span class="icon">

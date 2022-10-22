@@ -55,16 +55,19 @@ module.exports = {
 
   getProfileSettings: async (req, res) => {
     try {
+      if (req.user.id !== req.params.id) {
+        // add "you can't access this page"
+        return res.redirect("/");
+      }
       const user = {
         name: req.user.userName,
         id: req.user.id,
         image: req.user.image,
+        bio: req.user.bio,
       };
-      const browsedUser = await User.findById(req.user.id).lean();
       res.render("profile/profileSettings", {
-        title: `${browsedUser.userName}'s profile settings`,
+        title: `${req.user.userName}'s profile settings`,
         user,
-        browsedUser,
       });
     } catch (err) {
       console.error(err);
