@@ -34,7 +34,7 @@ module.exports = {
       id: req.user.id,
       image: req.user.image,
     };
-    res.render("posts/add", {
+    res.render("posts/postEditor", {
       title: "Socister | Create an awsome new post",
       user,
     });
@@ -100,5 +100,31 @@ module.exports = {
         title: "500 SOMETHING WENT WRONG",
       });
     }
+  },
+
+  getEditPost: async (req, res) => {
+    const post = await Post.findById(req.params.id).populate("user").lean();
+    if (!post) {
+      return res.render("error/404", {
+        layout: "narrow",
+        title: "404 NOT FOUND",
+      });
+    }
+    if (req.user.id !== post.user._id.toString()) {
+      // Add "you can't access this page"
+      return res.redirect("/");
+    }
+    const user = {
+      name: req.user.userName,
+      id: req.user.id,
+      image: req.user.image,
+    };
+    console.log(post.caption)
+    res.render("posts/postEditor", {
+      title: `Socister | Edit "${post.title}"`,
+      user,
+      post,
+      isEdit: true,
+    });
   },
 };

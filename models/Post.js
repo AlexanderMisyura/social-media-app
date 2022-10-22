@@ -15,6 +15,7 @@ const PostSchema = new mongoose.Schema({
   caption: {
     type: String,
     required: true,
+    trim: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,

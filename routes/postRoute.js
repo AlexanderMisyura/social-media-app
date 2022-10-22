@@ -11,5 +11,6 @@ router.post(
   postsController.savePost
 );
 router.get("/:id", ensureAuth, postsController.getPost);
+router.get("/edit/:id", ensureAuth, postsController.getEditPost);
 
 module.exports = router;
