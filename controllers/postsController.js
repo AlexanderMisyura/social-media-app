@@ -119,7 +119,6 @@ module.exports = {
       id: req.user.id,
       image: req.user.image,
     };
-    console.log(post.caption)
     res.render("posts/postEditor", {
       title: `Socister | Edit "${post.title}"`,
       user,

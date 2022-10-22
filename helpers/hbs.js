@@ -24,9 +24,7 @@ module.exports = {
   },
 
   postEditButton: function (loggedUserId, browsedUserId, postId) {
-    console.log("🚀 ~ file: hbs.js ~ line 28 ~ browsedUserId", browsedUserId)
     if (loggedUserId === browsedUserId.toString()) {
-      console.log('icon edit')
       return `<div class="is-top-right-position">
       <a class="button is-white" href="/post/edit/${postId.toString()}">
         <span class="icon">

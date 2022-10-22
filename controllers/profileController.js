@@ -87,10 +87,8 @@ module.exports = {
       if ("_method" in req.body) {
         delete req.body["_method"];
       }
-      console.log(req.body)
       // Check if form has no data to change user profile data to
       if (!req.file && !Object.values(req.body).every((formData) => formData)) {
-        console.log("no changes");
         return res.redirect(`/profile/settings/${req.user.id}`);
       }
 

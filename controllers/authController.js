@@ -103,7 +103,6 @@ module.exports = {
       if (err) {
         return next(err);
       }
-      console.log("User has logged out.");
       res.redirect("/");
     });
   },
