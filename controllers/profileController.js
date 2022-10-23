@@ -83,13 +83,10 @@ module.exports = {
       if (req.user.id !== req.params.id) {
         return res.redirect("/");
       }
-      // Delete _method property added to req.body by method-override
-      if ("_method" in req.body) {
-        delete req.body["_method"];
-      }
+
       // Check if form has no data to change user profile data to
-      if (!req.file && !Object.values(req.body).every((formData) => formData)) {
-        return res.redirect(`/profile/settings/${req.user.id}`);
+      if (!req.file && Object.values(req.body).every((formData) => !formData)) {
+        return res.redirect(`/profile/${req.user.id}`);
       }
 
       const user = await User.findById(req.user.id);
@@ -104,7 +101,7 @@ module.exports = {
       // to single updateParams object
       let updateParams = {};
       for (const key in req.body) {
-        if (key !== "_method" && req.body[key]) {
+        if (req.body[key]) {
           updateParams[key] = req.body[key];
         }
       }
