@@ -126,4 +126,51 @@ module.exports = {
       isEdit: true,
     });
   },
+
+  updatePost: async (req, res) => {
+    try {
+      // Check if user has sent empty form
+      if (Object.values(req.body).every((formData) => !formData)) {
+        return res.redirect(`/post/${req.params.id}`);
+      }
+      const post = await Post.findById(req.params.id).populate("user").lean();
+      if (!post) {
+        // The user has already deleted the post he edit
+        // or the query parameter (post id) was incorrect
+        return res.render("error/404", {
+          layout: "narrow",
+          title: "404 NOT FOUND",
+        });
+      }
+      if (req.user.id !== post.user._id.toString()) {
+        // User somehow send a query to edit someone else's post
+        return res.redirect("/");
+      }
+
+      // Grab non-empty data from req.body
+      // to updateParams object
+      let updateParams = {};
+      for (const key in req.body) {
+        if (req.body[key]) {
+          updateParams[key] = req.body[key];
+        }
+      }
+
+      // Update post data with updateParams object
+      const update = await Post.updateOne({ _id: req.params.id }, updateParams);
+      if (!update.acknowledged) {
+        return res.render("error/404", {
+          layout: "narrow",
+          title: "404 NOT FOUND",
+        });
+      }
+      res.redirect(`/post/${req.params.id}`);
+    } catch (err) {
+      console.error(err);
+      res.render("error/500", {
+        layout: "narrow",
+        title: "500 SOMETHING WENT WRONG",
+      });
+    }
+  },
 };

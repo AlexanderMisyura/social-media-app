@@ -3,9 +3,13 @@
     <div class="column is-two-thirds-tablet is-half-desktop">
       <form
         class="box block"
-        action="/post/add"
         method="POST"
-        enctype="multipart/form-data"
+        {{#if isEdit}}
+          action="/post/{{post._id}}?_method=PUT"
+        {{else}}
+          action="/post/add"
+          enctype="multipart/form-data"
+        {{/if}}
       >
         <div class="field">
           {{#if isEdit}}
