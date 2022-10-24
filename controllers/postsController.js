@@ -10,7 +10,9 @@ module.exports = {
         id: req.user.id,
         image: req.user.image,
       };
-      const posts = await Post.find()
+      // should improve the below query with posts with status: "friends"
+      // if logged user is in friend list of user which this post is
+      const posts = await Post.find({ deleted: false, status: "public" })
         .sort({ createdAt: "desc" })
         .populate("user")
         .lean();
@@ -84,9 +86,31 @@ module.exports = {
         id: req.user.id,
         image: req.user.image,
       };
-      const post = await Post.findById(req.params.id).populate("user").lean();
-      if (!post) {
-        return res.send("error");
+      const post = await Post.findOne({ _id: req.params.id, deleted: false })
+        .populate("user")
+        .lean();
+      // Instead of the cumbersome conditional mess below should specify the above query to DB
+      // which take care if logged user is not browsed user and post status: "private"
+      // namely (req.user.id !== post.user._id.toString() && post.status === "private")
+      // also if logged user is a friend of browsed user and post status: "friends"
+      // namely (post.status === "friends" && !post.user.friends.includes(mongoose.Types.ObjectId(req.user.id)))
+      if (
+        // no post in DB
+        !post ||
+          // user looks through someone else's post and..
+          (req.user.id !== post.user._id.toString() &&
+            // this post is private or..
+            (post.status === "private" ||
+            // this post if for friends and user is not a friend
+            (post.status === "friends" &&
+              !post.user.friends.includes(mongoose.Types.ObjectId(req.user.id)))))
+        ) {
+        // then user is not allowed to view this post
+        // should make additional page for this case
+        return res.render("error/404", {
+          layout: "narrow",
+          title: "404 NOT FOUND",
+        });
       }
       res.render("posts/post", {
         title: `Socister | ${post.title}`,

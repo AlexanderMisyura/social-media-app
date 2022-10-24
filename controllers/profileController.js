@@ -25,6 +25,8 @@ module.exports = {
           count: await CommentSchema.count({ user: req.user.id }),
         };
       } else {
+        //Should specify a query which allows to see posts with status:
+        // "friends" if logged user is in friends array of browsed user
         posts = await Post.find({
           user: req.params.id,
           status: "public",
