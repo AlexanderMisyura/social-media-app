@@ -13,5 +13,6 @@ router.post(
 router.get("/:id", ensureAuth, postsController.getPost);
 router.get("/edit/:id", ensureAuth, postsController.getEditPost);
 router.put("/:id", ensureAuth, postsController.updatePost);
+router.put("/delete/:id", ensureAuth, postsController.deletePost);
 
 module.exports = router;

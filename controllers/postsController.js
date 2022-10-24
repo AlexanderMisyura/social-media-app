@@ -173,4 +173,42 @@ module.exports = {
       });
     }
   },
+
+  deletePost: async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id).populate("user").lean();
+      if (!post) {
+        // The user has already deleted the post he edit
+        // or the query parameter (post id) was incorrect
+        return res.render("error/404", {
+          layout: "narrow",
+          title: "404 NOT FOUND",
+        });
+      }
+
+      if (req.user.id !== post.user._id.toString()) {
+        // User somehow send a query to delete someone else's post
+        return res.redirect("/");
+      }
+
+      // Mark post as deleted
+      const update = await Post.updateOne(
+        { _id: req.params.id },
+        { deleted: true }
+      );
+      if (!update.acknowledged) {
+        return res.render("error/404", {
+          layout: "narrow",
+          title: "404 NOT FOUND",
+        });
+      }
+      res.redirect(`/profile/${req.user.id}`);
+    } catch (err) {
+      console.error(err);
+      res.render("error/500", {
+        layout: "narrow",
+        title: "500 SOMETHING WENT WRONG",
+      });
+    }
+  },
 };

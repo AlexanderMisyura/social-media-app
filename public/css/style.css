@@ -47,14 +47,14 @@ html {
   position: absolute;
   left: 0.5em;
   top: 0.5rem;
-  z-index: 100;
+  z-index: 1;
 }
 
 .is-top-right-position {
   position: absolute;
   right: 0.5em;
   top: 0.5rem;
-  z-index: 100;
+  z-index: 1;
 }
 
 .is-max-width-less-1em {
