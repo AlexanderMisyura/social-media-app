@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 module.exports = {
   getIndex: async (req, res) => {
     try {
-      const user = {
+      const loggedUser = {
         name: req.user.userName,
         id: req.user.id,
         image: req.user.image,
@@ -18,7 +18,7 @@ module.exports = {
         .lean();
       res.render("index", {
         title: "Socister | Feed",
-        user,
+        loggedUser,
         posts,
       });
     } catch (err) {
@@ -31,14 +31,14 @@ module.exports = {
   },
 
   getAddPost: (req, res) => {
-    const user = {
+    const loggedUser = {
       name: req.user.userName,
       id: req.user.id,
       image: req.user.image,
     };
     res.render("posts/postEditor", {
       title: "Socister | Create an awsome new post",
-      user,
+      loggedUser,
     });
   },
 
@@ -77,7 +77,7 @@ module.exports = {
 
   getPost: async (req, res) => {
     try {
-      const user = {
+      const loggedUser = {
         name: req.user.userName,
         id: req.user.id,
         image: req.user.image,
@@ -110,7 +110,7 @@ module.exports = {
       }
       res.render("posts/post", {
         title: `Socister | ${post.title}`,
-        user,
+        loggedUser,
         post,
       });
     } catch (err) {
@@ -134,14 +134,14 @@ module.exports = {
       // Add "you can't access this page"
       return res.redirect("/");
     }
-    const user = {
+    const loggedUser = {
       name: req.user.userName,
       id: req.user.id,
       image: req.user.image,
     };
     res.render("posts/postEditor", {
       title: `Socister | Edit "${post.title}"`,
-      user,
+      loggedUser,
       post,
       isEdit: true,
     });

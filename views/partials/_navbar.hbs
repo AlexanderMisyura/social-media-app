@@ -56,11 +56,11 @@
         <div class="navbar-item has-dropdown is-hoverable">
           <div class="navbar-link">
             <span class="pr-2">
-              {{user.name}}
+              {{loggedUser.name}}
             </span>
             <figure class="image is-32x32">
               <img
-                src="{{user.image}}"
+                src="{{loggedUser.image}}"
                 alt="profile image"
                 class="is-rounded"
               />
@@ -68,7 +68,7 @@
           </div>
 
           <div class="navbar-dropdown is-right">
-            <a class="navbar-item" href="/profile/{{user.id}}">
+            <a class="navbar-item" href="/profile/{{loggedUser.id}}">
               <span class="icon"><i class="fa-regular fa-user"></i></span>
               <span>Profile</span>
             </a>

@@ -3,7 +3,7 @@
     <div class="column is-half">
       <div class="section box">
         <form
-          action="/profile/{{user.id}}?_method=PUT"
+          action="/profile/{{loggedUser.id}}?_method=PUT"
           method="post"
           enctype="multipart/form-data"
         >
@@ -14,7 +14,7 @@
                 <figure class="image is-128x128">
                   <img
                     class="is-rounded"
-                    src="{{user.image}}"
+                    src="{{loggedUser.image}}"
                     alt="profile image"
                   />
                 </figure>
@@ -38,7 +38,7 @@
           </div>
 
           <div class="field">
-            <label class="label">Username: {{user.name}}</label>
+            <label class="label">Username: {{loggedUser.name}}</label>
             <div class="control has-icons-left">
               <input
                 class="input"
@@ -55,7 +55,7 @@
           <div class="field">
             <label class="label">
               <p>Bio:</p>
-              <p>{{user.bio}}</p>
+              <p>{{loggedUser.bio}}</p>
             </label>
             <div class="control">
               <textarea
@@ -68,7 +68,7 @@
           <div class="box message is-danger has-text-centered">
             <a
               class="button is-danger"
-              href="/profile/passwordChange/{{user.id}}"
+              href="/profile/passwordChange/{{loggedUser.id}}"
             >
               <span class="icon-text">
                 <span class="icon">

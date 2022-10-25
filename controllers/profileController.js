@@ -9,7 +9,7 @@ module.exports = {
     try {
       let posts;
       let comments;
-      const user = {
+      const loggedUser = {
         name: req.user.userName,
         id: req.user.id,
         image: req.user.image,
@@ -42,7 +42,7 @@ module.exports = {
       res.render("profile/profile", {
         title: `${browsedUser.userName}'s profile`,
         posts,
-        user,
+        loggedUser,
         browsedUser,
         comments,
       });
@@ -61,7 +61,7 @@ module.exports = {
         // add "you can't access this page"
         return res.redirect("/");
       }
-      const user = {
+      const loggedUser = {
         name: req.user.userName,
         id: req.user.id,
         image: req.user.image,
@@ -69,7 +69,7 @@ module.exports = {
       };
       res.render("profile/profileSettings", {
         title: `${req.user.userName}'s profile settings`,
-        user,
+        loggedUser,
       });
     } catch (err) {
       console.error(err);
