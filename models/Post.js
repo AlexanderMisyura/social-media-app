@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const PostSchema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+    required: [true, "Title cannot be empty"],
     trim: true,
   },
   image: {
@@ -14,7 +14,7 @@ const PostSchema = new mongoose.Schema({
   },
   caption: {
     type: String,
-    required: true,
+    required: [true, "Caption cannot be empty"],
     trim: true,
   },
   user: {

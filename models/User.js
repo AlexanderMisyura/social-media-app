@@ -8,7 +8,7 @@ const defaultValues = {
 };
 
 const UserSchema = new mongoose.Schema({
-  userName: { type: String, unique: true, required: true },
+  userName: { type: String, unique: true, required: [true, "userName cannot be empty"], },
   email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   image: {

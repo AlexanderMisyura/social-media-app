@@ -81,13 +81,17 @@ module.exports = {
   },
 
   updateProfile: async (req, res) => {
+    // Should be a possibility to user to reset his bio to default
     try {
       if (req.user.id !== req.params.id) {
         return res.redirect("/");
       }
 
       // Check if form has no data to change user profile data to
-      if (!req.file && Object.values(req.body).every((formData) => !formData)) {
+      if (
+        !req.file &&
+        Object.values(req.body).every((formData) => !formData.trim())
+      ) {
         return res.redirect(`/profile/${req.user.id}`);
       }
 
@@ -103,7 +107,7 @@ module.exports = {
       // to single updateParams object
       let updateParams = {};
       for (const key in req.body) {
-        if (req.body[key]) {
+        if (req.body[key].trim()) {
           updateParams[key] = req.body[key];
         }
       }
@@ -131,7 +135,9 @@ module.exports = {
       }
 
       // Update user data with updateParams object
-      const update = await User.updateOne({ _id: req.user.id }, updateParams);
+      const update = await User.updateOne({ _id: req.user.id }, updateParams, {
+        runValidators: true,
+      });
       if (!update.acknowledged) {
         return res.render("error/404", {
           layout: "narrow",

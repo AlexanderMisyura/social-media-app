@@ -93,14 +93,16 @@ module.exports = {
       if (
         // no post in DB
         !post ||
-          // user looks through someone else's post and..
-          (req.user.id !== post.user._id.toString() &&
-            // this post is private or..
-            (post.status === "private" ||
+        // user looks through someone else's post and..
+        (req.user.id !== post.user._id.toString() &&
+          // this post is private or..
+          (post.status === "private" ||
             // this post if for friends and user is not a friend
             (post.status === "friends" &&
-              !post.user.friends.includes(mongoose.Types.ObjectId(req.user.id)))))
-        ) {
+              !post.user.friends.includes(
+                mongoose.Types.ObjectId(req.user.id)
+              ))))
+      ) {
         // then user is not allowed to view this post
         // should make additional page for this case
         return res.render("error/404", {
@@ -150,7 +152,7 @@ module.exports = {
   updatePost: async (req, res) => {
     try {
       // Check if user has sent empty form
-      if (Object.values(req.body).every((formData) => !formData)) {
+      if (Object.values(req.body).every((formData) => !formData.trim())) {
         return res.redirect(`/post/${req.params.id}`);
       }
       const post = await Post.findById(req.params.id).populate("user").lean();
@@ -171,13 +173,17 @@ module.exports = {
       // to updateParams object
       let updateParams = {};
       for (const key in req.body) {
-        if (req.body[key]) {
+        if (req.body[key].trim()) {
           updateParams[key] = req.body[key];
         }
       }
 
       // Update post data with updateParams object
-      const update = await Post.updateOne({ _id: req.params.id }, updateParams);
+      const update = await Post.updateOne(
+        { _id: req.params.id },
+        updateParams,
+        { runValidators: true }
+      );
       if (!update.acknowledged) {
         return res.render("error/404", {
           layout: "narrow",
