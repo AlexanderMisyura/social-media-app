@@ -33,7 +33,7 @@ module.exports = {
           deleted: false,
         })
           .populate("user")
-          .sort({ creationDate: "desc" })
+          .sort({ createdAt: "desc" })
           .lean();
         comments = {
           count: await CommentSchema.count({ user: req.params.id }),
