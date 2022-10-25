@@ -44,12 +44,8 @@ module.exports = {
 
   savePost: async (req, res) => {
     try {
-      let post = await Post.create({
-        title: req.body.title,
-        caption: req.body.caption,
-        user: mongoose.Types.ObjectId(req.user.id),
-        status: req.body.status,
-      });
+      req.body.user = req.user.id;
+      let post = await Post.create(req.body);
 
       const postId = post._id.toString();
       const uploadResult = await cloudinary.uploader.upload(req.file.path, {
