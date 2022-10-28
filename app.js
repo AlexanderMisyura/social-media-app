@@ -69,6 +69,7 @@ app.use(flash());
 app.use("/", require("./routes/indexRoute"));
 app.use("/profile", require("./routes/profileRoute"));
 app.use("/post", require("./routes/postRoute"));
+app.use("/like", require("./routes/likeRoute"));
 app.get("*", (req, res) => {
   res.render("error/404", { layout: "narrow", title: "404 NOT FOUND" });
 });

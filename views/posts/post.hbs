@@ -58,22 +58,29 @@
             </span>
           </div>
           <div>
-            <a class="pr-1" href="">
+            <span class="pr-1 share is-clickable">
               <span class="icon has-text-dark">
                 <i class="fa-solid fa-share-nodes fa-lg"></i>
               </span>
-            </a>
-            <a class="pr-1" href="">
+            </span>
+            <span
+              class="pr-1 bookmark is-clickable"
+              data-post-id="{{post._id}}"
+            >
               <span class="icon has-text-dark">
                 <i class="fa-regular fa-bookmark fa-lg"></i>
               </span>
-            </a>
-            <a href="" class="icon-text">
+            </span>
+            <span
+              id="like"
+              class="icon-text like is-clickable"
+              data-post-id="{{post._id}}"
+            >
               <span class="icon has-text-dark">
-                <i class="fa-regular fa-star fa-lg"></i>
+                <i class="fa-regular p-1 fa-star fa-lg"></i>
               </span>
               <span>{{post.likes}}</span>
-            </a>
+            </span>
           </div>
         </footer>
       </article>
