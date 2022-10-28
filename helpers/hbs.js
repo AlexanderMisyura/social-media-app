@@ -14,7 +14,7 @@ module.exports = {
   postDeleteButton: function (loggedUserId, browsedUserId) {
     if (loggedUserId === browsedUserId.toString()) {
       return `<div class="is-top-left-position">
-      <button class="button is-danger">
+      <button class="button is-danger js-modal-trigger" data-target-name="modal-delete-message">
         <span class="icon">
           <i class="fa-regular fa-trash-can"></i>
         </span>
