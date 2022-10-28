@@ -1,5 +1,5 @@
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-  <div class="container is-max-desktop">
+  <div class="container is-max-widescreen">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
         <img src="/img/socister-nav.png" alt="socister logo" />
@@ -10,7 +10,7 @@
         class="navbar-burger"
         aria-label="menu"
         aria-expanded="false"
-        data-target="navbar"
+        data-target-name="navbar"
       >
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -18,7 +18,7 @@
       </a>
     </div>
 
-    <div id="navbar" class="navbar-menu {{!is-active}}">
+    <div id="navbar" class="navbar-menu">
       <div class="navbar-end">
 
         <div class="navbar-item">
@@ -43,35 +43,31 @@
           </form>
         </div>
 
-        <a class="navbar-item" href="/post/add">
-          <span class="pr-2">New post</span>
-          <figure class="image is-24x24">
+        <a class="navbar-item is-flex" href="/post/add">
+          <figure class="image is-24x24 mr-2">
             <img
               class="is-rounded"
               src="/img/socister-single.png"
               alt="add new post"
             />
           </figure>
+          <span>New post</span>
         </a>
         <div class="navbar-item has-dropdown is-hoverable">
-          <div class="navbar-link">
-            <span class="pr-2">
-              {{loggedUser.name}}
-            </span>
-            <figure class="image is-24x24">
+          <a class="navbar-link is-flex" href="/profile/{{loggedUser.id}}">
+            <figure class="image is-24x24 mr-2">
               <img
                 src="{{loggedUser.image}}"
                 alt="profile image"
                 class="is-rounded"
               />
             </figure>
-          </div>
+            <span>
+              {{loggedUser.name}}
+            </span>
+          </a>
 
           <div class="navbar-dropdown is-right">
-            <a class="navbar-item" href="/profile/{{loggedUser.id}}">
-              <span class="icon"><i class="fa-regular fa-user"></i></span>
-              <span>Profile</span>
-            </a>
             <a class="navbar-item">
               <span class="icon"><i class="fa-regular fa-bookmark"></i></span>
               <span>Saved</span>
