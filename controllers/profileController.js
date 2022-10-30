@@ -1,6 +1,7 @@
 const CommentSchema = require("../models/CommentSchema");
 const Post = require("../models/Post");
 const User = require("../models/User");
+const LikePost = require("../models/LikePost");
 const cloudinary = require("../middleware/cloudinary");
 require("dotenv").config({ path: "../config/.env" });
 
@@ -35,6 +36,17 @@ module.exports = {
           .populate("user")
           .sort({ createdAt: "desc" })
           .lean();
+        // For each post found in DB if user has already liked it
+        // to be able to adjust appropriate icon color
+        posts = await Promise.all(
+          posts.map(async (post) => {
+            post.hasLike = await LikePost.exists({
+              userId: req.user.id,
+              postId: post._id,
+            });
+            return post;
+          })
+        );
         comments = {
           count: await CommentSchema.count({ user: req.params.id }),
         };

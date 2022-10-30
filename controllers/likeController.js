@@ -1,62 +1,57 @@
 const LikePost = require("../models/LikePost");
 const LikeComment = require("../models/LikeComment");
+const Post = require("../models/Post");
+const User = require("../models/User");
 
 module.exports = {
   toggleLike: async (req, res) => {
-    console.log("like counted: ", req.body.postId);
-    res.send("like counted");
+    try {
+      const like = {
+        userId: req.user.id,
+        postId: req.params.postId,
+      };
+      const isLikeExists = await LikePost.exists(like);
+      if (isLikeExists) {
+        await LikePost.deleteOne(like);
 
-    // try {
-    //   const likeDoc = {
-    //     userId: req.user.id,
-    //     storyId: req.params.storyId,
-    //   };
-    //   const isLike = await Like.exists(likeDoc);
-    //   if (isLike) {
-    //     const doesUserLike = false;
-    //     await Like.deleteOne(likeDoc);
+        const post = await Post.findByIdAndUpdate(
+          req.params.postId,
+          { $inc: { likes: -1 } },
+          { new: true }
+        );
 
-    //     const story = await Story.findByIdAndUpdate(
-    //       req.params.storyId,
-    //       { $inc: { likes: -1 } },
-    //       { new: true }
-    //     );
+        const user = await User.findByIdAndUpdate(
+          post.user,
+          { $inc: { rating: -1 } },
+          { new: true }
+        );
 
-    //     const user = await User.findByIdAndUpdate(
-    //       story.user,
-    //       { $inc: { rating: -1 } },
-    //       { new: true }
-    //     );
+        res.json({
+          postLikes: post.likes,
+          userRating: user.rating,
+        });
+      } else {
+        await LikePost.create(like);
 
-    //     res.json({
-    //       storyLikes: story.likes,
-    //       userRating: user.rating,
-    //       doesUserLike,
-    //     });
-    //   } else {
-    //     const doesUserLike = true;
-    //     await Like.create(likeDoc);
+        const post = await Post.findByIdAndUpdate(
+          req.params.postId,
+          { $inc: { likes: 1 } },
+          { new: true }
+        );
 
-    //     const story = await Story.findByIdAndUpdate(
-    //       req.params.storyId,
-    //       { $inc: { likes: 1 } },
-    //       { new: true }
-    //     );
+        const user = await User.findByIdAndUpdate(
+          post.user,
+          { $inc: { rating: 1 } },
+          { new: true }
+        );
 
-    //     const user = await User.findByIdAndUpdate(
-    //       story.user,
-    //       { $inc: { rating: 1 } },
-    //       { new: true }
-    //     );
-
-    //     res.json({
-    //       storyLikes: story.likes,
-    //       userRating: user.rating,
-    //       doesUserLike,
-    //     });
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
+        res.json({
+          storyLikes: post.likes,
+          userRating: user.rating,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   },
 };

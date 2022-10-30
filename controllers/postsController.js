@@ -1,4 +1,5 @@
 const Post = require("../models/Post");
+const LikePost = require("../models/LikePost");
 const cloudinary = require("../middleware/cloudinary");
 const mongoose = require("mongoose");
 
@@ -12,10 +13,23 @@ module.exports = {
       };
       // should improve the below query with posts with status: "friends"
       // if logged user is in friend list of user which this post is
-      const posts = await Post.find({ deleted: false, status: "public" })
+      let posts = await Post.find({ deleted: false, status: "public" })
         .sort({ createdAt: "desc" })
         .populate("user")
         .lean();
+
+      // For each post found in DB if user has already liked it
+      // to be able to adjust appropriate icon color
+      posts = await Promise.all(
+        posts.map(async (post) => {
+          post.hasLike = await LikePost.exists({
+            userId: req.user.id,
+            postId: post._id,
+          });
+          return post;
+        })
+      );
+
       res.render("index", {
         title: "Socister | Feed",
         loggedUser,
@@ -110,10 +124,23 @@ module.exports = {
           title: "404 NOT FOUND",
         });
       }
+      let hasLike;
+      // If user looks through someone else's post
+      if (req.user.id !== post.user._id.toString()) {
+        // Check if user has already liked the post
+        // to be able to adjust appropriate icon color
+        hasLike = await LikePost.exists({
+          userId: req.user.id,
+          postId: req.params.id,
+        });
+      }
+
+
       res.render("posts/post", {
         title: `Socister | ${post.title}`,
         loggedUser,
         post,
+        hasLike,
       });
     } catch (err) {
       console.error(err);
