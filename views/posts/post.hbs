@@ -71,16 +71,7 @@
                 <i class="fa-regular fa-bookmark fa-lg"></i>
               </span>
             </span>
-            <span
-              id="like"
-              class="icon-text like is-clickable"
-              data-post-id="{{post._id}}"
-            >
-              <span class="icon has-text-dark">
-                <i class="fa-regular p-1 fa-star fa-lg"></i>
-              </span>
-              <span>{{post.likes}}</span>
-            </span>
+            {{{likeIcon loggedUser.id post.user._id hasLike post._id post.likes}}}
           </div>
         </footer>
       </article>
