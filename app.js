@@ -26,12 +26,13 @@ const {
   profileEditButton,
   postDeleteButton,
   postEditButton,
+  likeIcon,
 } = require("./helpers/hbs");
 
 app.engine(
   ".hbs",
   hbs({
-    helpers: { profileEditButton, postDeleteButton, postEditButton },
+    helpers: { profileEditButton, postDeleteButton, postEditButton, likeIcon },
     defaultLayout: "main",
     extname: ".hbs",
   })

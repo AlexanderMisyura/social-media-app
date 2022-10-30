@@ -34,4 +34,25 @@ module.exports = {
     </div>`;
     }
   },
+
+  likeIcon: function ( loggedUserId, postAuthorId, hasLike, postId, postLikes) {
+    if (loggedUserId === postAuthorId.toString()) {
+      return `<span class="icon-text">
+  <span class="icon has-text-grey">
+    <i class="fa-regular p-1 fa-star fa-lg"></i>
+  </span>
+  <span id="likeCounter">${postLikes}</span>
+</span>`;
+    } else {
+      return `<span class="icon-text">
+  <span
+    id="like"
+    class="icon is-clickable has-text-${hasLike ? "warning" : "dark"}"
+    data-post-id="${postId}">
+    <i class="fa-regular p-1 fa-star fa-lg"></i>
+  </span>
+  <span id="likeCounter">${postLikes}</span>
+</span>`;
+    }
+  },
 };
