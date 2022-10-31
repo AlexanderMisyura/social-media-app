@@ -79,6 +79,133 @@
     <div class="column is-half-tablet is-half-desktop is-one-third-fullhd">
       <div class="box">
         <h3 class="title is-size-4">Comments</h3>
+        <section id="commentSection">
+
+          <article class="media is-relative" id="{{!comment._id}}">
+            <div class="is-top-right-position">
+              <button class="button is-danger is-small">
+                <span class="icon">
+                  <i class="fa-regular fa-trash-can"></i>
+                </span>
+              </button>
+            </div>
+
+            <figure class="media-left mr-2">
+              <p class="image is-24x24">
+                <a class="has-text-dark" href="/profile/{{!comment.user.id}}">
+                  <img
+                    class="is-rounded"
+                      src="{{!comment.user.image}}"
+                      alt="{{!comment.user.name}}'s avatar"
+                  />
+                </a>
+              </p>
+            </figure>
+            <div class="media-content">
+              <a class="has-text-dark" href="/profile/{{!comment.user.id}}">
+                <p class="title is-6 is-clipped is-inline-block">{{!comment.user.name}}Comment user name</p>
+              </a>
+              <div class="content">
+                <p>
+                  {{!comment.body}}
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam voluptate quibusdam quisquam expedita nemo necessitatibus, autem, praesentium nesciunt non vitae, ab eveniet animi deleniti eaque quam earum iure voluptatem consequatur.
+                </p>
+              </div>
+
+              <nav class="level is-mobile mb-0">
+                  <div class="level-left">
+                    <span class="is-clickable">
+                      <span class="icon has-text-dark">
+                        <i class="fa-regular fa-comment-dots"></i>
+                      </span>
+                    </span>
+                  </div>
+                  <div class="level-right">
+                    <span class="icon-text is-clickable mb-1">
+                      <span class="icon has-text-dark">
+                        <i class="fa-regular p-1 fa-star"></i>
+                      </span>
+                      <span>0</span>
+                    </span>
+                  </div>
+              </nav>
+              <article class="media is-hidden">
+                <figure class="media-left mr-2">
+                  <p class="image is-24x24">
+                    <a class="has-text-dark" href="/profile/{{post.user._id}}">
+                      <img
+                        class="is-rounded"
+                        src="{{loggedUser.image}}"
+                        alt="{{loggedUser.name}}'s avatar"
+                      />
+                    </a>
+                  </p>
+                </figure>
+                <div class="media-content">
+                  <a class="has-text-dark" href="/profile/{{loggedUser.id}}">
+                    <p class="title is-6 is-clipped is-inline-block">{{loggedUser.name}}</p>
+                  </a>
+                  <form class="is-flex" action="/comment/{{post._id}}" method="POST">
+                    <div class="field is-flex-grow-1 mb-0">
+                      <p class="control">
+                        <textarea
+                          class="textarea"
+                          placeholder="Add a comment..."
+                          rows="1"
+                          required
+                          name="content"
+                        ></textarea>
+                      </p>
+                    </div>
+                    <div class="field is-align-self-flex-end">
+                      <p class="control">
+                        <button class="button is-small ml-1" type="submit">Post</button>
+                      </p>
+                    </div>
+                  </form>
+                </div>
+              </article>
+            </div>
+
+          </article>
+
+          <article class="media">
+            <figure class="media-left mr-2">
+              <p class="image is-24x24">
+                <a class="has-text-dark" href="/profile/{{post.user._id}}">
+                  <img
+                    class="is-rounded"
+                    src="{{loggedUser.image}}"
+                    alt="{{loggedUser.name}}'s avatar"
+                  />
+                </a>
+              </p>
+            </figure>
+            <div class="media-content">
+              <a class="has-text-dark" href="/profile/{{loggedUser.id}}">
+                <p class="title is-6 is-clipped is-inline-block">{{loggedUser.name}}</p>
+              </a>
+              <form id="rootCommentForm" class="is-flex" action="/comment/{{post._id}}" method="POST">
+                <div class="field is-flex-grow-1 mb-0">
+                  <p class="control">
+                    <textarea
+                      class="textarea"
+                      placeholder="Add a comment..."
+                      rows="1"
+                      required
+                      name="content"
+                    ></textarea>
+                  </p>
+                </div>
+                <div class="field is-align-self-flex-end">
+                  <p class="control">
+                    <button class="button is-small ml-1" type="submit">Post</button>
+                  </p>
+                </div>
+              </form>
+            </div>
+          </article>
+        </section>
       </div>
     </div>
   </div>
