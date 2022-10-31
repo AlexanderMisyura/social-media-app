@@ -11,7 +11,7 @@ const CommentSchema = new mongoose.Schema({
     ref: "Post",
     required: true,
   },
-  body: {
+  content: {
     type: String,
     required: true,
   },
@@ -26,7 +26,7 @@ const CommentSchema = new mongoose.Schema({
   comments: {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
   },
-  creationDate: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },
