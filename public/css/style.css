@@ -61,6 +61,10 @@ html {
   max-width: calc(100% - 1em);
 }
 
+.is-line-height-1-3em {
+  line-height: 1.3em;
+}
+
 @media screen and (max-width: 450px) {
   .section {
     padding: 0em 0 3em;
