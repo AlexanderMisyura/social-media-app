@@ -1,4 +1,5 @@
 const CommentSchema = require("../models/CommentSchema");
+// const hbCreate = require("express-handlebars").create();
 
 module.exports = {
   saveComment: async (req, res) => {
@@ -20,6 +21,29 @@ module.exports = {
         layout: "narrow",
         title: "500 SOMETHING WENT WRONG",
       });
+    }
+  },
+
+  getChildComments: async (req, res) => {
+    try {
+      const loggedUser = {
+        name: req.user.userName,
+        id: req.user.id,
+        image: req.user.image,
+      };
+      const comments = await CommentSchema.find({
+        post: req.params.postId,
+        replyTo: req.params.commentId,
+      }).populate("user").lean();
+      res.render("partials/_comments", {
+        layout: false,
+        comments,
+        loggedUser,
+        post: { _id: req.body.postId }
+      });
+    } catch (error) {
+      console.error(error);
+      res.send(error);
     }
   },
 };
