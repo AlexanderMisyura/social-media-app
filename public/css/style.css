@@ -65,6 +65,14 @@ html {
   line-height: 1.3em;
 }
 
+.is-height-0 {
+  display: none;
+}
+
+.is-height-100 {
+  display: block;
+}
+
 @media screen and (max-width: 450px) {
   .section {
     padding: 0em 0 3em;
