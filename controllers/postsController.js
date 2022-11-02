@@ -2,6 +2,7 @@ const Post = require("../models/Post");
 const LikePost = require("../models/LikePost");
 const cloudinary = require("../middleware/cloudinary");
 const mongoose = require("mongoose");
+const CommentSchema = require("../models/CommentSchema");
 
 module.exports = {
   getIndex: async (req, res) => {
@@ -96,6 +97,10 @@ module.exports = {
         id: req.user.id,
         image: req.user.image,
       };
+
+//--------------------------------------//
+//---------- Get post from DB ----------//
+//--------------------------------------//
       const post = await Post.findOne({ _id: req.params.id, deleted: false })
         .populate("user")
         .lean();
@@ -124,6 +129,10 @@ module.exports = {
           title: "404 NOT FOUND",
         });
       }
+
+//-------------------------------------------//
+//---------- Get like info from DB ----------//
+//-------------------------------------------//
       let hasLike;
       // If user looks through someone else's post
       if (req.user.id !== post.user._id.toString()) {
@@ -135,12 +144,23 @@ module.exports = {
         });
       }
 
+//------------------------------------------//
+//---------- Get comments from DB ----------//
+//------------------------------------------//
+      const comments = await CommentSchema.find({
+        post: req.params.id,
+        replyTo: null,
+      })
+        .sort({ createdAt: "desc" })
+        .populate("user")
+        .lean();
 
       res.render("posts/post", {
         title: `Socister | ${post.title}`,
         loggedUser,
         post,
         hasLike,
+        comments,
       });
     } catch (err) {
       console.error(err);
