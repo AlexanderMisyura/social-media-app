@@ -19,9 +19,13 @@ const CommentSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  inResponseToComment: {
+  replyTo: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Comment",
+  },
+  replies: {
+    type: Number,
+    default: 0,
   },
   comments: {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
