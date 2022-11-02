@@ -1,0 +1,76 @@
+{{#each comments as |comment|}}
+  {{log comment}}
+              <article class="media is-relative">
+                <div class="is-top-right-position">
+                  <button class="button is-danger is-small">
+                    <span class="icon">
+                      <i class="fa-regular fa-trash-can"></i>
+                    </span>
+                  </button>
+                </div>
+
+                <figure class="media-left mr-2">
+                  <p class="image is-24x24">
+                    <a class="has-text-dark" href="/profile/{{user._id}}">
+                      <img
+                        class="is-rounded"
+                          src="{{user.image}}"
+                          alt="{{user.userName}}'s avatar"
+                      />
+                    </a>
+                  </p>
+                </figure>
+                <div class="media-content">
+                  <a class="has-text-dark" href="/profile/{{user._id}}">
+                    <p class="title is-6 is-clipped is-inline-block">{{user.userName}}</p>
+                  </a>
+                  <div class="content">
+                    <p>
+                      {{content}}
+                    </p>
+                  </div>
+
+                  <nav class="level is-mobile mb-0">
+                      <div class="level-left">
+                        <button
+                          class="reply button is-white is-small is-rounded has-text-weight-semibold icon-text is-unselectable"
+                          data-post-id="{{../post._id}}"
+                          data-comment-id="{{_id}}"
+                          data-logged-user-id="{{../loggedUser.id}}"
+                          data-logged-user-image="{{../loggedUser.image}}"
+                          data-logged-user-name="{{../loggedUser.name}}">
+                          <span class="is-size-7 is-line-height-1-3em">reply</span>
+                          <span class="icon has-text-dark">
+                            <i class="fa-regular fa-comment-dots fa-sm"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="level-right">
+                        <span class="icon-text is-clickable mb-1">
+                          <span class="icon has-text-dark">
+                            <i class="fa-regular p-1 fa-star"></i>
+                          </span>
+                          <span>0</span>
+                        </span>
+                      </div>
+                  </nav>
+
+                  <div id="{{_id}}"></div>
+
+                  {{#if replies}}
+                    <button
+                      class="comment-branch-btn button is-white is-small is-rounded icon-text has-color-link"
+                      data-parent-id="{{_id}}"
+                      data-post-id="{{../post._id}}">
+                      <span class="icon">
+                        <i class="fa-solid fa-angles-down"></i>
+                      </span>
+                      <span class="is-size-7 is-line-height-1-3em">View replies ({{replies}})</span>
+                    </button>
+                    <div class="comment-branch-container"></div>
+                  {{/if}}
+
+                </div>
+
+              </article>
+            {{/each}}

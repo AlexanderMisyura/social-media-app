@@ -98,7 +98,7 @@
                       <img
                         class="is-rounded"
                           src="{{user.image}}"
-                          alt="{{user.name}}'s avatar"
+                          alt="{{user.userName}}'s avatar"
                       />
                     </a>
                   </p>
@@ -115,7 +115,7 @@
 
                   <nav class="level is-mobile mb-0">
                       <div class="level-left">
-                        <span
+                        <button
                           class="reply button is-white is-small is-rounded has-text-weight-semibold icon-text is-unselectable"
                           data-post-id="{{../post._id}}"
                           data-comment-id="{{_id}}"
@@ -126,7 +126,7 @@
                           <span class="icon has-text-dark">
                             <i class="fa-regular fa-comment-dots fa-sm"></i>
                           </span>
-                        </span>
+                        </button>
                       </div>
                       <div class="level-right">
                         <span class="icon-text is-clickable mb-1">
@@ -139,6 +139,19 @@
                   </nav>
 
                   <div id="{{_id}}"></div>
+
+                  {{#if replies}}
+                    <button
+                      class="comment-branch-btn button is-white is-small is-rounded icon-text has-color-link"
+                      data-parent-id="{{_id}}"
+                      data-post-id="{{../post._id}}">
+                      <span class="icon">
+                        <i class="fa-solid fa-angles-down"></i>
+                      </span>
+                      <span class="is-size-7 is-line-height-1-3em">View replies ({{replies}})</span>
+                    </button>
+                    <div class="comment-branch-container"></div>
+                  {{/if}}
 
                 </div>
 
