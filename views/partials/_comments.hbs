@@ -1,13 +1,6 @@
 {{#each comments as |comment|}}
   <article class="is-not-centered media is-relative">
-    <div class="is-top-right-position">
-      <button class="button is-danger is-small">
-        <span class="icon">
-          <i class="fa-regular fa-trash-can"></i>
-        </span>
-      </button>
-    </div>
-
+    {{{commentDeleteButton ../loggedUser.id user._id}}}
     <figure class="media-left mr-2">
       <p class="image is-24x24">
         <a class="has-text-dark" href="/profile/{{user._id}}">

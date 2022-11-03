@@ -23,6 +23,18 @@ module.exports = {
     }
   },
 
+  commentDeleteButton: function (loggedUserId, commentUserId) {
+    if (loggedUserId === commentUserId.toString()) {
+      return `<div class="is-top-right-position">
+      <button class="button is-danger is-small">
+        <span class="icon">
+          <i class="fa-regular fa-trash-can"></i>
+        </span>
+      </button>
+    </div>`
+    }
+  },
+
   postEditButton: function (loggedUserId, browsedUserId, postId) {
     if (loggedUserId === browsedUserId.toString()) {
       return `<div class="is-top-right-position">

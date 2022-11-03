@@ -25,6 +25,7 @@ if (process.env.NODE_ENV === "development") {
 const {
   profileEditButton,
   postDeleteButton,
+  commentDeleteButton,
   postEditButton,
   likeIcon,
 } = require("./helpers/hbs");
@@ -32,7 +33,13 @@ const {
 app.engine(
   ".hbs",
   hbs({
-    helpers: { profileEditButton, postDeleteButton, postEditButton, likeIcon },
+    helpers: {
+      profileEditButton,
+      postDeleteButton,
+      commentDeleteButton,
+      postEditButton,
+      likeIcon,
+    },
     defaultLayout: "main",
     extname: ".hbs",
   })
