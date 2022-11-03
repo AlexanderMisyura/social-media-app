@@ -94,11 +94,11 @@ html {
   .is-top-right-position {
     right: 0;
   }
-  .media:not(article .media) {
+  .media:not(.is-not-centered) {
     flex-direction: column;
     align-items: center;
   }
-  .media-left:not(article .media-left) {
+  .media-left {
     margin: 0;
   }
   .media-content:not(article .media-content) {

@@ -20,22 +20,24 @@
       <article class="box">
         <h1 class="title">{{post.title}}</h1>
         <h2 class="subtitle">
-          <a class="has-text-dark" href="/profile/{{post.user._id}}">
-            <div class="media mb-1">
-              <div class="media-left">
-                <figure class="image is-24x24">
+          <div class="is-not-centered media mb-1">
+            <div class="media-left mr-2">
+              <figure class="image is-24x24">
+                 <a class="has-text-dark" href="/profile/{{post.user._id}}">
                   <img
                     class="is-rounded"
                     src="{{post.user.image}}"
                     alt="{{post.user.userName}}'s avatar"
                   />
-                </figure>
-              </div>
-              <div class="media-content">
-                <p class="title is-6 is-clipped">{{post.user.userName}}</p>
-              </div>
+                </a>
+               </figure>
             </div>
-          </a>
+            <div class="media-content">
+              <a class="has-text-dark" href="/profile/{{post.user._id}}">
+                <p class="title is-6 is-clipped is-inline-block">{{post.user.userName}}</p>
+              </a>
+            </div>
+            </div>
         </h2>
         <figure class="image is-square mb-5 is-relative">
           {{{postDeleteButton loggedUser.id post.user._id}}}
@@ -83,7 +85,7 @@
 
           {{#if comments}}
             {{#each comments as |comment|}}
-              <article class="media is-relative">
+              <article class="is-not-centered media is-relative">
                 <div class="is-top-right-position">
                   <button class="button is-danger is-small">
                     <span class="icon">
@@ -160,7 +162,7 @@
           {{/if}}
 
           {{!-- add root comment --}}
-          <article class="media">
+          <article class="is-not-centered media">
             <figure class="media-left mr-2">
               <p class="image is-24x24">
                 <a class="has-text-dark" href="/profile/{{post.user._id}}">

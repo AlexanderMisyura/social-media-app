@@ -9,22 +9,24 @@
             <div
               class="card-header-title is-flex-direction-column is-align-items-flex-start is-max-width-100"
             >
-              <a class="has-text-dark" href="/profile/{{user._id}}">
-                <div class="media mb-1">
-                  <div class="media-left">
-                    <figure class="image is-24x24">
-                      <img
-                        class="is-rounded"
-                        src="{{user.image}}"
-                        alt="user avatar"
-                      />
-                    </figure>
-                  </div>
-                  <div class="media-content">
-                    <p class="title is-6 is-clipped">{{user.userName}}</p>
-                  </div>
+              <div class="media mb-1">
+                <div class="media-left mr-2">
+                  <figure class="image is-24x24">
+                    <a class="has-text-dark" href="/profile/{{user._id}}">
+                    <img
+                      class="is-rounded"
+                      src="{{user.image}}"
+                      alt="user avatar"
+                    />
+                    </a>
+                  </figure>
                 </div>
-              </a>
+                <div class="media-content">
+                  <a class="has-text-dark" href="/profile/{{user._id}}">
+                    <p class="title is-6 is-clipped">{{user.userName}}</p>
+                  </a>
+                </div>
+              </div>
               <h2
                 class="title is-6 is-max-width-100 is-cropped"
               >{{title}}</h2>
