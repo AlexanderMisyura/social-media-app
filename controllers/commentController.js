@@ -39,7 +39,7 @@ module.exports = {
         layout: false,
         comments,
         loggedUser,
-        post: { _id: req.body.postId }
+        post: { _id: req.params.postId }
       });
     } catch (error) {
       console.error(error);
