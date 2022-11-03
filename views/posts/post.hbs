@@ -178,7 +178,7 @@
               <a class="has-text-dark" href="/profile/{{loggedUser.id}}">
                 <p class="title is-6 is-clipped is-inline-block">{{loggedUser.name}}</p>
               </a>
-              <form name="rootCommentForm" class="is-flex">
+              <form action="/comment" method="POST" name="rootCommentForm" class="is-flex">
                 <input type="hidden" name="post" value="{{post._id}}">
                 <div class="field is-flex-grow-1 mb-0">
                   <p class="control">

@@ -6,17 +6,14 @@ module.exports = {
     try {
       req.body.user = req.user.id;
       const comment = await CommentSchema.create(req.body);
-      if (!comment) {
-        return console.error(error);
-      }
       if (comment.replyTo) {
         await CommentSchema.findByIdAndUpdate(req.body.replyTo, {
           $inc: { replies: 1 },
         });
       }
-      res.json(req.body);
+      res.redirect(`/post/${req.body.post}`);
     } catch (error) {
-      console.error(err);
+      console.error(error);
       res.render("error/500", {
         layout: "narrow",
         title: "500 SOMETHING WENT WRONG",
@@ -34,12 +31,14 @@ module.exports = {
       const comments = await CommentSchema.find({
         post: req.params.postId,
         replyTo: req.params.commentId,
-      }).populate("user").lean();
+      })
+        .populate("user")
+        .lean();
       res.render("partials/_comments", {
         layout: false,
         comments,
         loggedUser,
-        post: { _id: req.params.postId }
+        post: { _id: req.params.postId },
       });
     } catch (error) {
       console.error(error);

@@ -1,36 +1,5 @@
 if (document.querySelector("#commentSection")) {
-  class PostComment {
-    constructor(form) {
-      this.form = form;
-    }
-
-    async #sendComment(e) {
-      e.preventDefault();
-      try {
-        let resPromise = await fetch("/comment", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            content: this.content.value,
-            post: this.post.value,
-            replyTo: this.replyTo?.value || null,
-          }),
-        });
-        let res = await resPromise.json();
-        console.log(res);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    listen() {
-      this.form.addEventListener("submit", this.#sendComment);
-    }
-  }
-
-  const rootCommentForm = new PostComment(document.forms.rootCommentForm);
-  rootCommentForm.listen();
-
+  // Add show/hide reply form to each comment
   function toggleReplyForm(e) {
     const targetFormContainer = document.getElementById(
       e.currentTarget.dataset.commentId
@@ -54,7 +23,7 @@ if (document.querySelector("#commentSection")) {
       <a class="has-text-dark" href="/profile/${e.currentTarget.dataset.loggedUserId}">
         <p class="title is-6 is-clipped is-inline-block">${e.currentTarget.dataset.loggedUserName}</p>
       </a>
-      <form name="${e.currentTarget.dataset.commentId}" class="is-flex">
+      <form action="/comment" method="POST" name="${e.currentTarget.dataset.commentId}" class="is-flex">
         <input type="hidden" name="post" value="${e.currentTarget.dataset.postId}">
         <input type="hidden" name="replyTo" value="${e.currentTarget.dataset.commentId}">
 
@@ -78,10 +47,6 @@ if (document.querySelector("#commentSection")) {
     </div>
   </article>`;
       targetFormContainer.innerHTML = formHtml;
-      const replyFormElement =
-        document.forms[e.currentTarget.dataset.commentId];
-      const replyForm = new PostComment(replyFormElement);
-      replyForm.listen();
     }
   }
 
@@ -93,6 +58,8 @@ if (document.querySelector("#commentSection")) {
   }
 
   if (document.querySelector(".comment-branch-btn")) {
+    // Class is for expand/collapse child comment branches
+    // and receive comment data for branch formation
     class CommentBranch {
       constructor(toggler, container) {
         this.toggler = toggler;
@@ -121,19 +88,34 @@ if (document.querySelector("#commentSection")) {
           const comments = await fetch(`/comment/${postId}/${commentId}`, {
             method: "GET",
           });
-          await comments.text().then((commentsHtml) => {
-            this.container.innerHTML = commentsHtml;
-            const btnReplyCol = this.container.querySelectorAll(".reply");
-            btnReplyCol.forEach((btnReply) =>
-              btnReply.addEventListener("click", toggleReplyForm)
-            );
-          });
+          await comments.text()
+            .then((commentsHtml) => {
+              this.container.innerHTML = commentsHtml;
+              const btnReplyCol = this.container.querySelectorAll(".reply");
+              btnReplyCol.forEach((btnReply) =>
+                btnReply.addEventListener("click", toggleReplyForm)
+              );
+
+              // Add listeners to toggle appeared child comment branches
+              const btnCommentBranchCol = this.container.querySelectorAll(
+                ".comment-branch-btn"
+              );
+              btnCommentBranchCol.forEach((btnCommentBranch) => {
+                const container = btnCommentBranch.parentElement.querySelector(
+                  ".comment-branch-container"
+                );
+                const commentBranch = new CommentBranch(
+                  btnCommentBranch,
+                  container
+                );
+                btnCommentBranch.addEventListener("click", () =>
+                  commentBranch.toggle()
+                );
+              });
+            });
           this.isEmpty = false;
         } catch (error) {
           console.log(error);
-          const hui = document.createElement("p");
-          hui.innerText = "Huische na vorotnik";
-          this.container.appendChild(hui);
         }
       }
 
@@ -153,6 +135,7 @@ if (document.querySelector("#commentSection")) {
       }
     }
 
+    // Add listeners to toggle existing child comment branches
     const btnCommentBranchCol = document.querySelectorAll(
       ".comment-branch-btn"
     );
