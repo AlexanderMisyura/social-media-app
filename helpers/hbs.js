@@ -41,17 +41,16 @@ module.exports = {
   <span class="icon has-text-grey">
     <i class="fa-regular p-1 fa-star fa-lg"></i>
   </span>
-  <span id="likeCounter">${postLikes}</span>
+  <span class="likeCounter">${postLikes}</span>
 </span>`;
     } else {
       return `<span class="icon-text">
   <span
-    id="like"
-    class="icon is-clickable has-text-${hasLike ? "warning" : "dark"}"
+    class="like icon is-clickable has-text-${hasLike ? "warning" : "dark"}"
     data-post-id="${postId}">
     <i class="fa-regular p-1 fa-star fa-lg"></i>
   </span>
-  <span id="likeCounter">${postLikes}</span>
+  <span class="likeCounter">${postLikes}</span>
 </span>`;
     }
   },
