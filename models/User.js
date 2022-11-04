@@ -21,6 +21,10 @@ const UserSchema = new mongoose.Schema({
   friends: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   createdAt: { type: Date, default: Date.now },
   rating: { type: Number, default: 0 },
+  bookmarks: {
+    type: Number,
+    default: 0,
+  },
 });
 
 // Passport hash middleware
