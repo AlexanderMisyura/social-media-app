@@ -2,6 +2,7 @@ const CommentSchema = require("../models/CommentSchema");
 const Post = require("../models/Post");
 const User = require("../models/User");
 const LikePost = require("../models/LikePost");
+const Bookmark = require("../models/Bookmark");
 const cloudinary = require("../middleware/cloudinary");
 require("dotenv").config({ path: "../config/.env" });
 
@@ -14,6 +15,7 @@ module.exports = {
         name: req.user.userName,
         id: req.user.id,
         image: req.user.image,
+        bookmarks: req.user.bookmarks,
       };
       let browsedUser = await User.findOne({ _id: req.params.id }).lean();
       if (req.user.id === req.params.id) {
@@ -21,6 +23,15 @@ module.exports = {
           .populate("user")
           .sort({ createdAt: "desc" })
           .lean();
+        posts = await Promise.all(
+          posts.map(async (post) => {
+            post.isBookmarked = await Bookmark.exists({
+              userId: req.user.id,
+              postId: post._id,
+            });
+            return post;
+          })
+        );
         comments = {
           bodies: await CommentSchema.find({ user: req.user.id }).lean(),
           count: await CommentSchema.count({ user: req.user.id }),
@@ -36,17 +47,24 @@ module.exports = {
           .populate("user")
           .sort({ createdAt: "desc" })
           .lean();
-        // For each post found in DB if user has already liked it
-        // to be able to adjust appropriate icon color
+        // For each post found in DB if user has already liked
+        // and bookmarked it to be able to adjust appropriate icon color
         posts = await Promise.all(
           posts.map(async (post) => {
             post.hasLike = await LikePost.exists({
               userId: req.user.id,
               postId: post._id,
             });
+            post.isBookmarked = await Bookmark.exists({
+              userId: req.user.id,
+              postId: post._id,
+            });
             return post;
           })
         );
+        // For each post found in DB if user has already bookmarked it
+        // to be able to adjust appropriate icon color
+
         comments = {
           count: await CommentSchema.count({ user: req.params.id }),
         };
@@ -78,6 +96,7 @@ module.exports = {
         id: req.user.id,
         image: req.user.image,
         bio: req.user.bio,
+        bookmarks: req.user.bookmarks,
       };
       res.render("profile/profileSettings", {
         title: `${req.user.userName}'s profile settings`,

@@ -1,5 +1,6 @@
 const Post = require("../models/Post");
 const LikePost = require("../models/LikePost");
+const Bookmark = require("../models/Bookmark");
 const cloudinary = require("../middleware/cloudinary");
 const mongoose = require("mongoose");
 const CommentSchema = require("../models/CommentSchema");
@@ -11,6 +12,7 @@ module.exports = {
         name: req.user.userName,
         id: req.user.id,
         image: req.user.image,
+        bookmarks: req.user.bookmarks,
       };
       // should improve the below query with posts with status: "friends"
       // if logged user is in friend list of user which this post is
@@ -24,6 +26,10 @@ module.exports = {
       posts = await Promise.all(
         posts.map(async (post) => {
           post.hasLike = await LikePost.exists({
+            userId: req.user.id,
+            postId: post._id,
+          });
+          post.isBookmarked = await Bookmark.exists({
             userId: req.user.id,
             postId: post._id,
           });
@@ -50,6 +56,7 @@ module.exports = {
       name: req.user.userName,
       id: req.user.id,
       image: req.user.image,
+      bookmarks: req.user.bookmarks,
     };
     res.render("posts/postEditor", {
       title: "Socister | Create an awsome new post",
@@ -96,11 +103,12 @@ module.exports = {
         name: req.user.userName,
         id: req.user.id,
         image: req.user.image,
+        bookmarks: req.user.bookmarks,
       };
 
-//--------------------------------------//
-//---------- Get post from DB ----------//
-//--------------------------------------//
+      //--------------------------------------//
+      //---------- Get post from DB ----------//
+      //--------------------------------------//
       const post = await Post.findOne({ _id: req.params.id, deleted: false })
         .populate("user")
         .lean();
@@ -130,9 +138,9 @@ module.exports = {
         });
       }
 
-//-------------------------------------------//
-//---------- Get like info from DB ----------//
-//-------------------------------------------//
+      //-------------------------------------------//
+      //---------- Get like info from DB ----------//
+      //-------------------------------------------//
       let hasLike;
       // If user looks through someone else's post
       if (req.user.id !== post.user._id.toString()) {
@@ -144,9 +152,17 @@ module.exports = {
         });
       }
 
-//------------------------------------------//
-//---------- Get comments from DB ----------//
-//------------------------------------------//
+      //-------------------------------------------//
+      //-------- Get bookmark info from DB --------//
+      //-------------------------------------------//
+      let isBookmarked = await Bookmark.exists({
+        userId: req.user.id,
+        postId: req.params.id,
+      });
+
+      //------------------------------------------//
+      //---------- Get comments from DB ----------//
+      //------------------------------------------//
       const comments = await CommentSchema.find({
         post: req.params.id,
         replyTo: null,
@@ -160,6 +176,7 @@ module.exports = {
         loggedUser,
         post,
         hasLike,
+        isBookmarked,
         comments,
       });
     } catch (err) {
@@ -187,6 +204,7 @@ module.exports = {
       name: req.user.userName,
       id: req.user.id,
       image: req.user.image,
+      bookmarks: req.user.bookmarks,
     };
     res.render("posts/postEditor", {
       title: `Socister | Edit "${post.title}"`,
