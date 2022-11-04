@@ -65,11 +65,14 @@
                 <i class="fa-solid fa-share-nodes fa-lg"></i>
               </span>
             </span>
-            <span
-              class="pr-1 bookmark is-clickable"
-              data-post-id="{{post._id}}"
-            >
-              <span class="icon has-text-dark">
+            <span class="pr-1 is-clickable">
+              <span data-post-id="{{post._id}}"
+                class="bookmark icon
+              {{#if isBookmarked}}
+                has-text-success
+              {{else}}
+                has-text-dark
+              {{/if}}">
                 <i class="fa-regular fa-bookmark fa-lg"></i>
               </span>
             </span>

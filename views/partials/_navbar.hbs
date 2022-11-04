@@ -68,9 +68,13 @@
           </a>
 
           <div class="navbar-dropdown is-right">
-            <a class="navbar-item">
-              <span class="icon"><i class="fa-regular fa-bookmark"></i></span>
-              <span>Saved</span>
+            <a class="navbar-item" href="/bookmarks">
+              <span class="icon"><i class="fa-regular fa-bookmarks"></i></span>
+              <span>
+                Saved (
+                <span class="bookmarkCounter">{{loggedUser.bookmarks}}</span>
+                )
+              </span>
             </a>
             <a class="navbar-item">
               <span class="icon"><i class="fa-regular fa-envelope"></i></span>

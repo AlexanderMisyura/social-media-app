@@ -68,11 +68,17 @@
                     <i class="fa-solid fa-share-nodes fa-lg"></i>
                   </span>
                 </a>
-                <a class="pr-1" href="">
-                  <span class="icon has-text-dark">
+                <span class="pr-1 is-clickable">
+                  <span data-post-id="{{_id}}"
+                    class="bookmark icon
+                  {{#if isBookmarked}}
+                    has-text-success
+                  {{else}}
+                    has-text-dark
+                  {{/if}}">
                     <i class="fa-regular fa-bookmark fa-lg"></i>
                   </span>
-                </a>
+                </span>
                 {{{likeIcon ../loggedUser.id user._id hasLike _id likes}}}
               </span>
 
