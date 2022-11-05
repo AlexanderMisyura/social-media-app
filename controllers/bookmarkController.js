@@ -77,6 +77,7 @@ module.exports = {
           return post;
         })
       );
+      posts.sort((a, b) => b.createdAt - a.createdAt);
       res.render("index", {
         title: `${req.user.userName}'s saved posts`,
         posts,
