@@ -1,6 +1,6 @@
 <div class="container is-max-desktop">
   <div class="columns is-centered">
-    <div class="column is-two-thirds-tablet is-half-desktop">
+    <div class="column is-three-fifths-tablet is-half-desktop">
       <form
         class="box block"
         method="POST"
@@ -30,20 +30,20 @@
         </div>
 
         {{#if isEdit}}
-          <figure class="image is-square">
+          <figure class="image is-square mb-2">
             <img src="{{post.image}}" alt="{{post.title}} image" />
           </figure>
         {{else}}
           <div class="field">
-            <figure class="image is-square">
-              <img src="/img/no-post-image.jpg" alt="" />
-            </figure>
             <div class="control">
               <div class="file is-boxed is-fullwidth has-text-centered">
                 <label class="file-label">
                   <input class="file-input" type="file" name="image" />
                   <span class="file-cta">
-                    <span class="file-icon">
+                    <figure class="image">
+                      <img src="/img/no-post-image.jpg" alt="" />
+                    </figure>
+                    <span class="file-icon mt-2">
                       <i class="fas fa-upload"></i>
                     </span>
                     <span class="file-label">
