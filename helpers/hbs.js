@@ -1,7 +1,7 @@
 module.exports = {
   profileEditButton: function (loggedUserId, browsedUserId) {
     if (loggedUserId === browsedUserId.toString()) {
-      return `<div class="is-top-right-position">
+      return `<div class="is-top-right-position is-toggle-hidden">
       <a class="button is-white is-small is-rounded" href="/profile/settings/${loggedUserId}">
         <span class="icon has-text-dark">
           <i class="fa-solid fa-gears fa-xl"></i>
@@ -13,7 +13,7 @@ module.exports = {
 
   postDeleteButton: function (loggedUserId, browsedUserId) {
     if (loggedUserId === browsedUserId.toString()) {
-      return `<div class="is-top-left-position">
+      return `<div class="is-top-left-position is-toggle-hidden">
       <button class="button is-danger js-modal-trigger" data-target-name="modal-delete-message">
         <span class="icon">
           <i class="fa-regular fa-trash-can"></i>
@@ -25,7 +25,7 @@ module.exports = {
 
   commentDeleteButton: function (loggedUserId, commentUserId) {
     if (loggedUserId === commentUserId.toString()) {
-      return `<div class="is-top-right-position">
+      return `<div class="is-top-right-position is-toggle-hidden">
       <button class="button is-danger is-small">
         <span class="icon">
           <i class="fa-regular fa-trash-can"></i>
@@ -37,7 +37,7 @@ module.exports = {
 
   postEditButton: function (loggedUserId, browsedUserId, postId) {
     if (loggedUserId === browsedUserId.toString()) {
-      return `<div class="is-top-right-position">
+      return `<div class="is-top-right-position is-toggle-hidden">
       <a class="button is-white" href="/post/edit/${postId.toString()}">
         <span class="icon">
         <i class="fa-regular fa-pen-to-square"></i>
