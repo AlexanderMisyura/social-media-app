@@ -45,4 +45,41 @@ module.exports = {
       res.send(error);
     }
   },
+
+  deleteComment: async (req, res) => {
+    try {
+      const comment = await CommentSchema.findById(req.params.commentId);
+      if (!comment) {
+        // The user has already deleted the comment
+        // or the query parameter (comment id) was incorrect
+        return res.render("error/404", {
+          layout: "narrow",
+          title: "404 NOT FOUND",
+        });
+      }
+      if (req.user.id !== comment.user.toString()) {
+        // User somehow send a query to delete someone else's comment
+        return res.redirect("/");
+      }
+
+      // Mark comment as deleted
+      const update = await CommentSchema.updateOne(
+        { _id: req.params.commentId },
+        { deleted: true }
+      );
+      if (!update.acknowledged) {
+        return res.render("error/404", {
+          layout: "narrow",
+          title: "404 NOT FOUND",
+        });
+      }
+      res.redirect(`/post/${comment.post.toString()}`)
+    } catch (error) {
+      console.error(error);
+      res.render("error/500", {
+        layout: "narrow",
+        title: "500 SOMETHING WENT WRONG",
+      });
+    }
+  },
 };
