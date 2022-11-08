@@ -23,14 +23,16 @@ module.exports = {
     }
   },
 
-  commentDeleteButton: function (loggedUserId, commentUserId) {
+  commentDeleteButton: function (loggedUserId, commentUserId, commentId) {
     if (loggedUserId === commentUserId.toString()) {
       return `<div class="is-top-right-position is-toggle-hidden">
-      <button class="button is-danger is-small">
-        <span class="icon">
-          <i class="fa-regular fa-trash-can"></i>
-        </span>
-      </button>
+      <form action="/comment/${commentId}?_method=PUT" method="post">
+        <button class="button is-danger is-small" type="submit">
+          <span class="icon">
+            <i class="fa-regular fa-trash-can"></i>
+          </span>
+        </button>
+      </form>
     </div>`
     }
   },

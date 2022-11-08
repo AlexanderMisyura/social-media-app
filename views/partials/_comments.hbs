@@ -14,14 +14,22 @@
 
     <div class="media-content">
       <div class="is-relative has-hidden">
-        {{{commentDeleteButton ../loggedUser.id user._id}}}
+        {{#unless deleted}}
+          {{{commentDeleteButton ../loggedUser.id user._id _id}}}
+        {{/unless}}
         <a class="has-text-dark" href="/profile/{{user._id}}">
           <p class="title is-6 is-clipped is-inline-block">{{user.userName}}</p>
         </a>
         <div class="content">
-          <p>
-            {{content}}
-          </p>
+           {{#unless deleted}}
+            <p>
+              {{content}}
+            </p>
+            {{else}}
+            <p class="is-italic has-text-grey">
+              Comment was deleted
+            </p>
+          {{/unless}}
         </div>
 
         <nav class="level is-mobile mb-0">
