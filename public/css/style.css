@@ -39,7 +39,7 @@ html {
 
 .is-cropped {
   white-space: nowrap;
-  overflow: hidden;
+  overflow-x: clip;
   text-overflow: ellipsis;
 }
 
@@ -55,10 +55,6 @@ html {
   right: 0.5em;
   top: 0.5rem;
   z-index: 1;
-}
-
-.is-max-width-less-1em {
-  max-width: calc(100% - 1em);
 }
 
 .is-line-height-1-3em {
