@@ -7,8 +7,8 @@ module.exports = {
   toggleBookmark: async (req, res) => {
     try {
       const bookmark = {
-        userId: req.user.id,
-        postId: req.params.postId,
+        user: req.user.id,
+        post: req.params.postId,
       };
       const isBookmarkExists = await Bookmark.exists(bookmark);
       if (isBookmarkExists) {
@@ -68,36 +68,29 @@ module.exports = {
         bookmarks: req.user.bookmarks,
       };
 
-      const bookmarks = await Bookmark.find({ userId: req.user.id }).lean();
-      const bookmarkPostIds = bookmarks.map((bookmark) => bookmark.postId);
-
-      let posts = await Promise.all(
-        bookmarkPostIds.map(async (postId) => {
-          const post = await Post.findOne({ _id: postId, deleted: false })
-            .populate("user")
-            .lean();
-
-          if (
-            // it is his own post or
-            post.user._id.toString() === req.user.id ||
-            // it is any public post or
-            post.status === "public" ||
-            // it is a post for friends and user is a friend
-            (post.status === "friends" &&
-              post.user.friends.some(
+      let bookmarks = await Bookmark.find({ user: req.user.id })
+        .populate("post")
+        .populate("user")
+        .lean();
+      bookmarks = bookmarks.filter((bookmark) => {
+        return (
+          bookmark.post.deleted === false &&
+          (bookmark.user._id.toString() === req.user.id ||
+            bookmark.post.status === "public" ||
+            (bookmark.post.status === "friends" &&
+              bookmark.user.friends.some(
                 (friend) => friend.toString() === req.user.id
-              ))
-          ) {
-            return post;
-          }
-        })
-      );
-      posts = await Promise.all(
-        posts.map(async (post) => {
+              )))
+        );
+      });
+      const posts = await Promise.all(
+        bookmarks.map(async (bookmark) => {
+          const post = bookmark.post;
           post.isBookmarked = true;
+          post.user = bookmark.user;
           post.hasLike = await LikePost.exists({
-            userId: req.user.id,
-            postId: post._id,
+            user: req.user.id,
+            post: post._id,
           });
           return post;
         })

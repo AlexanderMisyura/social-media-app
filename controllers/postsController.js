@@ -294,6 +294,19 @@ module.exports = {
           title: "404 NOT FOUND",
         });
       }
+
+      // Delete all bookmarks related to the post
+      const bookmarks = await Bookmark.find({ post: req.params.id }, "user");
+      await Promise.all(
+        bookmarks.map(
+          async (bookmark) =>
+            await User.findByIdAndUpdate(bookmark.user, { $inc: { bookmarks: -1 } })
+        )
+      );
+      await Bookmark.deleteMany({
+        postId: req.params.id,
+      });
+
       res.redirect(`/profile/${req.user.id}`);
     } catch (err) {
       console.error(err);
