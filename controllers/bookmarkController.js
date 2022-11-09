@@ -5,7 +5,6 @@ const LikePost = require("../models/LikePost");
 
 module.exports = {
   toggleBookmark: async (req, res) => {
-    console.log('"triggered" :>> ', "triggered");
     try {
       const bookmark = {
         userId: req.user.id,
@@ -25,17 +24,35 @@ module.exports = {
           bookmarks: user.bookmarks,
         });
       } else {
-        await Bookmark.create(bookmark);
+        const post = await Post.findOne({
+          _id: req.params.postId,
+          deleted: false,
+        }).populate("user");
 
-        const user = await User.findByIdAndUpdate(
-          req.user.id,
-          { $inc: { bookmarks: 1 } },
-          { new: true }
-        );
+        // User is able to save the post if
+        if (
+          // it is his own post or
+          post.user._id.toString() === req.user.id ||
+          // it is any public post or
+          post.status === "public" ||
+          // it is a post for friends and user is a friend
+          (post.status === "friends" &&
+            post.user.friends.some(
+              (friend) => friend.toString() === req.user.id
+            ))
+        ) {
+          await Bookmark.create(bookmark);
 
-        res.json({
-          bookmarks: user.bookmarks,
-        });
+          const user = await User.findByIdAndUpdate(
+            req.user.id,
+            { $inc: { bookmarks: 1 } },
+            { new: true }
+          );
+
+          res.json({
+            bookmarks: user.bookmarks,
+          });
+        }
       }
     } catch (error) {
       console.error(error);
@@ -59,10 +76,18 @@ module.exports = {
           const post = await Post.findOne({ _id: postId, deleted: false })
             .populate("user")
             .lean();
-          if (post.user._id === req.user.id) {
-            return post;
-          }
-          if (post.user._id !== req.user.id && post.status === "public") {
+
+          if (
+            // it is his own post or
+            post.user._id.toString() === req.user.id ||
+            // it is any public post or
+            post.status === "public" ||
+            // it is a post for friends and user is a friend
+            (post.status === "friends" &&
+              post.user.friends.some(
+                (friend) => friend.toString() === req.user.id
+              ))
+          ) {
             return post;
           }
         })
@@ -82,7 +107,7 @@ module.exports = {
         title: `${req.user.userName}'s saved posts`,
         posts,
         loggedUser,
-      })
+      });
     } catch (error) {
       console.error(error);
       res.render("error/500", {
