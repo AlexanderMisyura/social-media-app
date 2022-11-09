@@ -4,6 +4,7 @@ const Bookmark = require("../models/Bookmark");
 const cloudinary = require("../middleware/cloudinary");
 const mongoose = require("mongoose");
 const CommentSchema = require("../models/CommentSchema");
+const User = require("../models/User");
 
 module.exports = {
   getIndex: async (req, res) => {
@@ -30,8 +31,8 @@ module.exports = {
             postId: post._id,
           });
           post.isBookmarked = await Bookmark.exists({
-            userId: req.user.id,
-            postId: post._id,
+            user: req.user.id,
+            post: post._id,
           });
           return post;
         })
@@ -156,8 +157,8 @@ module.exports = {
       //-------- Get bookmark info from DB --------//
       //-------------------------------------------//
       let isBookmarked = await Bookmark.exists({
-        userId: req.user.id,
-        postId: req.params.id,
+        user: req.user.id,
+        post: req.params.id,
       });
 
       //------------------------------------------//

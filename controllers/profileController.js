@@ -26,8 +26,8 @@ module.exports = {
         posts = await Promise.all(
           posts.map(async (post) => {
             post.isBookmarked = await Bookmark.exists({
-              userId: req.user.id,
-              postId: post._id,
+              user: req.user.id,
+              post: post._id,
             });
             return post;
           })
@@ -56,8 +56,8 @@ module.exports = {
               postId: post._id,
             });
             post.isBookmarked = await Bookmark.exists({
-              userId: req.user.id,
-              postId: post._id,
+              user: req.user.id,
+              post: post._id,
             });
             return post;
           })
