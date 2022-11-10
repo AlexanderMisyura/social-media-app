@@ -11,13 +11,52 @@ module.exports = {
     }
   },
 
-  friendRequestButton: function (loggedUserId, browsedUserId, hasRequest) {
+  friendRequestButton: function (loggedUserId, browsedUserId, isFriend, hasRequest, hasOppositeRequest) {
     if (loggedUserId !== browsedUserId.toString()) {
-      // если друзья, можно удалить из друзей - красная
-      /// если не друзья, и если есть заявка с другой стороны, можно ее подтвердить - зеленая
-      //// если не друзья, если заявки нет, но своя есть, ее можно удалить - желтая
-      //// если не друзья, и если заявки нет, и своей тоже нет, можно сделать заявку - синяя
+      if (isFriend) {
+        return `<div class="is-top-right-position is-toggle-hidden">
+        <form action="/friends/remove/${browsedUserId}?_method=PUT" method="POST">
+          <button class="button is-danger is-small is-rounded" type="submit">
+            <span class="icon has-text-dark">
+              <i class="fa-solid fa-user-slash fa-xl"></i>
+            </span>
+          </button>
+        </form>
+      </div>`
+      }
 
+      if (hasOppositeRequest) {
+        return `<div class="is-top-right-position is-toggle-hidden">
+        <form action="/friends/confirm/${browsedUserId}?_method=PUT" method="POST">
+          <button class="button is-success is-light is-small is-rounded" type="submit">
+            <span class="icon has-text-dark">
+              <i class="fa-solid fa-user-check fa-xl"></i>
+            </span>
+          </button>
+        </form>
+      </div>
+      <div class="is-top-left-position is-toggle-hidden">
+        <form action="/friends/reject/${browsedUserId}?_method=PUT" method="POST">
+          <button class="button is-danger is-light is-small is-rounded" type="submit">
+            <span class="icon has-text-dark">
+              <i class="fa-solid fa-user-xmark fa-xl"></i>
+            </span>
+          </button>
+        </form>
+      </div>`;
+      }
+
+      if (hasRequest) {
+        return `<div class="is-top-right-position is-toggle-hidden">
+        <form action="/friends/${browsedUserId}?_method=DELETE" method="POST">
+          <button class="button is-warning is-light is-small is-rounded" type="submit">
+            <span class="icon has-text-dark">
+              <i class="fa-solid fa-user-minus fa-xl"></i>
+            </span>
+          </button>
+        </form>
+      </div>`;
+      }
 
       if (!hasRequest) {
         return `<div class="is-top-right-position is-toggle-hidden">
@@ -30,17 +69,7 @@ module.exports = {
         </form>
       </div>`;
       }
-      if (hasRequest) {
-        return `<div class="is-top-right-position is-toggle-hidden">
-        <form action="/friends/${browsedUserId}?_method=DELETE" method="POST">
-          <button class="button is-warning is-light is-small is-rounded" type="submit">
-            <span class="icon has-text-dark">
-              <i class="fa-solid fa-user-minus fa-xl"></i>
-            </span>
-          </button>
-        </form>
-      </div>`;
-      }
+
     }
   },
 

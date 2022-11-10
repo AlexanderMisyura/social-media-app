@@ -13,13 +13,15 @@ module.exports = {
       let posts;
       let comments;
       let hasRequest;
+      let hasOppositeRequest;
+      let isFriend;
       const loggedUser = {
         name: req.user.userName,
         id: req.user.id,
         image: req.user.image,
         bookmarks: req.user.bookmarks,
       };
-      let browsedUser = await User.findOne({ _id: req.params.userId }).lean();
+      const browsedUser = await User.findOne({ _id: req.params.userId }).lean();
       if (req.user.id === req.params.userId) {
         posts = await Post.find({ user: req.params.userId, deleted: false })
           .populate("user")
@@ -65,8 +67,9 @@ module.exports = {
           })
         );
 
-        hasRequest = await FriendRequest.exists({sender: req.user.id});
-
+        hasRequest = await FriendRequest.exists({sender: req.user.id, receiver: browsedUser._id});
+        hasOppositeRequest = await FriendRequest.exists({sender: browsedUser._id, receiver: req.user.id});
+        isFriend = browsedUser.friends.map(friend => friend.toString()).includes(req.user.id);
         comments = {
           count: await CommentSchema.count({ user: req.params.userId }),
         };
@@ -78,6 +81,8 @@ module.exports = {
         browsedUser,
         comments,
         hasRequest,
+        hasOppositeRequest,
+        isFriend,
       });
     } catch (err) {
       console.error(err);
