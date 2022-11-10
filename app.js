@@ -24,6 +24,7 @@ if (process.env.NODE_ENV === "development") {
 // Handlebars
 const {
   profileEditButton,
+  friendRequestButton,
   postDeleteButton,
   commentDeleteButton,
   postEditButton,
@@ -35,6 +36,7 @@ app.engine(
   hbs({
     helpers: {
       profileEditButton,
+      friendRequestButton,
       postDeleteButton,
       commentDeleteButton,
       postEditButton,

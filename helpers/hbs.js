@@ -11,6 +11,39 @@ module.exports = {
     }
   },
 
+  friendRequestButton: function (loggedUserId, browsedUserId, hasRequest) {
+    if (loggedUserId !== browsedUserId.toString()) {
+      // если друзья, можно удалить из друзей - красная
+      /// если не друзья, и если есть заявка с другой стороны, можно ее подтвердить - зеленая
+      //// если не друзья, если заявки нет, но своя есть, ее можно удалить - желтая
+      //// если не друзья, и если заявки нет, и своей тоже нет, можно сделать заявку - синяя
+
+
+      if (!hasRequest) {
+        return `<div class="is-top-right-position is-toggle-hidden">
+        <form action="/friends/${browsedUserId}" method="POST">
+          <button class="button is-link is-light is-small is-rounded" type="submit">
+            <span class="icon has-text-dark">
+              <i class="fa-solid fa-user-plus fa-xl"></i>
+            </span>
+          </button>
+        </form>
+      </div>`;
+      }
+      if (hasRequest) {
+        return `<div class="is-top-right-position is-toggle-hidden">
+        <form action="/friends/${browsedUserId}?_method=DELETE" method="POST">
+          <button class="button is-warning is-light is-small is-rounded" type="submit">
+            <span class="icon has-text-dark">
+              <i class="fa-solid fa-user-minus fa-xl"></i>
+            </span>
+          </button>
+        </form>
+      </div>`;
+      }
+    }
+  },
+
   postDeleteButton: function (loggedUserId, browsedUserId) {
     if (loggedUserId === browsedUserId.toString()) {
       return `<div class="is-top-left-position is-toggle-hidden">

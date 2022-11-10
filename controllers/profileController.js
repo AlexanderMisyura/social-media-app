@@ -3,6 +3,7 @@ const Post = require("../models/Post");
 const User = require("../models/User");
 const LikePost = require("../models/LikePost");
 const Bookmark = require("../models/Bookmark");
+const FriendRequest = require("../models/FriendRequest");
 const cloudinary = require("../middleware/cloudinary");
 require("dotenv").config({ path: "../config/.env" });
 
@@ -11,6 +12,7 @@ module.exports = {
     try {
       let posts;
       let comments;
+      let hasRequest;
       const loggedUser = {
         name: req.user.userName,
         id: req.user.id,
@@ -62,8 +64,8 @@ module.exports = {
             return post;
           })
         );
-        // For each post found in DB if user has already bookmarked it
-        // to be able to adjust appropriate icon color
+
+        hasRequest = await FriendRequest.exists({sender: req.user.id});
 
         comments = {
           count: await CommentSchema.count({ user: req.params.userId }),
@@ -75,6 +77,7 @@ module.exports = {
         loggedUser,
         browsedUser,
         comments,
+        hasRequest,
       });
     } catch (err) {
       console.error(err);
