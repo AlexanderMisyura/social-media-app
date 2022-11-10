@@ -27,8 +27,8 @@ module.exports = {
       posts = await Promise.all(
         posts.map(async (post) => {
           post.hasLike = await LikePost.exists({
-            userId: req.user.id,
-            postId: post._id,
+            user: req.user.id,
+            post: post._id,
           });
           post.isBookmarked = await Bookmark.exists({
             user: req.user.id,
@@ -148,8 +148,8 @@ module.exports = {
         // Check if user has already liked the post
         // to be able to adjust appropriate icon color
         hasLike = await LikePost.exists({
-          userId: req.user.id,
-          postId: req.params.id,
+          user: req.user.id,
+          post: req.params.id,
         });
       }
 

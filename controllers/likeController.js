@@ -7,8 +7,8 @@ module.exports = {
   toggleLike: async (req, res) => {
     try {
       const like = {
-        userId: req.user.id,
-        postId: req.params.postId,
+        user: req.user.id,
+        post: req.params.postId,
       };
       const isLikeExists = await LikePost.exists(like);
       if (isLikeExists) {
