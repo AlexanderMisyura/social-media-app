@@ -5,10 +5,10 @@ const upload = require("../middleware/multer");
 
 // @desc Show a single user's profile (own or another user)
 // @route GET /profile/:userId
-router.get("/:id", ensureAuth, profileController.getProfile);
-router.get("/settings/:id", ensureAuth, profileController.getProfileSettings);
+router.get("/:userId", ensureAuth, profileController.getProfile);
+router.get("/settings/:userId", ensureAuth, profileController.getProfileSettings);
 router.put(
-  "/:id",
+  "/:userId",
   ensureAuth,
   upload.single("image"),
   profileController.updateProfile

@@ -10,9 +10,9 @@ router.post(
   upload.single("image"),
   postsController.savePost
 );
-router.get("/:id", ensureAuth, postsController.getPost);
-router.get("/edit/:id", ensureAuth, postsController.getEditPost);
-router.put("/:id", ensureAuth, postsController.updatePost);
-router.put("/delete/:id", ensureAuth, postsController.deletePost);
+router.get("/:postId", ensureAuth, postsController.getPost);
+router.get("/edit/:postId", ensureAuth, postsController.getEditPost);
+router.put("/:postId", ensureAuth, postsController.updatePost);
+router.put("/delete/:postId", ensureAuth, postsController.deletePost);
 
 module.exports = router;

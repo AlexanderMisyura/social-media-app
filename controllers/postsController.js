@@ -110,7 +110,7 @@ module.exports = {
       //--------------------------------------//
       //---------- Get post from DB ----------//
       //--------------------------------------//
-      const post = await Post.findOne({ _id: req.params.id, deleted: false })
+      const post = await Post.findOne({ _id: req.params.postId, deleted: false })
         .populate("user")
         .lean();
       // Instead of the cumbersome conditional mess below should specify the above query to DB
@@ -149,7 +149,7 @@ module.exports = {
         // to be able to adjust appropriate icon color
         hasLike = await LikePost.exists({
           user: req.user.id,
-          post: req.params.id,
+          post: req.params.postId,
         });
       }
 
@@ -158,14 +158,14 @@ module.exports = {
       //-------------------------------------------//
       let isBookmarked = await Bookmark.exists({
         user: req.user.id,
-        post: req.params.id,
+        post: req.params.postId,
       });
 
       //------------------------------------------//
       //---------- Get comments from DB ----------//
       //------------------------------------------//
       const comments = await CommentSchema.find({
-        post: req.params.id,
+        post: req.params.postId,
         replyTo: null,
       })
         .sort({ createdAt: "desc" })
@@ -190,7 +190,7 @@ module.exports = {
   },
 
   getEditPost: async (req, res) => {
-    const post = await Post.findById(req.params.id).populate("user").lean();
+    const post = await Post.findById(req.params.postId).populate("user").lean();
     if (!post) {
       return res.render("error/404", {
         layout: "narrow",
@@ -219,9 +219,9 @@ module.exports = {
     try {
       // Check if user has sent empty form
       if (Object.values(req.body).every((formData) => !formData.trim())) {
-        return res.redirect(`/post/${req.params.id}`);
+        return res.redirect(`/post/${req.params.postId}`);
       }
-      const post = await Post.findById(req.params.id).populate("user").lean();
+      const post = await Post.findById(req.params.postId).populate("user").lean();
       if (!post) {
         // The user has already deleted the post he edit
         // or the query parameter (post id) was incorrect
@@ -246,7 +246,7 @@ module.exports = {
 
       // Update post data with updateParams object
       const update = await Post.updateOne(
-        { _id: req.params.id },
+        { _id: req.params.postId },
         updateParams,
         { runValidators: true }
       );
@@ -256,7 +256,7 @@ module.exports = {
           title: "404 NOT FOUND",
         });
       }
-      res.redirect(`/post/${req.params.id}`);
+      res.redirect(`/post/${req.params.postId}`);
     } catch (err) {
       console.error(err);
       res.render("error/500", {
@@ -268,7 +268,7 @@ module.exports = {
 
   deletePost: async (req, res) => {
     try {
-      const post = await Post.findById(req.params.id).populate("user").lean();
+      const post = await Post.findById(req.params.postId).populate("user").lean();
       if (!post) {
         // The user has already deleted the post he edit
         // or the query parameter (post id) was incorrect
@@ -285,7 +285,7 @@ module.exports = {
 
       // Mark post as deleted
       const update = await Post.updateOne(
-        { _id: req.params.id },
+        { _id: req.params.postId },
         { deleted: true }
       );
       if (!update.acknowledged) {
@@ -296,7 +296,7 @@ module.exports = {
       }
 
       // Delete all bookmarks related to the post
-      const bookmarks = await Bookmark.find({ post: req.params.id }, "user");
+      const bookmarks = await Bookmark.find({ post: req.params.postId }, "user");
       await Promise.all(
         bookmarks.map(
           async (bookmark) =>
@@ -304,7 +304,7 @@ module.exports = {
         )
       );
       await Bookmark.deleteMany({
-        postId: req.params.id,
+        postId: req.params.postId,
       });
 
       res.redirect(`/profile/${req.user.id}`);

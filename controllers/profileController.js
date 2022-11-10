@@ -17,9 +17,9 @@ module.exports = {
         image: req.user.image,
         bookmarks: req.user.bookmarks,
       };
-      let browsedUser = await User.findOne({ _id: req.params.id }).lean();
-      if (req.user.id === req.params.id) {
-        posts = await Post.find({ user: req.params.id, deleted: false })
+      let browsedUser = await User.findOne({ _id: req.params.userId }).lean();
+      if (req.user.id === req.params.userId) {
+        posts = await Post.find({ user: req.params.userId, deleted: false })
           .populate("user")
           .sort({ createdAt: "desc" })
           .lean();
@@ -40,7 +40,7 @@ module.exports = {
         //Should specify a query which allows to see posts with status:
         // "friends" if logged user is in friends array of browsed user
         posts = await Post.find({
-          user: req.params.id,
+          user: req.params.userId,
           status: "public",
           deleted: false,
         })
@@ -66,7 +66,7 @@ module.exports = {
         // to be able to adjust appropriate icon color
 
         comments = {
-          count: await CommentSchema.count({ user: req.params.id }),
+          count: await CommentSchema.count({ user: req.params.userId }),
         };
       }
       res.render("profile/profile", {
@@ -87,7 +87,7 @@ module.exports = {
 
   getProfileSettings: async (req, res) => {
     try {
-      if (req.user.id !== req.params.id) {
+      if (req.user.id !== req.params.userId) {
         // add "you can't access this page"
         return res.redirect("/");
       }
@@ -114,7 +114,7 @@ module.exports = {
   updateProfile: async (req, res) => {
     // Should be a possibility to user to reset his bio to default
     try {
-      if (req.user.id !== req.params.id) {
+      if (req.user.id !== req.params.userId) {
         return res.redirect("/");
       }
 
