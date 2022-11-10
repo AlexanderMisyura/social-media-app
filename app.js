@@ -80,6 +80,7 @@ app.use("/post", require("./routes/postRoute"));
 app.use("/like", require("./routes/likeRoute"));
 app.use("/comment", require("./routes/commentRoute"));
 app.use("/bookmarks", require("./routes/bookmarkRoute"));
+app.use("/friends", require("./routes/friendsRoute"));
 app.get("*", (req, res) => {
   res.render("error/404", { layout: "narrow", title: "404 NOT FOUND" });
 });
