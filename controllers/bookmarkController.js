@@ -70,7 +70,6 @@ module.exports = {
 
       let bookmarks = await Bookmark.find({ user: req.user.id })
         .populate("post")
-        .populate("user")
         .lean();
       bookmarks = bookmarks.filter((bookmark) => {
         return (
@@ -87,7 +86,7 @@ module.exports = {
         bookmarks.map(async (bookmark) => {
           const post = bookmark.post;
           post.isBookmarked = true;
-          post.user = bookmark.user;
+          post.user = await User.findById(bookmark.post.user).lean();
           post.hasLike = await LikePost.exists({
             user: req.user.id,
             post: post._id,
