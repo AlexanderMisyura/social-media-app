@@ -24,27 +24,23 @@ module.exports = {
           bookmarks: user.bookmarks,
         });
       } else {
-        const post = await Post.findOne({
+        const post = await Post.exists({
           _id: req.params.postId,
           deleted: false,
+          $or: [
+            { user: req.user.id },
+            { status: "public" },
+            { status: "friends", friends: req.user.id },
+          ],
         });
 
-        // User is able to save the post if
-        if (
-          // it is his own post or
-          post.user.toString() === req.user.id ||
-          // it is any public post or
-          post.status === "public" ||
-          // it is a post for friends and user is a friend
-          (post.status === "friends" &&
-            post.friends.some((friend) => friend.toString() === req.user.id))
-        ) {
+        if (post) {
           await Bookmark.create(bookmark);
 
           const user = await User.findByIdAndUpdate(
             req.user.id,
             { $inc: { bookmarks: 1 } },
-            { new: true }
+            { new: true, projection: { bookmarks: 1 } }
           );
 
           res.json({
@@ -67,7 +63,7 @@ module.exports = {
       };
 
       let bookmarks = await Bookmark.find({ user: req.user.id })
-        .populate("post")
+        .populate("post", "-cloudinaryId")
         .lean();
       bookmarks = bookmarks.filter((bookmark) => {
         return (
@@ -85,7 +81,10 @@ module.exports = {
         bookmarks.map(async (bookmark) => {
           const post = bookmark.post;
           post.isBookmarked = true;
-          post.user = await User.findById(bookmark.post.user).lean();
+          post.user = await User.findById(bookmark.post.user, {
+            image: 1,
+            userName: 1,
+          }).lean();
           post.hasLike = await LikePost.exists({
             user: req.user.id,
             post: post._id,
