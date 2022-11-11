@@ -17,7 +17,14 @@ module.exports = {
       };
       // should improve the below query with posts with status: "friends"
       // if logged user is in friend list of user which this post is
-      let posts = await Post.find({ deleted: false, status: "public" })
+      let posts = await Post.find({
+        deleted: false,
+        $or: [
+          { user: req.user.id },
+          { status: "public" },
+          { status: "friends", friends: req.user.id },
+        ],
+      })
         .sort({ createdAt: "desc" })
         .populate("user")
         .lean();
@@ -68,6 +75,9 @@ module.exports = {
   savePost: async (req, res) => {
     try {
       req.body.user = req.user.id;
+      if (req.body.status === "friends") {
+        req.body.friends = req.user.friends;
+      }
       let post = await Post.create(req.body);
 
       const postId = post._id.toString();
@@ -110,27 +120,19 @@ module.exports = {
       //--------------------------------------//
       //---------- Get post from DB ----------//
       //--------------------------------------//
-      const post = await Post.findOne({ _id: req.params.postId, deleted: false })
+      const post = await Post.findOne({
+        _id: req.params.postId,
+        deleted: false,
+        $or: [
+          { user: req.user.id },
+          { status: "public" },
+          { status: "friends", friends: req.user.id },
+        ],
+      })
         .populate("user")
         .lean();
-      // Instead of the cumbersome conditional mess below should specify the above query to DB
-      // which take care if logged user is not browsed user and post status: "private"
-      // namely (req.user.id !== post.user._id.toString() && post.status === "private")
-      // also if logged user is a friend of browsed user and post status: "friends"
-      // namely (post.status === "friends" && !post.user.friends.includes(mongoose.Types.ObjectId(req.user.id)))
-      if (
-        // no post in DB
-        !post ||
-        // user looks through someone else's post and..
-        (req.user.id !== post.user._id.toString() &&
-          // this post is private or..
-          (post.status === "private" ||
-            // this post if for friends and user is not a friend
-            (post.status === "friends" &&
-              !post.user.friends.includes(
-                mongoose.Types.ObjectId(req.user.id)
-              ))))
-      ) {
+
+      if (!post) {
         // then user is not allowed to view this post
         // should make additional page for this case
         return res.render("error/404", {
@@ -221,7 +223,9 @@ module.exports = {
       if (Object.values(req.body).every((formData) => !formData.trim())) {
         return res.redirect(`/post/${req.params.postId}`);
       }
-      const post = await Post.findById(req.params.postId).populate("user").lean();
+      const post = await Post.findById(req.params.postId)
+        .populate("user")
+        .lean();
       if (!post) {
         // The user has already deleted the post he edit
         // or the query parameter (post id) was incorrect
@@ -268,7 +272,9 @@ module.exports = {
 
   deletePost: async (req, res) => {
     try {
-      const post = await Post.findById(req.params.postId).populate("user").lean();
+      const post = await Post.findById(req.params.postId)
+        .populate("user")
+        .lean();
       if (!post) {
         // The user has already deleted the post he edit
         // or the query parameter (post id) was incorrect
@@ -296,11 +302,16 @@ module.exports = {
       }
 
       // Delete all bookmarks related to the post
-      const bookmarks = await Bookmark.find({ post: req.params.postId }, "user");
+      const bookmarks = await Bookmark.find(
+        { post: req.params.postId },
+        "user"
+      );
       await Promise.all(
         bookmarks.map(
           async (bookmark) =>
-            await User.findByIdAndUpdate(bookmark.user, { $inc: { bookmarks: -1 } })
+            await User.findByIdAndUpdate(bookmark.user, {
+              $inc: { bookmarks: -1 },
+            })
         )
       );
       await Bookmark.deleteMany({

@@ -1,5 +1,6 @@
 const FriendRequest = require("../models/FriendRequest");
 const User = require("../models/User");
+const Post = require("../models/Post");
 
 module.exports = {
   sendRequest: async (req, res) => {
@@ -45,10 +46,18 @@ module.exports = {
       await User.findByIdAndUpdate(req.params.userId, {
         $push: { friends: req.user.id },
       });
+      await Post.updateMany(
+        { user: req.params.userId, status: "friends" },
+        { $push: { friends: req.user.id } }
+      );
 
       await User.findByIdAndUpdate(req.user.id, {
         $push: { friends: req.params.userId },
       });
+      await Post.updateMany(
+        { user: req.user.id, status: "friends" },
+        { $push: { friends: req.params.userId } }
+      );
 
       await FriendRequest.deleteOne({
         sender: req.params.userId,
@@ -89,10 +98,18 @@ module.exports = {
       await User.findByIdAndUpdate(req.params.userId, {
         $pull: { friends: req.user.id },
       });
+      await Post.updateMany(
+        { user: req.params.userId, status: "friends" },
+        { $pull: { friends: req.user.id } }
+      );
 
       await User.findByIdAndUpdate(req.user.id, {
         $pull: { friends: req.params.userId },
       });
+      await Post.updateMany(
+        { user: req.user.id, status: "friends" },
+        { $pull: { friends: req.params.userId } }
+      );
 
       res.redirect(`/profile/${req.params.userId}`);
     } catch (error) {

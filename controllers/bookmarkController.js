@@ -27,19 +27,17 @@ module.exports = {
         const post = await Post.findOne({
           _id: req.params.postId,
           deleted: false,
-        }).populate("user");
+        });
 
         // User is able to save the post if
         if (
           // it is his own post or
-          post.user._id.toString() === req.user.id ||
+          post.user.toString() === req.user.id ||
           // it is any public post or
           post.status === "public" ||
           // it is a post for friends and user is a friend
           (post.status === "friends" &&
-            post.user.friends.some(
-              (friend) => friend.toString() === req.user.id
-            ))
+            post.friends.some((friend) => friend.toString() === req.user.id))
         ) {
           await Bookmark.create(bookmark);
 
@@ -73,11 +71,12 @@ module.exports = {
         .lean();
       bookmarks = bookmarks.filter((bookmark) => {
         return (
+          bookmark.post &&
           bookmark.post.deleted === false &&
-          (bookmark.user._id.toString() === req.user.id ||
+          (bookmark.user.toString() === req.user.id ||
             bookmark.post.status === "public" ||
             (bookmark.post.status === "friends" &&
-              bookmark.user.friends.some(
+              bookmark.post.friends.some(
                 (friend) => friend.toString() === req.user.id
               )))
         );

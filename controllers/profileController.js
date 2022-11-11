@@ -41,18 +41,32 @@ module.exports = {
           count: await CommentSchema.count({ user: req.user.id }),
         };
       } else {
-        //Should specify a query which allows to see posts with status:
-        // "friends" if logged user is in friends array of browsed user
+        // Check if users are friends
+        isFriend =
+          browsedUser.friends.some(
+            (friend) => friend.toString() === req.user.id
+          ) &&
+          req.user.friends.some(
+            (friend) => friend.toString() === browsedUser._id.toString()
+          );
+
+        // DB query for posts depending on whether
+        // the logged user is a friend
+
         posts = await Post.find({
           user: req.params.userId,
-          status: "public",
+          $or: [
+            { status: "public" },
+            { status: "friends", friends: req.user.id },
+          ],
           deleted: false,
         })
           .populate("user")
           .sort({ createdAt: "desc" })
           .lean();
-        // For each post found in DB if user has already liked
-        // and bookmarked it to be able to adjust appropriate icon color
+
+        // Check for each post if logged user has already liked
+        // and bookmarked the post to be able to adjust appropriate styling
         posts = await Promise.all(
           posts.map(async (post) => {
             post.hasLike = await LikePost.exists({
@@ -67,9 +81,16 @@ module.exports = {
           })
         );
 
-        hasRequest = await FriendRequest.exists({sender: req.user.id, receiver: browsedUser._id});
-        hasOppositeRequest = await FriendRequest.exists({sender: browsedUser._id, receiver: req.user.id});
-        isFriend = browsedUser.friends.map(friend => friend.toString()).includes(req.user.id);
+        // Check for friend requests for further rendering appropriate btns
+        hasRequest = await FriendRequest.exists({
+          sender: req.user.id,
+          receiver: browsedUser._id,
+        });
+        hasOppositeRequest = await FriendRequest.exists({
+          sender: browsedUser._id,
+          receiver: req.user.id,
+        });
+
         comments = {
           count: await CommentSchema.count({ user: req.params.userId }),
         };
