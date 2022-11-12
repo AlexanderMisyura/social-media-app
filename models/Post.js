@@ -29,17 +29,20 @@ const PostSchema = new mongoose.Schema({
   friends: {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
+  comments: {
+    type: Number,
+    default: 0,
+    min: 0,
+  },
   likes: {
     type: Number,
     default: 0,
-  },
-  comments: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
-    default: [],
+    min: 0,
   },
   views: {
     type: Number,
     default: 0,
+    min: 0,
   },
   createdAt: {
     type: Date,

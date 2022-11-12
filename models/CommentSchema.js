@@ -19,6 +19,7 @@ const CommentSchema = new mongoose.Schema({
   likes: {
     type: Number,
     default: 0,
+    min: 0,
   },
   replyTo: {
     type: mongoose.Schema.Types.ObjectId,
@@ -27,9 +28,7 @@ const CommentSchema = new mongoose.Schema({
   replies: {
     type: Number,
     default: 0,
-  },
-  comments: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
+    min: 0,
   },
   createdAt: {
     type: Date,
