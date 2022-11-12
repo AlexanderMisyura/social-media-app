@@ -17,13 +17,13 @@ module.exports = {
         const post = await Post.findByIdAndUpdate(
           req.params.postId,
           { $inc: { likes: -1 } },
-          { new: true }
+          { new: true, projection: { likes: 1, user: 1 } }
         );
 
         const user = await User.findByIdAndUpdate(
           post.user,
           { $inc: { rating: -1 } },
-          { new: true }
+          { new: true, projection: { rating: 1 } }
         );
 
         res.json({
@@ -36,13 +36,13 @@ module.exports = {
         const post = await Post.findByIdAndUpdate(
           req.params.postId,
           { $inc: { likes: 1 } },
-          { new: true }
+          { new: true, projection: { likes: 1, user: 1 } }
         );
 
         const user = await User.findByIdAndUpdate(
           post.user,
           { $inc: { rating: 1 } },
-          { new: true }
+          { new: true, projection: { rating: 1 } }
         );
 
         res.json({

@@ -43,17 +43,19 @@ module.exports = {
   confirmRequest: async (req, res) => {
     try {
       // Add check if users don't already have each other in a friend lists
-      await User.findByIdAndUpdate(req.params.userId, {
-        $push: { friends: req.user.id },
-      });
+      await User.updateOne(
+        { _id: req.params.userId },
+        { $push: { friends: req.user.id } }
+      );
       await Post.updateMany(
         { user: req.params.userId, status: "friends" },
         { $push: { friends: req.user.id } }
       );
 
-      await User.findByIdAndUpdate(req.user.id, {
-        $push: { friends: req.params.userId },
-      });
+      await User.updateOne(
+        { _id: req.user.id },
+        { $push: { friends: req.params.userId } }
+      );
       await Post.updateMany(
         { user: req.user.id, status: "friends" },
         { $push: { friends: req.params.userId } }
@@ -95,17 +97,19 @@ module.exports = {
 
   removeFromFriendsList: async (req, res) => {
     try {
-      await User.findByIdAndUpdate(req.params.userId, {
-        $pull: { friends: req.user.id },
-      });
+      await User.updateOne(
+        { _id: req.params.userId },
+        { $pull: { friends: req.user.id } }
+      );
       await Post.updateMany(
         { user: req.params.userId, status: "friends" },
         { $pull: { friends: req.user.id } }
       );
 
-      await User.findByIdAndUpdate(req.user.id, {
-        $pull: { friends: req.params.userId },
-      });
+      await User.updateOne(
+        { _id: req.user.id },
+        { $pull: { friends: req.params.userId } }
+      );
       await Post.updateMany(
         { user: req.user.id, status: "friends" },
         { $pull: { friends: req.params.userId } }

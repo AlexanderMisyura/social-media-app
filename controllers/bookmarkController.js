@@ -17,7 +17,7 @@ module.exports = {
         const user = await User.findByIdAndUpdate(
           req.user.id,
           { $inc: { bookmarks: -1 } },
-          { new: true }
+          { new: true, projection: { bookmarks: 1 } }
         );
 
         res.json({

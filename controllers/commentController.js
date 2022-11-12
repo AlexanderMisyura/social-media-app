@@ -7,9 +7,10 @@ module.exports = {
       req.body.user = req.user.id;
       const comment = await CommentSchema.create(req.body);
       if (comment.replyTo) {
-        await CommentSchema.findByIdAndUpdate(req.body.replyTo, {
-          $inc: { replies: 1 },
-        });
+        await CommentSchema.updateOne(
+          { _id: req.body.replyTo },
+          { $inc: { replies: 1 } }
+        );
       }
       res.redirect(`/post/${req.body.post}`);
     } catch (error) {
@@ -28,11 +29,12 @@ module.exports = {
         id: req.user.id,
         image: req.user.image,
       };
-      const comments = await CommentSchema.find({
-        post: req.params.postId,
-        replyTo: req.params.commentId,
-      })
-        .populate("user")
+      const comments = await CommentSchema.find(
+        { post: req.params.postId, replyTo: req.params.commentId },
+        { post: 0, replyTo: 0 }
+      )
+        .sort({ createdAt: "desc" })
+        .populate("user", "image userName")
         .lean();
       res.render("partials/_comments", {
         layout: false,
@@ -48,7 +50,11 @@ module.exports = {
 
   deleteComment: async (req, res) => {
     try {
-      const comment = await CommentSchema.findById(req.params.commentId);
+      const comment = await CommentSchema.findById(req.params.commentId, {
+        user: 1,
+        post: 1,
+      });
+
       if (!comment) {
         // The user has already deleted the comment
         // or the query parameter (comment id) was incorrect
@@ -73,7 +79,7 @@ module.exports = {
           title: "404 NOT FOUND",
         });
       }
-      res.redirect(`/post/${comment.post.toString()}`)
+      res.redirect(`/post/${comment.post.toString()}`);
     } catch (error) {
       console.error(error);
       res.render("error/500", {

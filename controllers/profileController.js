@@ -21,10 +21,26 @@ module.exports = {
         image: req.user.image,
         bookmarks: req.user.bookmarks,
       };
-      const browsedUser = await User.findOne({ _id: req.params.userId }).lean();
+      const browsedUser = await User.findOne(
+        { _id: req.params.userId },
+        {
+          userName: 1,
+          image: 1,
+          rating: 1,
+          bio: 1,
+          friends: 1,
+        }
+      ).lean();
       if (req.user.id === req.params.userId) {
-        posts = await Post.find({ user: req.params.userId, deleted: false })
-          .populate("user")
+        posts = await Post.find(
+          { user: req.params.userId, deleted: false },
+          {
+            cloudinaryId: 0,
+            status: 0,
+            friends: 0,
+            deleted: 0,
+          }
+        )
           .sort({ createdAt: "desc" })
           .lean();
         posts = await Promise.all(
@@ -38,7 +54,6 @@ module.exports = {
         );
         comments = {
           bodies: await CommentSchema.find({ user: req.user.id }).lean(),
-          count: await CommentSchema.count({ user: req.user.id }),
         };
       } else {
         // Check if users are friends
@@ -53,15 +68,22 @@ module.exports = {
         // DB query for posts depending on whether
         // the logged user is a friend
 
-        posts = await Post.find({
-          user: req.params.userId,
-          $or: [
-            { status: "public" },
-            { status: "friends", friends: req.user.id },
-          ],
-          deleted: false,
-        })
-          .populate("user")
+        posts = await Post.find(
+          {
+            user: req.params.userId,
+            $or: [
+              { status: "public" },
+              { status: "friends", friends: req.user.id },
+            ],
+            deleted: false,
+          },
+          {
+            cloudinaryId: 0,
+            status: 0,
+            friends: 0,
+            deleted: 0,
+          }
+        )
           .sort({ createdAt: "desc" })
           .lean();
 
@@ -90,10 +112,6 @@ module.exports = {
           sender: browsedUser._id,
           receiver: req.user.id,
         });
-
-        comments = {
-          count: await CommentSchema.count({ user: req.params.userId }),
-        };
       }
       res.render("profile/profile", {
         title: `${browsedUser.userName}'s profile`,
@@ -155,14 +173,6 @@ module.exports = {
         return res.redirect(`/profile/${req.user.id}`);
       }
 
-      const user = await User.findById(req.user.id);
-      if (!user) {
-        return res.render("error/404", {
-          layout: "narrow",
-          title: "404 NOT FOUND",
-        });
-      }
-
       // Grab non-empty data from req.file and req.body
       // to single updateParams object
       let updateParams = {};
@@ -178,8 +188,8 @@ module.exports = {
         const uploadResult = await cloudinary.uploader.upload(req.file.path, {
           folder: `socister/${req.user.id}/avatar`,
         });
-        if (user.image !== process.env.DEFAULT_AVATAR_LINK) {
-          await cloudinary.api.delete_resources([user.cloudinaryId]);
+        if (req.user.image !== process.env.DEFAULT_AVATAR_LINK) {
+          await cloudinary.api.delete_resources([req.user.cloudinaryId]);
         }
         updateParams.image = cloudinary.url(uploadResult.public_id, {
           transformation: {

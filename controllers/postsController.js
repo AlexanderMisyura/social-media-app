@@ -17,20 +17,28 @@ module.exports = {
       };
       // should improve the below query with posts with status: "friends"
       // if logged user is in friend list of user which this post is
-      let posts = await Post.find({
-        deleted: false,
-        $or: [
-          { user: req.user.id },
-          { status: "public" },
-          { status: "friends", friends: req.user.id },
-        ],
-      })
+      let posts = await Post.find(
+        {
+          deleted: false,
+          $or: [
+            { user: req.user.id },
+            { status: "public" },
+            { status: "friends", friends: req.user.id },
+          ],
+        },
+        {
+          cloudinaryId: 0,
+          status: 0,
+          friends: 0,
+          deleted: 0,
+        }
+      )
         .sort({ createdAt: "desc" })
-        .populate("user")
+        .populate("user", "image userName")
         .lean();
 
-      // For each post found in DB if user has already liked it
-      // to be able to adjust appropriate icon color
+      // For each post found in DB check if user has already
+      // liked and bookmarked it to be able to set appropriate styling
       posts = await Promise.all(
         posts.map(async (post) => {
           post.hasLike = await LikePost.exists({
@@ -120,16 +128,24 @@ module.exports = {
       //--------------------------------------//
       //---------- Get post from DB ----------//
       //--------------------------------------//
-      const post = await Post.findOne({
-        _id: req.params.postId,
-        deleted: false,
-        $or: [
-          { user: req.user.id },
-          { status: "public" },
-          { status: "friends", friends: req.user.id },
-        ],
-      })
-        .populate("user")
+      const post = await Post.findOne(
+        {
+          _id: req.params.postId,
+          deleted: false,
+          $or: [
+            { user: req.user.id },
+            { status: "public" },
+            { status: "friends", friends: req.user.id },
+          ],
+        },
+        {
+          cloudinaryId: 0,
+          status: 0,
+          friends: 0,
+          deleted: 0,
+        }
+      )
+        .populate("user", "image userName")
         .lean();
 
       if (!post) {
@@ -166,12 +182,15 @@ module.exports = {
       //------------------------------------------//
       //---------- Get comments from DB ----------//
       //------------------------------------------//
-      const comments = await CommentSchema.find({
-        post: req.params.postId,
-        replyTo: null,
-      })
+      const comments = await CommentSchema.find(
+        {
+          post: req.params.postId,
+          replyTo: null,
+        },
+        { post: 0, replyTo: 0 }
+      )
         .sort({ createdAt: "desc" })
-        .populate("user")
+        .populate("user", "image userName")
         .lean();
 
       res.render("posts/post", {
@@ -192,14 +211,19 @@ module.exports = {
   },
 
   getEditPost: async (req, res) => {
-    const post = await Post.findById(req.params.postId).populate("user").lean();
+    const post = await Post.findById(req.params.postId, {
+      user: 1,
+      title: 1,
+      image: 1,
+      caption: 1,
+    }).lean();
     if (!post) {
       return res.render("error/404", {
         layout: "narrow",
         title: "404 NOT FOUND",
       });
     }
-    if (req.user.id !== post.user._id.toString()) {
+    if (req.user.id !== post.user.toString()) {
       // Add "you can't access this page"
       return res.redirect("/");
     }
@@ -223,9 +247,7 @@ module.exports = {
       if (Object.values(req.body).every((formData) => !formData.trim())) {
         return res.redirect(`/post/${req.params.postId}`);
       }
-      const post = await Post.findById(req.params.postId)
-        .populate("user")
-        .lean();
+      const post = await Post.findById(req.params.postId, { user: 1 }).lean();
       if (!post) {
         // The user has already deleted the post he edit
         // or the query parameter (post id) was incorrect
@@ -234,7 +256,7 @@ module.exports = {
           title: "404 NOT FOUND",
         });
       }
-      if (req.user.id !== post.user._id.toString()) {
+      if (req.user.id !== post.user.toString()) {
         // User somehow send a query to edit someone else's post
         return res.redirect("/");
       }
@@ -272,9 +294,7 @@ module.exports = {
 
   deletePost: async (req, res) => {
     try {
-      const post = await Post.findById(req.params.postId)
-        .populate("user")
-        .lean();
+      const post = await Post.findById(req.params.postId, { user: 1 }).lean();
       if (!post) {
         // The user has already deleted the post he edit
         // or the query parameter (post id) was incorrect
@@ -284,7 +304,7 @@ module.exports = {
         });
       }
 
-      if (req.user.id !== post.user._id.toString()) {
+      if (req.user.id !== post.user.toString()) {
         // User somehow send a query to delete someone else's post
         return res.redirect("/");
       }
@@ -302,16 +322,14 @@ module.exports = {
       }
 
       // Delete all bookmarks related to the post
-      const bookmarks = await Bookmark.find(
+      const usersHaveBookmark = await Bookmark.find(
         { post: req.params.postId },
-        "user"
+        { user: 1, _id: 0 }
       );
       await Promise.all(
-        bookmarks.map(
-          async (bookmark) =>
-            await User.findByIdAndUpdate(bookmark.user, {
-              $inc: { bookmarks: -1 },
-            })
+        usersHaveBookmark.map(
+          async (user) =>
+            await User.updateOne({ _id: user }, { $inc: { bookmarks: -1 } })
         )
       );
       await Bookmark.deleteMany({
