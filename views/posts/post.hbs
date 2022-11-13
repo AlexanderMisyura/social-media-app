@@ -49,16 +49,16 @@
         </div>
         <footer class="is-flex is-justify-content-space-between">
           <div class="icon-text">
-            <span class="icon has-text-grey">
+            <span class="icon has-text-grey-light">
               <i class="fa-regular fa-eye fa-lg"></i>
             </span>
-            <span>{{post.views}}</span>
+            <span class="has-text-grey">{{post.views}}</span>
           </div>
           <div class="icon-text">
-            <span class="icon has-text-grey">
+            <span class="icon has-text-grey-light">
               <i class="fa-regular p-1 fa-comment fa-lg"></i>
             </span>
-            <span>{{post.comments}}</span>
+            <span class="has-text-grey">{{post.comments}}</span>
           </div>
           <div>
             <span class="pr-1 share is-clickable">
@@ -94,7 +94,7 @@
           <article class="is-not-centered media">
             <figure class="media-left mr-2">
               <p class="image is-24x24">
-                <a class="has-text-dark" href="/profile/{{post.user._id}}">
+                <a class="has-text-dark" href="/profile/{{loggedUser.id}}">
                   <img
                     class="is-rounded"
                     src="{{loggedUser.image}}"

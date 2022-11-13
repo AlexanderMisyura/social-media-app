@@ -114,19 +114,19 @@ module.exports = {
   likeIcon: function ( loggedUserId, postAuthorId, hasLike, postId, postLikes) {
     if (loggedUserId === postAuthorId.toString()) {
       return `<span class="icon-text">
-  <span class="icon has-text-grey">
-    <i class="fa-regular p-1 fa-star fa-lg"></i>
+  <span class="icon has-text-grey-light">
+    <i class="fa-regular fa-star fa-lg"></i>
   </span>
-  <span class="likeCounter">${postLikes}</span>
+  <span class="likeCounter has-text-grey">${postLikes}</span>
 </span>`;
     } else {
       return `<span class="icon-text">
   <span
     class="like icon is-clickable has-text-${hasLike ? "warning" : "dark"}"
     data-post-id="${postId}">
-    <i class="fa-regular p-1 fa-star fa-lg"></i>
+    <i class="fa-regular fa-star fa-lg"></i>
   </span>
-  <span class="likeCounter">${postLikes}</span>
+  <span class="likeCounter has-text-grey">${postLikes}</span>
 </span>`;
     }
   },
