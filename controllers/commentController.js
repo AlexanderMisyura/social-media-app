@@ -1,4 +1,5 @@
 const CommentSchema = require("../models/CommentSchema");
+const Post = require("../models/Post");
 // const hbCreate = require("express-handlebars").create();
 
 module.exports = {
@@ -6,6 +7,7 @@ module.exports = {
     try {
       req.body.user = req.user.id;
       const comment = await CommentSchema.create(req.body);
+      await Post.updateOne({ _id: req.body.post }, { $inc: { comments: 1 } });
       if (comment.replyTo) {
         await CommentSchema.updateOne(
           { _id: req.body.replyTo },
