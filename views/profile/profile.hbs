@@ -27,77 +27,84 @@
       </div>
       <div class="tabs is-centered">
         <ul>
-          <li class="is-active"><a>Posts</a></li>
-          <li><a>Comments</a></li>
-          <li><a>Friends</a></li>
+          <li class="is-active js-tab-trigger" data-tab="posts"><a>Posts</a></li>
+          <li class="js-tab-trigger" data-tab="comments"><a>Comments</a></li>
+          <li class="js-tab-trigger" data-tab="friends"><a>Friends</a></li>
         </ul>
       </div>
     </div>
   </div>
 </div>
 <div class="container is-max-desktop">
-
-  <div class="columns is-multiline is-desktop">
-    {{#if posts}}
-      {{#each posts as |post|}}
-        <div class="column is-half-desktop">
-          <div class="box is-relative">
-            <article class="media is-align-items-stretch">
-              <figure class="media-left">
-                <p class="image is-128x128">
-                  <a href="/post/{{_id}}"><img src="{{image}}" /></a>
-                </p>
-              </figure>
-              <div
-                class="media-content is-flex is-flex-direction-column is-justify-content-space-between is-cropped"
-              >
-                <a href="/post/{{_id}}">
-                  <div class="content">
-                    <h3
-                      class="title is-5 is-cropped"
-                    >{{title}}</h3>
-                    <p class="subtitle is-6 is-cropped">{{caption}}</p>
-                  </div>
-                </a>
-                <footer class="is-flex is-justify-content-space-between">
-                  <div class="icon-text">
-                    <span class="icon has-text-grey-light">
-                      <i class="fa-regular fa-eye fa-lg"></i>
-                    </span>
-                    <span class="has-text-grey">{{views}}</span>
-                  </div>
-                  <div>
-                    <span class="icon-text">
+  <div id="posts" class="tab">
+    <div class="columns is-multiline is-desktop">
+      {{#if posts}}
+        {{#each posts as |post|}}
+          <div class="column is-half-desktop">
+            <div class="box is-relative">
+              <article class="media is-align-items-stretch">
+                <figure class="media-left">
+                  <p class="image is-128x128">
+                    <a href="/post/{{_id}}"><img src="{{image}}" /></a>
+                  </p>
+                </figure>
+                <div
+                  class="media-content is-flex is-flex-direction-column is-justify-content-space-between is-cropped"
+                >
+                  <a href="/post/{{_id}}">
+                    <div class="content">
+                      <h3
+                        class="title is-5 is-cropped"
+                      >{{title}}</h3>
+                      <p class="subtitle is-6 is-cropped">{{caption}}</p>
+                    </div>
+                  </a>
+                  <footer class="is-flex is-justify-content-space-between">
+                    <div class="icon-text">
                       <span class="icon has-text-grey-light">
-                        <i class="fa-regular p-1 fa-comment fa-lg"></i>
+                        <i class="fa-regular fa-eye fa-lg"></i>
                       </span>
-                      <span class="has-text-grey">{{comments}}</span>
-                    </span>
-                  </div>
-                  <div>
-                    <a class="pr-1" href="">
-                      <span class="icon has-text-dark">
-                        <i class="fa-solid fa-share-nodes fa-lg"></i>
+                      <span class="has-text-grey">{{views}}</span>
+                    </div>
+                    <div>
+                      <span class="icon-text">
+                        <span class="icon has-text-grey-light">
+                          <i class="fa-regular p-1 fa-comment fa-lg"></i>
+                        </span>
+                        <span class="has-text-grey">{{comments}}</span>
                       </span>
-                    </a>
-                    <span class="pr-1 is-clickable">
-                      <span data-post-id="{{_id}}"
-                        class="bookmark icon {{#if isBookmarked}}has-text-success {{else}}has-text-dark{{/if}}">
-                        <i class="fa-regular fa-bookmark fa-lg"></i>
+                    </div>
+                    <div>
+                      <a class="pr-1" href="">
+                        <span class="icon has-text-dark">
+                          <i class="fa-solid fa-share-nodes fa-lg"></i>
+                        </span>
+                      </a>
+                      <span class="pr-1 is-clickable">
+                        <span data-post-id="{{_id}}"
+                          class="bookmark icon {{#if isBookmarked}}has-text-success {{else}}has-text-dark{{/if}}">
+                          <i class="fa-regular fa-bookmark fa-lg"></i>
+                        </span>
                       </span>
-                    </span>
-                    {{{likeIcon ../loggedUser.id user hasLike _id likes}}}
-                  </div>
-                </footer>
-              </div>
-            </article>
+                      {{{likeIcon ../loggedUser.id user hasLike _id likes}}}
+                    </div>
+                  </footer>
+                </div>
+              </article>
+            </div>
           </div>
+        {{/each}}
+      {{else}}
+        <div class="column">
+          <p class="box">No posts yet</p>
         </div>
-      {{/each}}
-    {{else}}
-      <div class="column">
-        <p class="box">No posts yet</p>
-      </div>
-    {{/if}}
+      {{/if}}
+    </div>
+  </div>
+  <div id="comments" class="tab is-hidden">
+    
+  </div>
+  <div id="friends" class="tab is-hidden">
+    
   </div>
 </div>
