@@ -324,18 +324,18 @@ module.exports = {
       }
 
       // Delete all bookmarks related to the post
-      const usersHaveBookmark = await Bookmark.find(
+      const bookmarksWithDeletedPost = await Bookmark.find(
         { post: req.params.postId },
         { user: 1, _id: 0 }
       );
       await Promise.all(
-        usersHaveBookmark.map(
-          async (user) =>
-            await User.updateOne({ _id: user }, { $inc: { bookmarks: -1 } })
+        bookmarksWithDeletedPost.map(
+          async (bookmark) =>
+            await User.updateOne({ _id: bookmark.user }, { $inc: { bookmarks: -1 } })
         )
       );
       await Bookmark.deleteMany({
-        postId: req.params.postId,
+        post: req.params.postId,
       });
 
       res.redirect(`/profile/${req.user.id}`);
