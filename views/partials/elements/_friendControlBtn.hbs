@@ -1,0 +1,78 @@
+{{#if isFriend}}
+  <div class="is-top-right-position is-toggle-hidden">
+    <form
+      action="/friends/remove/{{browsedUser._id}}?_method=PUT"
+      method="POST"
+    >
+      <button class="button is-danger is-small is-rounded" type="submit">
+        <span class="icon">
+          <i class="fa-solid fa-user-slash fa-xl"></i>
+        </span>
+      </button>
+    </form>
+  </div>
+{{else}}
+  {{#if hasOppositeRequest}}
+    <div class="is-top-right-position is-toggle-hidden">
+      <form
+        action="/friends/confirm/{{browsedUser._id}}?_method=PUT"
+        method="POST"
+      >
+        <button
+          class="button is-success is-light is-small is-rounded"
+          type="submit"
+        >
+          <span class="icon has-text-dark">
+            <i class="fa-solid fa-user-check fa-xl"></i>
+          </span>
+        </button>
+      </form>
+    </div>
+    <div class="is-top-left-position is-toggle-hidden">
+      <form
+        action="/friends/reject/{{browsedUser._id}}?_method=PUT"
+        method="POST"
+      >
+        <button
+          class="button is-danger is-light is-small is-rounded"
+          type="submit"
+        >
+          <span class="icon has-text-dark">
+            <i class="fa-solid fa-user-xmark fa-xl"></i>
+          </span>
+        </button>
+      </form>
+    </div>
+  {{else}}
+    {{#if hasRequest}}
+      <div class="is-top-right-position is-toggle-hidden">
+        <form
+          action="/friends/{{browsedUser._id}}?_method=DELETE"
+          method="POST"
+        >
+          <button
+            class="button is-warning is-light is-small is-rounded"
+            type="submit"
+          >
+            <span class="icon has-text-dark">
+              <i class="fa-solid fa-user-minus fa-xl"></i>
+            </span>
+          </button>
+        </form>
+      </div>
+    {{else}}
+      <div class="is-top-right-position is-toggle-hidden">
+        <form action="/friends/{{browsedUser._id}}" method="POST">
+          <button
+            class="button is-link is-light is-small is-rounded"
+            type="submit"
+          >
+            <span class="icon has-text-dark">
+              <i class="fa-solid fa-user-plus fa-xl"></i>
+            </span>
+          </button>
+        </form>
+      </div>
+    {{/if}}
+  {{/if}}
+{{/if}}

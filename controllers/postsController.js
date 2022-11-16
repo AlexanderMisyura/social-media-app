@@ -41,6 +41,7 @@ module.exports = {
       // liked and bookmarked it to be able to set appropriate styling
       posts = await Promise.all(
         posts.map(async (post) => {
+          post.isOwnPost = req.user.id === post.user._id.toString();
           post.hasLike = await LikePost.exists({
             user: req.user.id,
             post: post._id,
@@ -156,20 +157,18 @@ module.exports = {
           title: "404 NOT FOUND",
         });
       }
+      // Check if user view his own post
+      post.isOwnPost = req.user.id === post.user._id.toString();
 
       //-------------------------------------------//
       //---------- Get like info from DB ----------//
       //-------------------------------------------//
-      let hasLike;
-      // If user looks through someone else's post
-      if (req.user.id !== post.user._id.toString()) {
-        // Check if user has already liked the post
-        // to be able to adjust appropriate icon color
-        hasLike = await LikePost.exists({
-          user: req.user.id,
-          post: req.params.postId,
-        });
-      }
+      post.hasLike = post.isOwnPost
+        ? false
+        : await LikePost.exists({
+            user: req.user.id,
+            post: req.params.postId,
+          });
 
       //-------------------------------------------//
       //-------- Get bookmark info from DB --------//
@@ -192,12 +191,15 @@ module.exports = {
         .sort({ createdAt: "desc" })
         .populate("user", "image userName")
         .lean();
+      comments.forEach(
+        (comment) =>
+          (comment.isOwnComment = req.user.id === comment.user._id.toString())
+      );
 
       res.render("posts/post", {
         title: `Socister | ${post.title}`,
         loggedUser,
         post,
-        hasLike,
         isBookmarked,
         comments,
       });

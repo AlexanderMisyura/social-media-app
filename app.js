@@ -22,28 +22,15 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Handlebars
-const {
-  profileEditButton,
-  friendRequestButton,
-  postDeleteButton,
-  commentDeleteButton,
-  postEditButton,
-  likeIcon,
-} = require("./helpers/hbs");
+const {} = require("./helpers/hbs");
 
 app.engine(
   ".hbs",
   hbs({
-    helpers: {
-      profileEditButton,
-      friendRequestButton,
-      postDeleteButton,
-      commentDeleteButton,
-      postEditButton,
-      likeIcon,
-    },
+    helpers: {},
     defaultLayout: "main",
     extname: ".hbs",
+    partialsDir: ["views/partials/", "views/partials/elements"],
   })
 );
 app.set("view engine", ".hbs");

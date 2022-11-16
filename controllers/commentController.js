@@ -38,6 +38,10 @@ module.exports = {
         .sort({ createdAt: "desc" })
         .populate("user", "image userName")
         .lean();
+      comments.forEach(
+        (comment) =>
+          (comment.isOwnComment = req.user.id === comment.user._id.toString())
+      );
       res.render("partials/_comments", {
         layout: false,
         comments,

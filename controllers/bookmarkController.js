@@ -85,6 +85,7 @@ module.exports = {
             image: 1,
             userName: 1,
           }).lean();
+          post.isOwnPost = req.user.id === post.user._id.toString();
           post.hasLike = await LikePost.exists({
             user: req.user.id,
             post: post._id,

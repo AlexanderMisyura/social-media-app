@@ -5,8 +5,17 @@
         <div class="column">
           <div class="media">
             <div class="media-left is-flex is-relative has-hidden">
-              {{{profileEditButton loggedUser.id browsedUser._id}}}
-              {{{friendRequestButton loggedUser.id browsedUser._id isFriend hasRequest hasOppositeRequest}}}
+              {{#if isOwnProfile}}
+                <div class="is-top-right-position is-toggle-hidden">
+                  <a class="button is-white is-small is-rounded" href="/profile/settings/{{loggedUser.id}}">
+                    <span class="icon has-text-dark">
+                      <i class="fa-solid fa-gears fa-xl"></i>
+                    </span>
+                  </a>
+                </div>
+              {{else}}
+              {{> _friendControlBtn}}
+              {{/if}}
               <figure class="image is-128x128">
                 <img
                   class="is-rounded"
@@ -86,7 +95,7 @@
                           <i class="fa-regular fa-bookmark fa-lg"></i>
                         </span>
                       </span>
-                      {{{likeIcon ../loggedUser.id user hasLike _id likes}}}
+                      {{> _likeIcon}}
                     </div>
                   </footer>
                 </div>

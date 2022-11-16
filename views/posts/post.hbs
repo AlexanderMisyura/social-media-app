@@ -1,20 +1,23 @@
 <div class="container is-max-widescreen">
-  <div id="modal-delete-message" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-content">
-      <div class="message is-danger">
-        <div class="message-body has-text-centered">
-          <div class="content">
-            <p class="has-text-weight-semibold">Delete this post?</p>
-            <form action="/post/delete/{{post._id}}?_method=PUT" method="post">
-              <button class="button is-danger" type="submit">Yes, delete</button>
-            </form>
+  {{#if post.isOwnPost}}
+    <div id="modal-delete-message" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <div class="message is-danger">
+          <div class="message-body has-text-centered">
+            <div class="content">
+              <p class="has-text-weight-semibold">Delete this post?</p>
+              <form action="/post/delete/{{post._id}}?_method=PUT" method="post">
+                <button class="button is-danger" type="submit">Yes, delete</button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
+      <button class="modal-close is-large" aria-label="close"></button>
     </div>
-    <button class="modal-close is-large" aria-label="close"></button>
-  </div>
+  {{/if}}
+
   <div class="columns">
     <div class="column">
       <article class="box">
@@ -40,8 +43,22 @@
         </h2>
         <h1 class="title">{{post.title}}</h1>
         <figure class="image is-square mb-5 is-relative has-hidden">
-          {{{postDeleteButton loggedUser.id post.user._id}}}
-          {{{postEditButton loggedUser.id post.user._id post._id}}}
+          {{#if post.isOwnPost}}
+            <div class="is-top-left-position is-toggle-hidden">
+              <button class="button is-danger js-modal-trigger" data-target-name="modal-delete-message">
+                <span class="icon">
+                  <i class="fa-regular fa-trash-can"></i>
+                </span>
+              </button>
+            </div>
+            <div class="is-top-right-position is-toggle-hidden">
+              <a class="button is-white" href="/post/edit/{{post._id}}">
+                <span class="icon">
+                <i class="fa-regular fa-pen-to-square"></i>
+                </span>
+              </a>
+            </div>
+          {{/if}}
           <img src="{{post.image}}" alt="{{post.title}} image" />
         </figure>
         <div class="is-size-5 content">
@@ -77,7 +94,9 @@
                 <i class="fa-regular fa-bookmark fa-lg"></i>
               </span>
             </span>
-            {{{likeIcon loggedUser.id post.user._id hasLike post._id post.likes}}}
+            {{#with post}}
+              {{> _likeIcon}}
+            {{/with}}
           </div>
         </footer>
       </article>

@@ -15,6 +15,7 @@ module.exports = {
       let hasRequest;
       let hasOppositeRequest;
       let isFriend;
+      let isOwnProfile;
       const loggedUser = {
         name: req.user.userName,
         id: req.user.id,
@@ -32,6 +33,7 @@ module.exports = {
         }
       ).lean();
       if (req.user.id === req.params.userId) {
+        isOwnProfile = true;
         posts = await Post.find(
           { user: req.params.userId, deleted: false },
           {
@@ -45,6 +47,7 @@ module.exports = {
           .lean();
         posts = await Promise.all(
           posts.map(async (post) => {
+            post.isOwnPost = true;
             post.isBookmarked = await Bookmark.exists({
               user: req.user.id,
               post: post._id,
@@ -91,6 +94,7 @@ module.exports = {
         // and bookmarked the post to be able to adjust appropriate styling
         posts = await Promise.all(
           posts.map(async (post) => {
+            post.isOwnPost = false;
             post.hasLike = await LikePost.exists({
               user: req.user.id,
               post: post._id,
@@ -122,6 +126,7 @@ module.exports = {
         hasRequest,
         hasOppositeRequest,
         isFriend,
+        isOwnProfile,
       });
     } catch (err) {
       console.error(err);
