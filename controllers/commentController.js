@@ -85,7 +85,7 @@ module.exports = {
           title: "404 NOT FOUND",
         });
       }
-      res.redirect(`/post/${comment.post.toString()}`);
+      res.redirect("back");
     } catch (error) {
       console.error(error);
       res.render("error/500", {

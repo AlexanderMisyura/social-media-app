@@ -55,9 +55,28 @@ module.exports = {
             return post;
           })
         );
-        comments = {
-          bodies: await CommentSchema.find({ user: req.user.id }).lean(),
-        };
+        comments = await CommentSchema.find(
+          { user: req.user.id, deleted: false },
+          { replyTo: 0, deleted: 0 }
+        )
+          .sort({ createdAt: "desc" })
+          .populate([
+            { path: "user", select: "image userName" },
+            { path: "post", select: "title" },
+          ])
+          .lean();
+        comments.forEach((comment) => {
+          comment.createdAtLocale = new Date(comment.createdAt).toLocaleString(
+            "en-En",
+            {
+              weekday: "short",
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            }
+          );
+          comment.isOwnComment = true;
+        });
       } else {
         // Check if users are friends
         isFriend =

@@ -1,4 +1,8 @@
 {{#each comments as |comment|}}
+{{#if ../isOwnProfile}}
+  <div class="column is-half-desktop">
+    <div class="box">
+{{/if}}
   <article class="is-not-centered media is-relative has-hidden">
     <figure class="media-left mr-2">
       <p class="image is-24x24">
@@ -30,9 +34,15 @@
         <a class="has-text-dark" href="/profile/{{user._id}}">
           <p class="title is-6 is-clipped is-inline-block">{{user.userName}}</p>
         </a>
+        {{#if ../isOwnProfile}}
+          <a class="has-text-dark title is-6" href="/post/{{post._id}}">
+            <p class="title is-6 is-clipped is-inline-block">in {{post.title}}</p>
+          </a>
+        {{/if}}
+        <p class="is-size-7 is-inline-block has-text-grey-light is-pulled-right">{{createdAtLocale}}</p>
         <div class="content">
            {{#unless deleted}}
-            <p>
+            <p class="has-text-break-overflow">
               {{content}}
             </p>
             {{else}}
@@ -43,7 +53,8 @@
         </div>
 
         <nav class="level is-mobile mb-0">
-            <div class="level-left">
+          <div class="level-left">
+            {{#unless ../isOwnProfile}}
               <button
                 class="reply button is-white is-small is-rounded has-text-weight-semibold icon-text is-unselectable"
                 data-post-id="{{../post._id}}"
@@ -56,6 +67,11 @@
                   <i class="fa-regular fa-comment-dots fa-sm"></i>
                 </span>
               </button>
+            {{else}}
+              {{#if replies}}
+                <span class="is-size-7 has-text-grey">Replies: {{replies}}</span>
+              {{/if}}
+            {{/unless}}
             </div>
             <div class="level-right">
               <span class="icon-text is-clickable mb-1">
@@ -69,7 +85,7 @@
 
         <div id="{{_id}}"></div>
       </div>
-
+      {{#unless ../isOwnProfile}}
       {{#if replies}}
         <button
           class="comment-branch-btn button is-white is-small is-rounded icon-text has-color-link"
@@ -82,8 +98,13 @@
         </button>
         <div class="comment-branch-container"></div>
       {{/if}}
+      {{/unless}}
 
     </div>
 
   </article>
+  {{#if ../isOwnProfile}}
+      </div>
+    </div>
+  {{/if}}
 {{/each}}

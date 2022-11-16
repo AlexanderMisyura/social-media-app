@@ -77,6 +77,10 @@ html {
   display: block;
 }
 
+.has-text-break-overflow {
+  overflow-wrap: anywhere;
+}
+
 @media screen and (max-width: 450px) {
   .section {
     padding: 0em 0 3em;

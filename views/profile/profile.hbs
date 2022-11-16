@@ -37,8 +37,10 @@
       <div class="tabs is-centered">
         <ul>
           <li class="is-active js-tab-trigger" data-tab="posts"><a>Posts</a></li>
-          <li class="js-tab-trigger" data-tab="comments"><a>Comments</a></li>
-          <li class="js-tab-trigger" data-tab="friends"><a>Friends</a></li>
+          {{#if isOwnProfile}}
+            <li class="js-tab-trigger" data-tab="comments"><a>Comments</a></li>
+            <li class="js-tab-trigger" data-tab="friends"><a>Friends</a></li>
+          {{/if}}
         </ul>
       </div>
     </div>
@@ -110,10 +112,12 @@
       {{/if}}
     </div>
   </div>
-  <div id="comments" class="tab is-hidden">
-    
-  </div>
-  <div id="friends" class="tab is-hidden">
-    
-  </div>
+  {{#if isOwnProfile}}
+    <div id="comments" class="tab is-hidden columns is-multiline is-desktop">
+      {{> _comments}}
+    </div>
+    <div id="friends" class="tab is-hidden">
+      
+    </div>
+  {{/if}}
 </div>
