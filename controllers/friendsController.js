@@ -1,6 +1,7 @@
 const FriendRequest = require("../models/FriendRequest");
 const User = require("../models/User");
 const Post = require("../models/Post");
+const Bookmark = require("../models/Bookmark");
 
 module.exports = {
   sendRequest: async (req, res) => {
@@ -97,23 +98,83 @@ module.exports = {
 
   removeFromFriendsList: async (req, res) => {
     try {
+      // Update data related to logged user:
+
+      // Remove logged user's bookmarks with with browsed user's friend posts
+      let loggedUserBookmarks = await Bookmark.find({ user: req.user.id })
+        .populate({
+          path: "post",
+          match: { user: req.params.userId, friends: req.user.id },
+          select: "user",
+        })
+        .lean();
+      loggedUserBookmarks = loggedUserBookmarks.filter(
+        (bookmark) => bookmark.post
+      );
+      console.log('loggedUserBookmarks :>> ', loggedUserBookmarks);
+
+      await Promise.all(
+        loggedUserBookmarks.map(
+          async (bookmark) =>
+            await Bookmark.deleteOne({
+              user: req.user.id,
+              post: bookmark.post._id,
+            })
+        )
+      );
+      // Remove browsed user from logged user friend list,
+      // decrement logged user's bookmarks by the number of
+      // browsed user's friend posts (which logged user had bookmarked)
+      await User.updateOne(
+        { _id: req.user.id },
+        {
+          $pull: { friends: req.params.userId },
+          $inc: { bookmarks: -loggedUserBookmarks.length },
+        }
+      );
+
+      // Remove browsed user's bookmarks with with logged user's friend posts
+      let browsedUserBookmarks = await Bookmark.find({ user: req.params.userId })
+        .populate({
+          path: "post",
+          match: { user: req.user.id, friends: req.params.userId },
+          select: "user",
+        })
+        .lean();
+      browsedUserBookmarks = browsedUserBookmarks.filter(
+        (bookmark) => bookmark.post
+      );
+      console.log('browsedUserBookmarks to delete (ururu / zurk friend post) :>> ', browsedUserBookmarks);
+
+      await Promise.all(
+        browsedUserBookmarks.map(
+          async (bookmark) =>
+            await Bookmark.deleteOne({
+              user: req.params.userId,
+              post: bookmark.post._id,
+            })
+        )
+      );
+      // Remove logged user from browsed user friend list,
+      // decrement browsed user's bookmarks by the number of
+      // logged user's friend posts (which browsed user had bookmarked)
       await User.updateOne(
         { _id: req.params.userId },
-        { $pull: { friends: req.user.id } }
+        {
+          $pull: { friends: req.user.id },
+          $inc: { bookmarks: -browsedUserBookmarks.length },
+        }
       );
+      // Remove logged user from browsed user's friend posts
       await Post.updateMany(
         { user: req.params.userId, status: "friends" },
         { $pull: { friends: req.user.id } }
-      );
-
-      await User.updateOne(
-        { _id: req.user.id },
-        { $pull: { friends: req.params.userId } }
-      );
+      )
+      // Remove browsed user from logged user's friend posts
       await Post.updateMany(
         { user: req.user.id, status: "friends" },
         { $pull: { friends: req.params.userId } }
-      );
+      );;
 
       res.redirect(`/profile/${req.params.userId}`);
     } catch (error) {
