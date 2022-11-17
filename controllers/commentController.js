@@ -77,11 +77,16 @@ module.exports = {
       }
 
       // Mark comment as deleted
-      const update = await CommentSchema.updateOne(
+      const deletedComment = await CommentSchema.findByIdAndUpdate(
         { _id: req.params.commentId },
-        { deleted: true }
+        { deleted: true },
+        { projection: { post: 1 } }
       );
-      if (update.acknowledged) {
+      await Post.updateOne(
+        { _id: deletedComment.post },
+        { $inc: { comments: -1 } }
+      );
+      if (deletedComment) {
         // Recursively cheks parent comments and reduce their replies if needed
         async function checkParents(comment) {
           if (comment.replyTo && !comment.replies) {
