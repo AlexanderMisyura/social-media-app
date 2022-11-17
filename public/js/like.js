@@ -5,17 +5,20 @@ if (document.querySelector(".like")) {
     }
 
     async #toggleLike() {
-      const route = `/like/post/${this.likeElement.dataset.postId}`;
+      const route = this.likeElement.dataset.isCommentLike
+        ? `/like/comment/${this.likeElement.dataset.commentId}`
+        : `/like/post/${this.likeElement.dataset.postId}`;
       try {
-        let resPromise = await fetch(route, {
+        const resPromise = await fetch(route, {
           method: "PUT",
         });
-        let res = await resPromise.json();
+        const res = await resPromise.json();
         if (res) {
           this.likeElement.classList.toggle("has-text-warning");
           this.likeElement.classList.toggle("has-text-dark");
-          this.likeElement.parentElement.querySelector(".likeCounter").textContent =
-            res.storyLikes || 0;
+          this.likeElement.parentElement.querySelector(
+            ".likeCounter"
+          ).textContent = res.likes || 0;
           if (document.querySelector("#userRating")) {
             document.querySelector("#userRating").textContent = res.userRating;
           }
