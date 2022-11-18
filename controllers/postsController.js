@@ -15,6 +15,7 @@ module.exports = {
         id: req.user.id,
         image: req.user.image,
         bookmarks: req.user.bookmarks,
+        language: req.user.language,
       };
       // should improve the below query with posts with status: "friends"
       // if logged user is in friend list of user which this post is
@@ -75,6 +76,7 @@ module.exports = {
       id: req.user.id,
       image: req.user.image,
       bookmarks: req.user.bookmarks,
+      language: req.user.language,
     };
     res.render("posts/postEditor", {
       title: "Socister | Create an awsome new post",
@@ -125,6 +127,7 @@ module.exports = {
         id: req.user.id,
         image: req.user.image,
         bookmarks: req.user.bookmarks,
+        language: req.user.language,
       };
 
       //--------------------------------------//
@@ -241,6 +244,7 @@ module.exports = {
       id: req.user.id,
       image: req.user.image,
       bookmarks: req.user.bookmarks,
+      language: req.user.language,
     };
     res.render("posts/postEditor", {
       title: `Socister | Edit "${post.title}"`,

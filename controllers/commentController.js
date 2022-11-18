@@ -31,6 +31,7 @@ module.exports = {
         name: req.user.userName,
         id: req.user.id,
         image: req.user.image,
+        language: req.user.language,
       };
       let comments = await CommentSchema.find(
         { post: req.params.postId, replyTo: req.params.commentId },

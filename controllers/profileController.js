@@ -21,6 +21,7 @@ module.exports = {
         id: req.user.id,
         image: req.user.image,
         bookmarks: req.user.bookmarks,
+        language: req.user.language,
       };
       const browsedUser = await User.findOne(
         { _id: req.params.userId },
@@ -66,15 +67,6 @@ module.exports = {
           ])
           .lean();
         comments.forEach((comment) => {
-          comment.createdAtLocale = new Date(comment.createdAt).toLocaleString(
-            "en-En",
-            {
-              weekday: "short",
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            }
-          );
           comment.isOwnComment = true;
         });
       } else {
@@ -168,6 +160,7 @@ module.exports = {
         image: req.user.image,
         bio: req.user.bio,
         bookmarks: req.user.bookmarks,
+        language: req.user.language,
       };
       res.render("profile/profileSettings", {
         title: `${req.user.userName}'s profile settings`,

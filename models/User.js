@@ -35,6 +35,10 @@ const UserSchema = new mongoose.Schema({
     default: "No bio yet",
     set: defaultValues.bio,
   },
+  language: {
+    type: String,
+    default: "en-En"
+  },
   friends: {
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },

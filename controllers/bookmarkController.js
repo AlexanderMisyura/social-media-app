@@ -60,6 +60,7 @@ module.exports = {
         id: req.user.id,
         image: req.user.image,
         bookmarks: req.user.bookmarks,
+        language: req.user.language,
       };
 
       let bookmarks = await Bookmark.find({ user: req.user.id })
