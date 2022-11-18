@@ -50,6 +50,10 @@ html {
   z-index: 1;
 }
 
+.is-absolute {
+  position: absolute;
+}
+
 .is-top-right-position {
   position: absolute;
   right: 0.5em;

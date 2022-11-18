@@ -35,6 +35,7 @@
                </figure>
             </div>
             <div class="media-content">
+              <p class="is-size-7 is-inline-block has-text-grey-light is-pulled-right">{{dateToLocale post.createdAt loggedUser.language}}</p>
               <a class="has-text-dark title is-6 is-clipped is-inline-block" href="/profile/{{post.user._id}}">
                 {{post.user.userName}}
               </a>

@@ -38,7 +38,7 @@
             <p class="title is-6 is-clipped is-inline-block">in {{post.title}}</p>
           </a>
         {{/if}}
-        <p class="is-size-7 is-inline-block has-text-grey-light is-pulled-right">{{createdAtLocale}}</p>
+        <p class="is-size-7 is-inline-block has-text-grey-light is-pulled-right">{{dateToLocale createdAt ../loggedUser.language}}</p>
         <div class="content">
           <p class="has-text-break-overflow">
             {{content}}
@@ -112,7 +112,7 @@
           <a class="has-text-dark" href="/profile/{{user._id}}">
             <p class="title is-6 is-clipped is-inline-block">{{user.userName}}</p>
           </a>
-          <p class="is-size-7 is-inline-block has-text-grey-light is-pulled-right">{{createdAtLocale}}</p>
+          <p class="is-size-7 is-inline-block has-text-grey-light is-pulled-right">{{dateToLocale createdAt ../loggedUser.language}}</p>
           <div class="content">
             <p class="is-italic has-text-grey">
               Comment was deleted

@@ -22,12 +22,12 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Handlebars
-const {} = require("./helpers/hbs");
+const { dateToLocale } = require("./helpers/hbs");
 
 app.engine(
   ".hbs",
   hbs({
-    helpers: {},
+    helpers: { dateToLocale },
     defaultLayout: "main",
     extname: ".hbs",
     partialsDir: ["views/partials/", "views/partials/elements"],
