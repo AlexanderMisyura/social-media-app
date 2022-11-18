@@ -1,5 +1,6 @@
 const Post = require("../models/Post");
 const LikePost = require("../models/LikePost");
+const LikeComment = require("../models/LikeComment");
 const Bookmark = require("../models/Bookmark");
 const cloudinary = require("../middleware/cloudinary");
 const mongoose = require("mongoose");
@@ -181,7 +182,7 @@ module.exports = {
       //------------------------------------------//
       //---------- Get comments from DB ----------//
       //------------------------------------------//
-      const comments = await CommentSchema.find(
+      let comments = await CommentSchema.find(
         {
           post: req.params.postId,
           replyTo: null,
@@ -191,9 +192,15 @@ module.exports = {
         .sort({ createdAt: "desc" })
         .populate("user", "image userName")
         .lean();
-      comments.forEach(
-        (comment) =>
-          (comment.isOwnComment = req.user.id === comment.user._id.toString())
+      comments = await Promise.all(
+        comments.map(async (comment) => {
+          comment.isOwnComment = req.user.id === comment.user._id.toString();
+          comment.hasLike = await LikeComment.exists({
+            user: req.user.id,
+            comment: comment._id,
+          });
+          return comment;
+        })
       );
 
       res.render("posts/post", {

@@ -1,4 +1,5 @@
 const CommentSchema = require("../models/CommentSchema");
+const LikeComment = require("../models/LikeComment");
 const Post = require("../models/Post");
 // const hbCreate = require("express-handlebars").create();
 
@@ -31,16 +32,22 @@ module.exports = {
         id: req.user.id,
         image: req.user.image,
       };
-      const comments = await CommentSchema.find(
+      let comments = await CommentSchema.find(
         { post: req.params.postId, replyTo: req.params.commentId },
         { post: 0, replyTo: 0 }
       )
         .sort({ createdAt: "desc" })
         .populate("user", "image userName")
         .lean();
-      comments.forEach(
-        (comment) =>
-          (comment.isOwnComment = req.user.id === comment.user._id.toString())
+      comments = await Promise.all(
+        comments.map(async (comment) => {
+          comment.hasLike = await LikeComment.exists({
+            user: req.user.id,
+            comment: comment._id,
+          });
+          comment.isOwnComment = req.user.id === comment.user._id.toString();
+          return comment;
+        })
       );
       res.render("partials/_comments", {
         layout: false,
@@ -109,7 +116,6 @@ module.exports = {
       }
 
       res.redirect("back");
-
     } catch (error) {
       console.error(error);
       res.render("error/500", {
