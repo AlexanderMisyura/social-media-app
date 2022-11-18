@@ -91,6 +91,11 @@ if (document.querySelector("#commentSection")) {
           await comments.text()
             .then((commentsHtml) => {
               this.container.innerHTML = commentsHtml;
+              const likeElements = this.container.querySelectorAll(".like");
+              likeElements.forEach(likeElement => {
+                const like = new Like(likeElement);
+                like.listen();
+              })
               const btnReplyCol = this.container.querySelectorAll(".reply");
               btnReplyCol.forEach((btnReply) =>
                 btnReply.addEventListener("click", toggleReplyForm)
