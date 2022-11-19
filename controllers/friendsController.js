@@ -111,7 +111,6 @@ module.exports = {
       loggedUserBookmarks = loggedUserBookmarks.filter(
         (bookmark) => bookmark.post
       );
-      console.log('loggedUserBookmarks :>> ', loggedUserBookmarks);
 
       await Promise.all(
         loggedUserBookmarks.map(
@@ -134,7 +133,9 @@ module.exports = {
       );
 
       // Remove browsed user's bookmarks with with logged user's friend posts
-      let browsedUserBookmarks = await Bookmark.find({ user: req.params.userId })
+      let browsedUserBookmarks = await Bookmark.find({
+        user: req.params.userId,
+      })
         .populate({
           path: "post",
           match: { user: req.user.id, friends: req.params.userId },
@@ -144,7 +145,10 @@ module.exports = {
       browsedUserBookmarks = browsedUserBookmarks.filter(
         (bookmark) => bookmark.post
       );
-      console.log('browsedUserBookmarks to delete (ururu / zurk friend post) :>> ', browsedUserBookmarks);
+      console.log(
+        "browsedUserBookmarks to delete (ururu / zurk friend post) :>> ",
+        browsedUserBookmarks
+      );
 
       await Promise.all(
         browsedUserBookmarks.map(
@@ -169,12 +173,12 @@ module.exports = {
       await Post.updateMany(
         { user: req.params.userId, status: "friends" },
         { $pull: { friends: req.user.id } }
-      )
+      );
       // Remove browsed user from logged user's friend posts
       await Post.updateMany(
         { user: req.user.id, status: "friends" },
         { $pull: { friends: req.params.userId } }
-      );;
+      );
 
       res.redirect(`/profile/${req.params.userId}`);
     } catch (error) {

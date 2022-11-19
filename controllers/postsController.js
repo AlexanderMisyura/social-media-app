@@ -342,7 +342,10 @@ module.exports = {
       await Promise.all(
         bookmarksWithDeletedPost.map(
           async (bookmark) =>
-            await User.updateOne({ _id: bookmark.user }, { $inc: { bookmarks: -1 } })
+            await User.updateOne(
+              { _id: bookmark.user },
+              { $inc: { bookmarks: -1 } }
+            )
         )
       );
       await Bookmark.deleteMany({

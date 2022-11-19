@@ -25,7 +25,9 @@ if (document.querySelector(".bookmark")) {
     }
 
     listen() {
-      this.bookmarkElement.addEventListener("click", () => this.#toggleBookmark());
+      this.bookmarkElement.addEventListener("click", () =>
+        this.#toggleBookmark()
+      );
     }
   }
 
