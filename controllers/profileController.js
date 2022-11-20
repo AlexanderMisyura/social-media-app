@@ -12,6 +12,7 @@ module.exports = {
     try {
       let posts;
       let comments;
+      let friends;
       let hasRequest;
       let hasOppositeRequest;
       let isFriend;
@@ -69,6 +70,26 @@ module.exports = {
         comments.forEach((comment) => {
           comment.isOwnComment = true;
         });
+        friends = await Promise.all(
+          browsedUser.friends.map(async (friendUser) => {
+            const friend = await User.findOne(
+              { _id: friendUser },
+              {
+                userName: 1,
+                image: 1,
+                rating: 1,
+                bio: 1,
+              }
+            );
+            return {
+              _id: friend._id,
+              userName: friend.userName,
+              image: friend.image,
+              rating: friend.rating,
+              bio: friend.bio,
+            };
+          })
+        );
       } else {
         // Check if users are friends
         isFriend =
@@ -134,6 +155,7 @@ module.exports = {
         loggedUser,
         browsedUser,
         comments,
+        friends,
         hasRequest,
         hasOppositeRequest,
         isFriend,

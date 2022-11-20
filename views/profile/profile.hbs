@@ -117,8 +117,39 @@
     <div id="comments" class="tab is-hidden columns is-multiline is-desktop">
       {{> _comments}}
     </div>
-    <div id="friends" class="tab is-hidden">
-      
+    <div id="friends" class="tab is-hidden columns is-multiline is-desktop">
+      {{#if friends}}
+      {{log friends}}
+        {{#each friends as |friend|}}
+          <div class="column is-half-desktop">
+            <div class="box">
+              <article class="media is-not-centered">
+                <figure class="media-left mr-2">
+                  <div class="image is-48x48">
+                    <a href="/profile/{{_id}}">
+                      <img
+                        class="is-rounded"
+                          src="{{image}}"
+                          alt="{{userName}}'s avatar"
+                      />
+                    </a>
+                  </div>
+                </figure>
+                <div class="media-content">
+                  <a class="has-text-dark" href="/profile/{{_id}}">
+                    <p class="title is-6 is-clipped is-inline-block">{{userName}}</p>
+                  </a>
+                  <div class="content">
+                    <p class="has-text-break-overflow">
+                      {{bio}}
+                    </p>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        {{/each}}
+      {{/if}}
     </div>
   {{/if}}
 </div>
