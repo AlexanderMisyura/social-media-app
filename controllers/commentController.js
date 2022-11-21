@@ -72,7 +72,7 @@ module.exports = {
           replyTo: 1,
           replies: 1,
         }
-      );
+      ).lean();
 
       if (!comment) {
         // The user has already deleted the comment
@@ -89,7 +89,7 @@ module.exports = {
         { _id: req.params.commentId },
         { deleted: true },
         { projection: { post: 1 } }
-      );
+      ).lean();
       await Post.updateOne(
         { _id: deletedComment.post },
         { $inc: { comments: -1 } }
@@ -102,7 +102,7 @@ module.exports = {
               { _id: comment.replyTo },
               { $inc: { replies: -1 } },
               { new: true, projection: { replies: 1, replyTo: 1, deleted: 1 } }
-            );
+            ).lean();
             if (parent.deleted) {
               checkParents(parent);
             }

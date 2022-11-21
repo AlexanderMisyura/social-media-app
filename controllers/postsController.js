@@ -338,7 +338,7 @@ module.exports = {
       const bookmarksWithDeletedPost = await Bookmark.find(
         { post: req.params.postId },
         { user: 1, _id: 0 }
-      );
+      ).lean();
       await Promise.all(
         bookmarksWithDeletedPost.map(
           async (bookmark) =>

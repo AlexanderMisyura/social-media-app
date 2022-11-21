@@ -19,13 +19,13 @@ module.exports = {
           req.params.postId,
           { $inc: { likes: -1 } },
           { new: true, projection: { likes: 1, user: 1 } }
-        );
+        ).lean();
 
         const user = await User.findByIdAndUpdate(
           post.user,
           { $inc: { rating: -1 } },
           { new: true, projection: { rating: 1 } }
-        );
+        ).lean();
 
         res.json({
           likes: post.likes,
@@ -38,13 +38,13 @@ module.exports = {
           req.params.postId,
           { $inc: { likes: 1 } },
           { new: true, projection: { likes: 1, user: 1 } }
-        );
+        ).lean();
 
         const user = await User.findByIdAndUpdate(
           post.user,
           { $inc: { rating: 1 } },
           { new: true, projection: { rating: 1 } }
-        );
+        ).lean();
 
         res.json({
           likes: post.likes,
@@ -70,13 +70,13 @@ module.exports = {
           req.params.commentId,
           { $inc: { likes: -1 } },
           { new: true, projection: { likes: 1, user: 1 } }
-        );
+        ).lean();
 
         const user = await User.findByIdAndUpdate(
           comment.user,
           { $inc: { rating: -1 } },
           { new: true, projection: { rating: 1 } }
-        );
+        ).lean();
 
         res.json({
           likes: comment.likes,
@@ -89,13 +89,13 @@ module.exports = {
           req.params.commentId,
           { $inc: { likes: 1 } },
           { new: true, projection: { likes: 1, user: 1 } }
-        );
+        ).lean();
 
         const user = await User.findByIdAndUpdate(
           comment.user,
           { $inc: { rating: 1 } },
           { new: true, projection: { rating: 1 } }
-        );
+        ).lean();
 
         res.json({
           likes: comment.likes,

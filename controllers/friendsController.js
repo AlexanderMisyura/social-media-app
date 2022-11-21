@@ -184,8 +184,8 @@ module.exports = {
 
   showFriendRequests: async (req, res) => {
     try {
-      const userReceive = await FriendRequest.find({ receiver: req.user.id });
-      const userSend = await FriendRequest.find({ sender: req.user.id });
+      const userReceive = await FriendRequest.find({ receiver: req.user.id }).lean();
+      const userSend = await FriendRequest.find({ sender: req.user.id }).lean();
       res.json({ userReceive, userSend });
 
       // res.render("partials/_friendRequests", {

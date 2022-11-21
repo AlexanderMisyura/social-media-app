@@ -18,7 +18,7 @@ module.exports = {
           req.user.id,
           { $inc: { bookmarks: -1 } },
           { new: true, projection: { bookmarks: 1 } }
-        );
+        ).lean();
 
         res.json({
           bookmarks: user.bookmarks,
@@ -41,7 +41,7 @@ module.exports = {
             req.user.id,
             { $inc: { bookmarks: 1 } },
             { new: true, projection: { bookmarks: 1 } }
-          );
+          ).lean();
 
           res.json({
             bookmarks: user.bookmarks,
