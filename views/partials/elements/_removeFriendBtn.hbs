@@ -1,0 +1,12 @@
+<div class="{{#unless @root.isOwnProfile}}is-top-right-position is-toggle-hidden{{else}}is-align-self-center{{/unless}}">
+  <form
+    action="/friends/remove/{{#unless @root.isOwnProfile}}{{browsedUser._id}}{{else}}{{_id}}{{/unless}}?_method=PUT"
+    method="POST"
+  >
+    <button class="button is-danger is-rounded" type="submit">
+      <span class="icon">
+        <i class="fa-solid fa-user-slash fa-xl"></i>
+      </span>
+    </button>
+  </form>
+</div>

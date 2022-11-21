@@ -1,0 +1,15 @@
+<div class="{{#unless @root.isOwnProfile}}is-top-right-position is-toggle-hidden{{else}}is-align-self-center{{/unless}}">
+  <form
+    action="/friends/{{#unless @root.isOwnProfile}}{{browsedUser._id}}{{else}}{{_id}}{{/unless}}?_method=DELETE"
+    method="POST"
+  >
+    <button
+      class="button is-warning is-light is-rounded"
+      type="submit"
+    >
+      <span class="icon has-text-dark">
+        <i class="fa-solid fa-user-minus fa-xl"></i>
+      </span>
+    </button>
+  </form>
+</div>

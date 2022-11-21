@@ -1,0 +1,15 @@
+<div class="{{#unless @root.isOwnProfile}}is-top-left-position is-toggle-hidden{{else}}is-align-self-center{{/unless}}">
+  <form
+    action="/friends/reject/{{#unless @root.isOwnProfile}}{{browsedUser._id}}{{else}}{{_id}}{{/unless}}?_method=PUT"
+    method="POST"
+  >
+    <button
+      class="button is-danger is-light is-rounded mr-2"
+      type="submit"
+    >
+      <span class="icon has-text-dark">
+        <i class="fa-solid fa-user-xmark fa-xl"></i>
+      </span>
+    </button>
+  </form>
+</div>
