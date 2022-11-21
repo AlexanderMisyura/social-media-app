@@ -21,7 +21,7 @@ module.exports = {
           receiver: req.params.userId,
         });
 
-        res.redirect(`/profile/${req.params.userId}`);
+        res.redirect("back");
       }
     } catch (error) {
       console.error(error);
@@ -35,7 +35,7 @@ module.exports = {
         receiver: req.params.userId,
       });
 
-      res.redirect(`/profile/${req.params.userId}`);
+      res.redirect("back");
     } catch (error) {
       console.error(error);
     }
@@ -72,7 +72,7 @@ module.exports = {
         receiver: req.params.userId,
       });
 
-      res.redirect(`/profile/${req.params.userId}`);
+      res.redirect("back");
     } catch (error) {
       console.error(error);
     }
@@ -90,7 +90,7 @@ module.exports = {
         receiver: req.params.userId,
       });
 
-      res.redirect(`/profile/${req.params.userId}`);
+      res.redirect("back");
     } catch (error) {
       console.error(error);
     }
@@ -145,10 +145,6 @@ module.exports = {
       browsedUserBookmarks = browsedUserBookmarks.filter(
         (bookmark) => bookmark.post
       );
-      console.log(
-        "browsedUserBookmarks to delete (ururu / zurk friend post) :>> ",
-        browsedUserBookmarks
-      );
 
       await Promise.all(
         browsedUserBookmarks.map(
@@ -180,7 +176,7 @@ module.exports = {
         { $pull: { friends: req.params.userId } }
       );
 
-      res.redirect(`/profile/${req.params.userId}`);
+      res.redirect("back");
     } catch (error) {
       console.error(error);
     }
