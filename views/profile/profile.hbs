@@ -14,7 +14,20 @@
                   </a>
                 </div>
               {{else}}
-              {{> _friendControlBtn}}
+                {{#if isFriend}}
+                  {{> _removeFriendBtn}}
+                {{else}}
+                  {{#if hasOppositeRequest}}
+                    {{> _acceptFriendBtn}}
+                    {{> _rejectFriendBtn}}
+                  {{else}}
+                    {{#if hasRequest}}
+                      {{> _cancelFriendBtn}}
+                    {{else}}
+                      {{> _sendFriendBtn}}
+                    {{/if}}
+                  {{/if}}
+                {{/if}}
               {{/if}}
               <figure class="image is-128x128">
                 <img
@@ -118,38 +131,97 @@
       {{> _comments}}
     </div>
     <div id="friends" class="tab is-hidden columns is-multiline is-desktop">
-      {{#if friends}}
-      {{log friends}}
-        {{#each friends as |friend|}}
-          <div class="column is-half-desktop">
-            <div class="box">
-              <article class="media is-not-centered">
-                <figure class="media-left mr-2">
-                  <div class="image is-48x48">
-                    <a href="/profile/{{_id}}">
-                      <img
-                        class="is-rounded"
-                          src="{{image}}"
-                          alt="{{userName}}'s avatar"
-                      />
-                    </a>
-                  </div>
-                </figure>
-                <div class="media-content">
-                  <a class="has-text-dark" href="/profile/{{_id}}">
-                    <p class="title is-6 is-clipped is-inline-block">{{userName}}</p>
+      {{#each oppositeRequests as |oppositeRequest|}}
+        <div class="column is-half-desktop">
+          <div class="box">
+            <article class="media is-not-centered has-hidden">
+              <figure class="media-left mr-2">
+                <div class="image is-48x48">
+                  <a href="/profile/{{_id}}">
+                    <img
+                      class="is-rounded"
+                        src="{{oppositeRequest.image}}"
+                        alt="{{userName}}'s avatar"
+                    />
                   </a>
-                  <div class="content">
-                    <p class="has-text-break-overflow">
-                      {{bio}}
-                    </p>
-                  </div>
                 </div>
-              </article>
-            </div>
+              </figure>
+              <div class="media-content">
+                <a class="has-text-dark" href="/profile/{{_id}}">
+                  <p class="title is-6 is-clipped is-inline-block">{{userName}}</p>
+                </a>
+                <div class="content">
+                  <p class="has-text-break-overflow">
+                    {{bio}}
+                  </p>
+                </div>
+              </div>
+              {{> _rejectFriendBtn}}
+              {{> _acceptFriendBtn}}
+            </article>
           </div>
-        {{/each}}
-      {{/if}}
+        </div>
+      {{/each}}
+      {{#each friends as |friend|}}
+        <div class="column is-half-desktop">
+          <div class="box">
+            <article class="media is-not-centered has-hidden">
+              <figure class="media-left mr-2">
+                <div class="image is-48x48">
+                  <a href="/profile/{{_id}}">
+                    <img
+                      class="is-rounded"
+                        src="{{image}}"
+                        alt="{{userName}}'s avatar"
+                    />
+                  </a>
+                </div>
+              </figure>
+              <div class="media-content">
+                <a class="has-text-dark" href="/profile/{{_id}}">
+                  <p class="title is-6 is-clipped is-inline-block">{{userName}}</p>
+                </a>
+                <div class="content">
+                  <p class="has-text-break-overflow">
+                    {{bio}}
+                  </p>
+                </div>
+              </div>
+              {{> _removeFriendBtn}}
+            </article>
+          </div>
+        </div>
+      {{/each}}
+      {{#each requests as |request|}}
+        <div class="column is-half-desktop">
+          <div class="box">
+            <article class="media is-not-centered has-hidden">
+              <figure class="media-left mr-2">
+                <div class="image is-48x48">
+                  <a href="/profile/{{_id}}">
+                    <img
+                      class="is-rounded"
+                        src="{{image}}"
+                        alt="{{userName}}'s avatar"
+                    />
+                  </a>
+                </div>
+              </figure>
+              <div class="media-content">
+                <a class="has-text-dark" href="/profile/{{_id}}">
+                  <p class="title is-6 is-clipped is-inline-block">{{userName}}</p>
+                </a>
+                <div class="content">
+                  <p class="has-text-break-overflow">
+                    {{bio}}
+                  </p>
+                </div>
+              </div>
+              {{> _cancelFriendBtn}}
+            </article>
+          </div>
+        </div>
+      {{/each}}
     </div>
   {{/if}}
 </div>

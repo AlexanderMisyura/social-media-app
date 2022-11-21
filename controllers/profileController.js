@@ -10,13 +10,16 @@ require("dotenv").config({ path: "../config/.env" });
 module.exports = {
   getProfile: async (req, res) => {
     try {
-      let posts;
-      let comments;
-      let friends;
-      let hasRequest;
-      let hasOppositeRequest;
-      let isFriend;
-      let isOwnProfile;
+      console.log('req.user :>> ', req.user);
+      let posts,
+        comments,
+        friends,
+        hasRequest,
+        hasOppositeRequest,
+        isFriend,
+        isOwnProfile,
+        requests,
+        oppositeRequests;
       const loggedUser = {
         name: req.user.userName,
         id: req.user.id,
@@ -47,6 +50,7 @@ module.exports = {
         )
           .sort({ createdAt: "desc" })
           .lean();
+
         posts = await Promise.all(
           posts.map(async (post) => {
             post.isOwnPost = true;
@@ -57,6 +61,7 @@ module.exports = {
             return post;
           })
         );
+
         comments = await CommentSchema.find(
           { user: req.user.id, deleted: false },
           { replyTo: 0, deleted: 0 }
@@ -70,9 +75,10 @@ module.exports = {
         comments.forEach((comment) => {
           comment.isOwnComment = true;
         });
+
         friends = await Promise.all(
           browsedUser.friends.map(async (friendUser) => {
-            const friend = await User.findOne(
+            return await User.findOne(
               { _id: friendUser },
               {
                 userName: 1,
@@ -80,15 +86,26 @@ module.exports = {
                 rating: 1,
                 bio: 1,
               }
-            );
-            return {
-              _id: friend._id,
-              userName: friend.userName,
-              image: friend.image,
-              rating: friend.rating,
-              bio: friend.bio,
-            };
+            ).lean();
           })
+        );
+
+        requests = await FriendRequest.find(
+          { sender: req.user.id },
+          { receiver: 1, _id: 0 }
+        )
+          .populate("receiver", "userName image rating bio")
+          .lean();
+        requests = requests.map((request) => request.receiver);
+
+        oppositeRequests = await FriendRequest.find(
+          { receiver: req.user.id },
+          { sender: 1, _id: 0 }
+        )
+          .populate("sender", "userName image rating bio")
+          .lean();
+        oppositeRequests = oppositeRequests.map(
+          (oppRequest) => oppRequest.sender
         );
       } else {
         // Check if users are friends
@@ -160,6 +177,8 @@ module.exports = {
         hasOppositeRequest,
         isFriend,
         isOwnProfile,
+        requests,
+        oppositeRequests,
       });
     } catch (err) {
       console.error(err);
