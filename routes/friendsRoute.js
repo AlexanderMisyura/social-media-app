@@ -11,5 +11,5 @@ router.put(
   ensureAuth,
   friendsController.removeFromFriendsList
 );
-router.get("/show", ensureAuth, friendsController.showFriendRequests);
+
 module.exports = router;
