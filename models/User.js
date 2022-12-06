@@ -7,56 +7,57 @@ const defaultValues = {
   bio: (val) => (val === undefined ? "No bio yet" : val),
 };
 
-const UserSchema = new mongoose.Schema({
-  userName: {
-    type: String,
-    unique: true,
-    required: [true, "userName cannot be empty"],
+const UserSchema = new mongoose.Schema(
+  {
+    userName: {
+      type: String,
+      unique: true,
+      required: [true, "userName cannot be empty"],
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      default: process.env.DEFAULT_AVATAR_LINK,
+      set: defaultValues.image,
+    },
+    cloudinaryId: {
+      type: String,
+    },
+    bio: {
+      type: String,
+      default: "No bio yet",
+      set: defaultValues.bio,
+    },
+    language: {
+      type: String,
+      default: "en-En",
+    },
+    friends: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    },
+    rating: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
+    bookmarks: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
   },
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    default: process.env.DEFAULT_AVATAR_LINK,
-    set: defaultValues.image,
-  },
-  cloudinaryId: {
-    type: String,
-  },
-  bio: {
-    type: String,
-    default: "No bio yet",
-    set: defaultValues.bio,
-  },
-  language: {
-    type: String,
-    default: "en-En"
-  },
-  friends: {
-    type: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  rating: {
-    type: Number,
-    default: 0,
-    min: 0,
-  },
-  bookmarks: {
-    type: Number,
-    default: 0,
-    min: 0,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 // Passport hash middleware
 
