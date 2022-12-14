@@ -10,7 +10,6 @@ require("dotenv").config({ path: "../config/.env" });
 module.exports = {
   getProfile: async (req, res) => {
     try {
-      console.log('req.user :>> ', req.user);
       let posts,
         comments,
         friends,
@@ -72,7 +71,6 @@ module.exports = {
             { path: "post", select: "title deleted" },
           ])
           .lean();
-          console.log('comments', comments)
         comments = comments.filter(comment => !comment.post.deleted);
         comments.forEach((comment) => {
           comment.isOwnComment = true;

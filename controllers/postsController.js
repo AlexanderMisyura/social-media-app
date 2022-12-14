@@ -3,7 +3,6 @@ const LikePost = require("../models/LikePost");
 const LikeComment = require("../models/LikeComment");
 const Bookmark = require("../models/Bookmark");
 const cloudinary = require("../middleware/cloudinary");
-const mongoose = require("mongoose");
 const CommentSchema = require("../models/CommentSchema");
 const User = require("../models/User");
 
