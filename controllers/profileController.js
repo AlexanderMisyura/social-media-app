@@ -69,9 +69,11 @@ module.exports = {
           .sort({ createdAt: "desc" })
           .populate([
             { path: "user", select: "image userName" },
-            { path: "post", select: "title" },
+            { path: "post", select: "title deleted" },
           ])
           .lean();
+          console.log('comments', comments)
+        comments = comments.filter(comment => !comment.post.deleted);
         comments.forEach((comment) => {
           comment.isOwnComment = true;
         });
