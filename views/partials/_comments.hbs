@@ -22,7 +22,7 @@
         {{#if isOwnComment}}
           <div class="is-top-right-position is-toggle-hidden">
             <form action="/comment/{{_id}}?_method=PUT" method="post">
-              <button class="button is-danger is-small" type="submit">
+              <button class="button is-danger is-small" type="submit" title="Delete comment">
                 <span class="icon">
                   <i class="fa-regular fa-trash-can"></i>
                 </span>
@@ -43,7 +43,6 @@
           <p class="has-text-break-overflow">
             {{content}}
           </p>
-
         </div>
 
         <nav class="level is-mobile mb-0">

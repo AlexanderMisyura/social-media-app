@@ -47,16 +47,16 @@
             </div>
           </div>
           <div class="card-footer is-justify-content-space-between">
-            <div class="card-item">
+            {{!-- <div class="card-item">
               <span class="card-footer-item icon-text">
                 <span class="icon has-text-grey-light">
                   <i class="fa-regular fa-eye fa-lg"></i>
                 </span>
                 <span class="has-text-grey">{{views}}</span>
               </span>
-            </div>
+            </div> --}}
             <div class="card-item">
-              <span class="card-footer-item icon-text">
+              <span class="card-footer-item icon-text" title="Comments number">
                 <span class="icon has-text-grey-light">
                   <i class="fa-regular p-1 fa-comment fa-lg"></i>
                 </span>
@@ -65,19 +65,20 @@
             </div>
             <div class="card-item">
               <span class="card-footer-item">
-                <a class="pr-1" href="">
+                {{!-- <a class="pr-1" href="">
                   <span class="icon has-text-dark">
                     <i class="fa-solid fa-share-nodes fa-lg"></i>
                   </span>
-                </a>
+                </a> --}}
                 <span class="pr-1 is-clickable">
                   <span data-post-id="{{_id}}"
                     class="bookmark icon
-                  {{#if isBookmarked}}
-                    has-text-success
-                  {{else}}
-                    has-text-dark
-                  {{/if}}">
+                    {{#if isBookmarked}}
+                      has-text-success
+                    {{else}}
+                      has-text-dark
+                    {{/if}}"
+                    title="Bookmark">
                     <i class="fa-regular fa-bookmark fa-lg"></i>
                   </span>
                 </span>

@@ -46,14 +46,14 @@
         <figure class="image is-square mb-5 is-relative has-hidden">
           {{#if post.isOwnPost}}
             <div class="is-top-left-position is-toggle-hidden">
-              <button class="button is-danger js-modal-trigger" data-target-name="modal-delete-message">
+              <button class="button is-danger js-modal-trigger" data-target-name="modal-delete-message" title="Delete post">
                 <span class="icon">
                   <i class="fa-regular fa-trash-can"></i>
                 </span>
               </button>
             </div>
             <div class="is-top-right-position is-toggle-hidden">
-              <a class="button is-white" href="/post/edit/{{post._id}}">
+              <a class="button is-white" href="/post/edit/{{post._id}}" title="Edit post">
                 <span class="icon">
                 <i class="fa-regular fa-pen-to-square"></i>
                 </span>
@@ -66,32 +66,33 @@
           <p>{{post.caption}}</p>
         </div>
         <footer class="is-flex is-justify-content-space-between">
-          <div class="icon-text">
+          {{!-- <div class="icon-text">
             <span class="icon has-text-grey-light">
               <i class="fa-regular fa-eye fa-lg"></i>
             </span>
             <span class="has-text-grey">{{post.views}}</span>
-          </div>
+          </div> --}}
           <div class="icon-text">
-            <span class="icon has-text-grey-light">
+            <span class="icon has-text-grey-light" title="Comments number">
               <i class="fa-regular p-1 fa-comment fa-lg"></i>
             </span>
             <span class="has-text-grey">{{post.comments}}</span>
           </div>
           <div>
-            <span class="pr-1 share is-clickable">
+            {{!-- <span class="pr-1 share is-clickable">
               <span class="icon has-text-dark">
                 <i class="fa-solid fa-share-nodes fa-lg"></i>
               </span>
-            </span>
+            </span> --}}
             <span class="pr-1 is-clickable">
               <span data-post-id="{{post._id}}"
                 class="bookmark icon
-              {{#if isBookmarked}}
-                has-text-success
-              {{else}}
-                has-text-dark
-              {{/if}}">
+                {{#if isBookmarked}}
+                  has-text-success
+                {{else}}
+                  has-text-dark
+                {{/if}}"
+                title="Bookmark">
                 <i class="fa-regular fa-bookmark fa-lg"></i>
               </span>
             </span>

@@ -3,7 +3,7 @@
     action="/friends/remove/{{#unless @root.isOwnProfile}}{{browsedUser._id}}{{else}}{{_id}}{{/unless}}?_method=PUT"
     method="POST"
   >
-    <button class="button is-danger is-rounded" type="submit">
+    <button class="button is-danger is-rounded" type="submit" title="Remove from friends">
       <span class="icon">
         <i class="fa-solid fa-user-slash fa-xl"></i>
       </span>

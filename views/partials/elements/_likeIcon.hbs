@@ -1,12 +1,12 @@
 {{#if isOwnPost}}
-  <span class="icon-text">
+  <span class="icon-text" title="Like">
     <span class="icon has-text-grey-light">
       <i class="fa-regular fa-star fa-lg"></i>
     </span>
     <span class="has-text-grey">{{likes}}</span>
   </span>
 {{else}}
-  <span class="icon-text">
+  <span class="icon-text" title="Like">
     <span
       class="like icon is-clickable has-text-{{#if hasLike}}warning{{else}}dark{{/if}}"
       data-post-id="{{_id}}"
