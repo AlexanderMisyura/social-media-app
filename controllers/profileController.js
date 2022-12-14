@@ -71,7 +71,7 @@ module.exports = {
             { path: "post", select: "title deleted" },
           ])
           .lean();
-        comments = comments.filter(comment => !comment.post.deleted);
+        comments = comments.filter((comment) => !comment.post.deleted);
         comments.forEach((comment) => {
           comment.isOwnComment = true;
         });
@@ -258,6 +258,7 @@ module.exports = {
             quality: "auto",
             background: "auto",
           },
+          secure: true,
         });
         updateParams.cloudinaryId = uploadResult.public_id;
       }
