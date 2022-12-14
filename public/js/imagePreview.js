@@ -1,5 +1,4 @@
 if (document.getElementById("preview")) {
-  console.log('"preview"', "preview")
   const imageInput = document.querySelector(".file-input");
   imageInput.addEventListener("change", previewImage);
   function previewImage(e) {
