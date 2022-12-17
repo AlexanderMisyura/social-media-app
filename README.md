@@ -1,19 +1,20 @@
 # Socister
-Socister is a full stack social media website.
+A full stack social media website.
 <br>
+
 ## Features:
  - user login/registration
  - user profile dashboard
- - managable categories:
-   - posts
-   - comments
-   - bookmarks
-   - friends
- - post and comment likes
+ - manageable categories:
+   - posts (can be public, private, visible only to friends. Users can add new, edit or delete existing own posts.)
+   - comments (when deleting a comment, it is marked as *Comment was deleted* if it has non-deleted replies, otherwise it is completely deleted )
+   - bookmarks (save/delete posts to a separate list)
+   - friends (send/cancel own friend request, accept/reject someone else's request, remove a user from friends list)
+ - post and comment likes (increase user rating)
 
 **Link to project:** https://socister.onrender.com
 
-![Socister gif](https://i.ibb.co/C5fLNPT/socister2-1.gif)
+![Socister gif](https://i.ibb.co/ySkxSJG/socister3.gif)
 
 ## How It's Made:
 
