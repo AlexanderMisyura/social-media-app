@@ -6,6 +6,7 @@
         type="text"
         placeholder="email"
         name="email"
+        autocomplete="email"
       />
       <span class="icon is-small is-left">
         <i class="fa-solid fa-envelope"></i>
@@ -14,6 +15,14 @@
         <i class="fas fa-check"></i>
       </span> --}}
     </div>
+    {{#each validationErrors}}
+      {{#each emailErrors as |error|}}
+        <p class="help is-danger">{{error.msg}}</p>
+      {{/each}}
+    {{/each}}
+    {{#each authErrors as |error|}}
+      <p class="help is-danger">{{error.msg}}</p>
+    {{/each}}
     {{!-- <p class="help is-success">This email is available</p> --}}
   </div>
 
@@ -24,6 +33,7 @@
         type="password"
         placeholder="password"
         name="password"
+        autocomplete="current-password"
       />
       <span class="icon is-small is-left">
         <i class="fa-solid fa-key"></i>
@@ -32,7 +42,11 @@
         <i class="fas fa-exclamation-triangle"></i>
       </span> --}}
     </div>
-    {{!-- <p class="help is-danger">smth with password</p> --}}
+    {{#each validationErrors}}
+      {{#each passwordErrors as |error|}}
+        <p class="help is-danger">{{error.msg}}</p>
+      {{/each}}
+    {{/each}}
   </div>
 
   <div class="field">

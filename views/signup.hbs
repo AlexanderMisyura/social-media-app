@@ -6,6 +6,7 @@
         type="text"
         placeholder="username"
         name="userName"
+        autocomplete="username"
       />
       <span class="icon is-small is-left">
         <i class="fas fa-user"></i>
@@ -14,7 +15,14 @@
         <i class="fas fa-check"></i>
       </span> --}}
     </div>
-    {{!-- <p class="help is-success">This username is available</p> --}}
+    {{#each validationErrors}}
+      {{#each userNameErrors as |error|}}
+        <p class="help is-danger">{{error.msg}}</p>
+      {{/each}}
+    {{/each}}
+    {{#each duplicationErrors as |error|}}
+      <p class="help is-danger">{{error.msg}}</p>
+    {{/each}}
   </div>
 
   <div class="field">
@@ -24,6 +32,7 @@
         type="email"
         placeholder="email"
         name="email"
+        autocomplete="email"
       />
       <span class="icon is-small is-left">
         <i class="fas fa-envelope"></i>
@@ -32,7 +41,14 @@
         <i class="fas fa-check"></i>
       </span> --}}
     </div>
-    {{!-- <p class="help is-success">This username is available</p> --}}
+    {{#each validationErrors}}
+      {{#each emailErrors as |error|}}
+        <p class="help is-danger">{{error.msg}}</p>
+      {{/each}}
+    {{/each}}
+    {{#each duplicationErrors as |error|}}
+      <p class="help is-danger">{{error.msg}}</p>
+    {{/each}}
   </div>
 
   <div class="field">
@@ -42,6 +58,7 @@
         type="password"
         placeholder="password"
         name="password"
+        autocomplete="new-password"
       />
       <span class="icon is-small is-left">
         <i class="fas fa-solid fa-key"></i>
@@ -50,7 +67,11 @@
         <i class="fas fa-exclamation-triangle"></i>
       </span> --}}
     </div>
-    {{!-- <p class="help is-danger">smth with password</p> --}}
+    {{#each validationErrors}}
+      {{#each passwordErrors as |error|}}
+        <p class="help is-danger">{{error.msg}}</p>
+      {{/each}}
+    {{/each}}
   </div>
 
   <div class="field">
@@ -60,6 +81,7 @@
         type="password"
         placeholder="confirm password"
         name="confirmPassword"
+        autocomplete="new-password"
       />
       <span class="icon is-small is-left">
         <i class="fas fa-solid fa-lock"></i>
@@ -68,7 +90,6 @@
         <i class="fas fa-exclamation-triangle"></i>
       </span> --}}
     </div>
-    {{!-- <p class="help is-danger">smth with password</p> --}}
   </div>
 
   <div class="field">
