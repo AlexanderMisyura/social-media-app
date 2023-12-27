@@ -143,4 +143,15 @@ module.exports = {
       res.redirect("/");
     });
   },
+
+  postTestLogin: (req, res, next) => {
+    req.body.email = process.env.TEST_USER_EMAIL;
+    req.body.password = process.env.TEST_USER_PASSWORD;
+
+    passport.authenticate("local", (err, user, info) => {
+      req.logIn(user, (err) => {
+        res.redirect("/");
+      })
+    })(req, res, next);
+  }
 };
